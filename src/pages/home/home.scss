@@ -1,3 +1,19 @@
 page-home {
+    .card{
+        background: linear-gradient(color($colors, card-background-2), color($colors, card-background));
+    }
 
+    .button-md{
+        border: 1px solid;
+        background-color: white !important;
+        border-radius: 5px;
+    }
+
+    .card-content-md{
+        padding: 3px 15px;
+    }
+
+    .incompleto{
+        color: lightgrey;
+    }
 }

@@ -1,14 +1,47 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Coleção de Mangás
     </ion-title>
+    <ion-buttons end>
+      
+      <button ion-button icon-only (click)="irParaAdicionarManga()"><ion-icon name="add-circle"></ion-icon> </button> 
+      <button ion-button icon-end (click)="mostrarFiltro()"> <ion-icon name="more"></ion-icon> </button> 
+    </ion-buttons>
   </ion-navbar>
+
+
+
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content>
+  <div padding *ngIf="lista_mangas && !lista_mangas.length">
+    Você não possui mangás adicionados. <a (click)="irParaAdicionarManga()"> Clique aqui </a> para adicionar
+  </div>
+  <div  *ngFor="let manga of lista_mangas">
+  <ion-card *ngIf="!apenasNaoCompletos || !manga.completo" (click) = "irParaCapitulos(manga);">
+    <ion-card-content>
+      <ion-card-title>
+        {{manga.titulo}}
+      </ion-card-title>
+      <p>
+        <ion-col>
+        Último comprado: <ion-badge color="comprado">{{manga.ultimoComprado}}</ion-badge> 
+        </ion-col>
+        <ion-col> 
+        Último lido: <ion-badge color="lido">{{manga.ultimoLido}}</ion-badge>
+        </ion-col>
+      </p>
+      <ion-row>
+          <button small ion-button icon-only clear (click)="editarManga(manga);$event.stopPropagation();"><ion-icon name="create"></ion-icon>  </button>
+          <button small ion-button icon-only clear (click)="apagarManga(manga);$event.stopPropagation();"><ion-icon name="trash"></ion-icon></button>
+          <button small ion-button icon-start clear (click)="toggleCompleto(manga);$event.stopPropagation();" [ngClass]="manga.completo? 'completo' : 'incompleto'">
+            <ion-icon [hidden]="!manga.completo" name="checkmark-circle"></ion-icon>
+            <ion-icon [hidden]="manga.completo" name="radio-button-off"></ion-icon>
+            Completo
+          </button>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</div>
 </ion-content>

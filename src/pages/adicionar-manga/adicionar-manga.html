@@ -1,0 +1,31 @@
+<!--
+  Generated template for the AdicionarMangaPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Adicionar Mangá</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-input type="text" [(ngModel)]="manga.titulo" placeholder="Título" name="title"></ion-input>
+  </ion-item>
+  
+  <!-- or with standalone set to true -->
+
+  <ion-item> 
+    <ion-input type="number" placeholder="Último volume comprado"  [(ngModel)]="manga.ultimoComprado" ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input type="number" placeholder="Último volume lido"  [(ngModel)]="manga.ultimoLido" ></ion-input>
+  </ion-item>  
+  
+
+
+  <button ion-button block (click) = "adicionar()">Adicionar</button>
+</ion-content>

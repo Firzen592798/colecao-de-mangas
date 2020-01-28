@@ -1,0 +1,70 @@
+page-capitulos-manga {
+
+.container{    
+    background-color: blue;
+    position: relative;
+    width: 100%;
+    padding-top: 16.666%;
+    border-radius: 100px;
+    border: 1px solid lightgray;
+}
+
+.text {
+   position:  absolute;
+   top: 0;
+   left: 0;
+   bottom: 0;
+   right: 0;
+   margin-top: calc(50% - 10px);
+   text-align: center;
+   font-size: 20px;
+   color: white;
+ }
+
+ ion-col{
+    margin: 1.2%;
+ }
+
+ .lido{
+    @extend .container;
+    background-color: color($colors, lido);
+ }
+
+ .comprado{
+    @extend .container;
+     background-color: color($colors, comprado);
+ }
+
+ .naocomprado{
+    @extend .container;
+    background-color: color($colors, naocomprado);
+ }
+
+ .add{
+   @extend .container;
+   //background-color: #E8AC41;
+   background-color: white;
+   color: black;
+ }
+
+ .legenda{
+   display: inline-block; height: 10px; width: 10px;  border: 1px solid grey;
+ }
+ .lido-legenda{
+   @extend .legenda;
+   background-color: color($colors, lido);
+ }
+ .comprado-legenda{
+   @extend .legenda;
+   background-color: color($colors, comprado);
+ }
+ .naocomprado-legenda{
+   @extend .legenda;
+   background-color: color($colors, naocomprado);
+ }
+
+ .toolbar-btn{
+   border: 1px solid grey;
+   border-radius: 30px;
+ }
+}
