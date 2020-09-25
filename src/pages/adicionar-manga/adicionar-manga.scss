@@ -6,4 +6,31 @@ page-adicionar-manga {
     ion-checkbox{
         $checkbox-ios-background-color-off: red;
     }
+
+    .img-query{
+        height: 60px !important;
+        width: 40px !important;
+    }
+
+    ion-list{
+        z-index: 1;
+        background: color($colors, primary);
+        position: absolute;
+        width: calc(100% - 40px);
+        margin-top: -8px !important;
+    }
+
+    .item-md{
+        padding-left: 0px;
+    }
+
+    .autocomplete-text{
+        color: white;
+    }
+
+    ion-thumbnail{
+        min-width: 50px !important;
+        min-height: 0px !important;
+        margin: 0px !important;
+    }
 }

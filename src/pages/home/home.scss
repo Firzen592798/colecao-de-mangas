@@ -1,7 +1,7 @@
 page-home {
-    .card{
+    /*.card{
         background: linear-gradient(color($colors, card-background-2), color($colors, card-background));
-    }
+    }*/
 
     .button-md{
         border: 1px solid;
@@ -16,4 +16,9 @@ page-home {
     .incompleto{
         color: lightgrey;
     }
+
+    img{
+        height: 120px !important;
+    }
+    
 }
