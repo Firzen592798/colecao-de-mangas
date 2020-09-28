@@ -67,6 +67,7 @@ export class MangaProvider {
         return Promise.resolve(lista);
       })
       .catch((error) => {
+        console.log(error);
         return Promise.reject(error);
       });
   }

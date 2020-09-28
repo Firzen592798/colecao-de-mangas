@@ -23,7 +23,7 @@ import { QuantitativosPage } from '../pages/quantitativos/quantitativos';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {_forceStatusbarPadding: true}),
     CapitulosMangaPageModule,
     AdicionarMangaPageModule,
     IonicStorageModule.forRoot(),

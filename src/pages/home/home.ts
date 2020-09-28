@@ -25,7 +25,7 @@ export class HomePage {
       this.lista_mangas = data;
       alert(JSON.stringify(data));
       this.lista_mangas_filtrado = data;
-    });
+    }).catch(err => console.log(err));
   }
 
   irParaAdicionarManga(){
