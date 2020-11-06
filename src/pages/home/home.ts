@@ -23,7 +23,7 @@ export class HomePage {
   ionViewDidEnter(){
     this.mangaProvider.listar().then(data => {
       this.lista_mangas = data;
-      alert(JSON.stringify(data));
+      //alert(JSON.stringify(data));
       this.lista_mangas_filtrado = data;
     }).catch(err => console.log(err));
   }
@@ -91,9 +91,18 @@ export class HomePage {
           text: 'Excluir',
           handler: () => {
             this.mangaProvider.excluirManga(manga.key);
-            this.mangaProvider.listar().then(data => {
+            var index = this.lista_mangas_filtrado.indexOf(manga);
+            if (index !== -1) {
+              this.lista_mangas_filtrado.splice(index, 1);
+            }
+            index = this.lista_mangas.indexOf(manga);
+            if (index !== -1) {
+              this.lista_mangas.splice(index, 1);
+            }
+            /*this.mangaProvider.listar().then(data => {
               this.lista_mangas = data;
-            });
+              console.log(data);
+            });*/
             this.presentToast("Mangá excluído com sucesso");
           }
         }

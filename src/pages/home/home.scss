@@ -17,8 +17,26 @@ page-home {
         color: lightgrey;
     }
 
+    .item-manga{
+        height: 120px !important;
+        padding-left: 0px;
+    }
+
     img{
         height: 120px !important;
+    }
+
+    .numeros-container{
+        padding: 3px;
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        border: 1px solid black;
+        border-radius: 5px;
+        background: color($colors, card-background-2);
+        width: 190px;
+    }
+
+    ion-card-title{
+        padding: 0px !important;
     }
     
 }

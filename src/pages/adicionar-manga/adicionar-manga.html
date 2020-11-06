@@ -11,13 +11,18 @@
 </ion-header>
 
 <ion-content padding>
-  <div>
-    <ion-searchbar type="text" debounce=250 autocomplete="on" [(ngModel)]="manga.titulo" placeholder="Título" name="title" (ionInput)="carregarAutocomplete()"></ion-searchbar>
+  <div class="row">
+    <!--(ionInput)="carregarAutocomplete()-->
+    <ion-item col-9> 
+      <ion-input placeholder="Nome do mangá..." [(ngModel)]="manga.titulo" ></ion-input>
+    </ion-item>
+    <button col-3 ion-button block class="ion-button" (click)="carregarAutocomplete()"><ion-icon name="search"></ion-icon>
+    </button>
   </div>
-  <ion-list>
+  <ion-list *ngIf="mangaAutocomplete?.length > 0">
 		<ion-item *ngFor="let manga of mangaAutocomplete" (click)="carregarInfo(manga)">
       <ion-thumbnail item-start>
-        <img fixed [src]="manga.imagem" class="img-query">
+        <img *ngIf="manga.imagem" fixed [src]="manga.imagem" class="img-query">
       </ion-thumbnail>
       <p class="autocomplete-text">{{manga.titulo}}</p>
 

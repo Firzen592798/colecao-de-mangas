@@ -36,11 +36,12 @@ export class AdicionarMangaPage {
   }
 
   carregarAutocomplete(){
+    
     if(this.manga.titulo.lenght == 0){
-      alert("Oogesa");
       this.mangaAutocomplete = [];
     }
     if(this.manga.titulo.length >= 3){
+      this.mangaAutocomplete = [{titulo: "Carregando...", imagem: null}];
       this.malProvider.getMangas(this.manga.titulo).then((mangas) => {
         this.mangaAutocomplete = mangas;
       });
