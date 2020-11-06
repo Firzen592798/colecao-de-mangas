@@ -11,25 +11,29 @@ import { CapitulosMangaPageModule } from '../pages/capitulos-manga/capitulos-man
 import { AdicionarMangaPageModule } from '../pages/adicionar-manga/adicionar-manga.module';
 import { DatePipe } from '@angular/common';
 import { IonicStorageModule } from '@ionic/storage';
+import { HttpClientModule } from '@angular/common/http';
+import { MalapiProvider } from '../providers/malapi/malapi';
+import { QuantitativosPage } from '../pages/quantitativos/quantitativos';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
-    
+    HomePage,
+    QuantitativosPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {_forceStatusbarPadding: true}),
     CapitulosMangaPageModule,
     AdicionarMangaPageModule,
     IonicStorageModule.forRoot(),
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-
+    QuantitativosPage
 
   ],
   providers: [
@@ -37,6 +41,7 @@ import { IonicStorageModule } from '@ionic/storage';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MangaProvider,
+    MalapiProvider,
     DatePipe,
     IonicStorageModule,
   ]

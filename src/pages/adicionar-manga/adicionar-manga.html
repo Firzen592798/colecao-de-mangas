@@ -11,10 +11,21 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-item>
-    <ion-input type="text" [(ngModel)]="manga.titulo" placeholder="Título" name="title"></ion-input>
-  </ion-item>
-  
+  <div>
+    <ion-searchbar type="text" debounce=250 autocomplete="on" [(ngModel)]="manga.titulo" placeholder="Título" name="title" (ionInput)="carregarAutocomplete()"></ion-searchbar>
+  </div>
+  <ion-list>
+		<ion-item *ngFor="let manga of mangaAutocomplete" (click)="carregarInfo(manga)">
+      <ion-thumbnail item-start>
+        <img fixed [src]="manga.imagem" class="img-query">
+      </ion-thumbnail>
+      <p class="autocomplete-text">{{manga.titulo}}</p>
+
+      <!--<img fixed [src]="manga.imagem">-->
+    
+    </ion-item>
+  </ion-list>
+
   <!-- or with standalone set to true -->
 
   <ion-item> 
@@ -25,7 +36,11 @@
     <ion-input type="number" placeholder="Último volume lido"  [(ngModel)]="manga.ultimoLido" ></ion-input>
   </ion-item>  
   
+  <ion-thumbnail>
+    <img *ngIf="manga.imagem" [src]="manga.imagem">
+  </ion-thumbnail>
 
-
-  <button ion-button block (click) = "adicionar()">Adicionar</button>
+  <button ion-button block (click) = "salvar()">
+    Salvar
+  </button>
 </ion-content>

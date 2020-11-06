@@ -2,8 +2,11 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, ToastController, Checkbox } from 'ionic-angular';
 import { AdicionarMangaPage } from '../adicionar-manga/adicionar-manga';
+import { QuantitativosPage } from '../quantitativos/quantitativos';
 import { MangaProvider } from '../../providers/manga/manga';
 import { CapitulosMangaPage } from '../capitulos-manga/capitulos-manga';
+import { MalapiProvider } from '../../providers/malapi/malapi';
+
 
 @Component({
   selector: 'page-home',
@@ -11,19 +14,30 @@ import { CapitulosMangaPage } from '../capitulos-manga/capitulos-manga';
 })
 export class HomePage {
   public lista_mangas: any;
+  public lista_mangas_filtrado: any;
+  public query: String;
   public apenasNaoCompletos: boolean = false;
-  constructor(public navCtrl: NavController, public mangaProvider: MangaProvider, public alertCtrl: AlertController, public toastCtrl: ToastController) {
-
+  constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public mangaProvider: MangaProvider, public alertCtrl: AlertController, public toastCtrl: ToastController) {
   }
 
   ionViewDidEnter(){
     this.mangaProvider.listar().then(data => {
       this.lista_mangas = data;
-    });
+      alert(JSON.stringify(data));
+      this.lista_mangas_filtrado = data;
+    }).catch(err => console.log(err));
   }
 
   irParaAdicionarManga(){
     this.navCtrl.push(AdicionarMangaPage)
+  }
+
+  irParaEditarManga(manga){
+    this.navCtrl.push(AdicionarMangaPage, {manga: manga})
+  }
+
+  irParaQuantitativos(){
+    this.navCtrl.push(QuantitativosPage, {lista_mangas: this.lista_mangas})
   }
 
   irParaCapitulos(manga){
@@ -140,5 +154,9 @@ export class HomePage {
       ]
     });
     alert.present();
+  }
+  
+  filtrar(){
+    this.lista_mangas_filtrado = this.lista_mangas.filter((x) => {return x.titulo.toUpperCase().includes(this.query.toUpperCase())});
   }
 }

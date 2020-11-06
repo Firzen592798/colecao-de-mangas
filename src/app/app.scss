@@ -17,6 +17,11 @@
 .toolbar-background{
     background-color: color($colors, primary);
 }
+
+.toolbar-title-md,.back-button{
+    color: white;
+}
+
 .content{
     background: linear-gradient(to bottom right, color($colors, background-2),color($colors, background));
 }
