@@ -60,7 +60,7 @@ export class HomePage {
     });
     alert.present();
   }
-
+  
   apagarManga(manga) {
     let alert = this.alertCtrl.create({
       title: 'Confirmação',
