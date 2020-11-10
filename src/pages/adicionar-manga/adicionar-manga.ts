@@ -36,15 +36,19 @@ export class AdicionarMangaPage {
   }
 
   carregarAutocomplete(){
-    
-    if(this.manga.titulo.lenght == 0){
+    if(this.manga.titulo === undefined || this.manga.titulo.length == 0){
       this.mangaAutocomplete = [];
-    }
-    if(this.manga.titulo.length >= 3){
-      this.mangaAutocomplete = [{titulo: "Carregando...", imagem: null}];
-      this.malProvider.getMangas(this.manga.titulo).then((mangas) => {
-        this.mangaAutocomplete = mangas;
-      });
+    }else{
+      if(this.manga.titulo.length >= 3){
+        this.mangaAutocomplete = [{titulo: "Carregando...", imagem: null}];
+        this.malProvider.getMangas(this.manga.titulo).then((mangas) => {
+          
+          this.mangaAutocomplete = mangas;
+        }).catch((error) => {
+          this.presentToast("É necessário uma conexão com a internet para usar essa busca");
+          this.mangaAutocomplete = [];
+        });
+      }
     }
   }
 
@@ -58,7 +62,7 @@ export class AdicionarMangaPage {
     if(!this.manga.titulo){
       this.presentToast("É necessário preencher um título");
     }else if(this.manga.ultimoComprado > 200){
-      this.presentToast("Não é permitido adicionar mais de 200 volumes, porque se existir um mangá maior do que isso, parabens =)");
+      this.presentToast("Não é permitido adicionar mais de 200 volumes. Se existir um mangá maior do que isso, parabens =)");
     }else{
       if(!this.manga.key){
         let key = this.datepipe.transform(new Date(), "ddMMyyyyHHmmss");
@@ -85,4 +89,7 @@ export class AdicionarMangaPage {
     toast.present();
   }
 
+  fecharAutocomplete(){
+    this.mangaAutocomplete = [];
+  }
 }

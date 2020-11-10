@@ -1,23 +1,29 @@
 <ion-header>
+
   <ion-navbar>
-    <ion-title>
+
+    <ion-title [hidden]="isSearching">
       Coleção de Mangás
     </ion-title>
-    <!--<ion-buttons end>
-      <button ion-button icon-end (click)="mostrarFiltro()"> <ion-icon name="more"></ion-icon> </button> 
-    </ion-buttons>-->
+    <ion-input #search style="display: none;" id="search-input" placeholder="Buscar" (ionChange)="filtrar()" [(ngModel)]="query"></ion-input>
+    
+    <ion-buttons end>
+      <button color="light" [hidden]="isSearching" ion-button icon-end (click)="irParaAjuda();"> <ion-icon name="help"></ion-icon> </button> 
+      <button color="light" [hidden]="isSearching" ion-button icon-end (click)="mostrarFiltro();"> <ion-icon name="options"></ion-icon> </button> 
+      <button color="light" [hidden]="isSearching" ion-button icon-end (click)="mostrarBusca();"> <ion-icon name="search"></ion-icon> </button> 
+      <button color="light" [hidden]="!isSearching" ion-button icon-end (click)="esconderBusca()"> <ion-icon name="close"></ion-icon> </button> 
+    </ion-buttons>
+
   </ion-navbar>
-
-
-
 </ion-header>
-<ion-content>
-  <ion-fab right bottom>
-    <button ion-fab ><ion-icon name="arrow-dropleft"></ion-icon></button>
-    <ion-fab-list side="left">
-      <!--<button ion-fab color="primary" (click)="irParaAdicionarManga()"><ion-icon name="add"></ion-icon></button> -->
-      <button ion-button style="border: 1px solid transparent; background-color: cadetblue !important" (click)="irParaAdicionarManga()">Novo Mangá</button>
-      <button ion-button style="border: 1px solid transparent; background-color: cadetblue !important" (click)="irParaQuantitativos()">Estatísticas</button>
+  
+  <ion-fab right bottom #fab >
+    <button ion-fab ><ion-icon name="arrow-up"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button ion-fab color="primary" (click)="irParaAdicionarManga(fab)" style="background-color: cadetblue"><ion-icon name="add"></ion-icon></button>
+      <button ion-fab color="primary" (click)="irParaQuantitativos(fab)" style="background-color: cadetblue"><ion-icon name="podium"></ion-icon></button>
+      <!--<button ion-button style="border: 1px solid transparent; background-color: cadetblue !important" (click)="irParaAdicionarManga()">Novo Mangá</button>
+      <button ion-button style="border: 1px solid transparent; background-color: cadetblue !important" (click)="irParaQuantitativos()">Estatísticas</button>-->
     </ion-fab-list>
     
   </ion-fab>
@@ -32,55 +38,44 @@
       <ion-option value="snes">SNES</ion-option>
     </ion-select>
   </ion-item>-->
-  <ion-row>
-    <ion-col>
-      <ion-searchbar placeholder="Buscar" (ionInput)="filtrar()" [(ngModel)]="query" ></ion-searchbar>
-    </ion-col>
-    <ion-col> 
-      <ion-item>
+
+  <ion-content>
+    <ion-row>
+      <!--<ion-item>
         <ion-label>Apenas Incompletos</ion-label>
         <ion-toggle [(ngModel)]="apenasNaoCompletos" (change)="mostrarFiltro($event)"></ion-toggle>
-      </ion-item>
-    </ion-col>  
-
-  </ion-row>   
- 
-  
-
-  <div padding *ngIf="lista_mangas && !lista_mangas.length"> 
-    Você não possui mangás adicionados. <a (click)="irParaAdicionarManga()"> Clique aqui </a> para adicionar
-  </div>
-  <div *ngFor="let manga of lista_mangas_filtrado">
-  <ion-card *ngIf="!apenasNaoCompletos || !manga.completo" (click) = "irParaCapitulos(manga);">
-    <ion-item class="item-manga">
-      <ion-thumbnail item-start>
-        <img *ngIf="manga.imagem" [src]="manga.imagem">
-        <img *ngIf="!manga.imagem" src="../assets/imgs/manga.png">
-      </ion-thumbnail>
-      <ion-card-title>
-        {{manga.titulo}}
-      </ion-card-title>
+      </ion-item>-->
+    </ion-row>   
+    <div padding *ngIf="lista_mangas && !lista_mangas.length"> 
+      Você não possui mangás adicionados. <a (click)="irParaAdicionarManga()"> Clique aqui </a> para adicionar
+    </div>
+    <div *ngFor="let manga of lista_mangas_filtrado">
+    <ion-card *ngIf="!apenasNaoCompletos || !manga.completo" (click) = "irParaCapitulos(manga);">
+      <ion-item class="item-manga">
+        <ion-thumbnail item-start>
+          <img *ngIf="manga.imagem" [src]="manga.imagem">
+          <img *ngIf="!manga.imagem" src="../assets/imgs/manga.png">
+        </ion-thumbnail>
+        <ion-card-title>
+          {{manga.titulo}}
+        </ion-card-title>
+        
+        
+          <span> Último comprado: <ion-badge color="comprado">{{manga.ultimoComprado}}</ion-badge> </span>
+          <br/>
+          <span> Último lido: <ion-badge color="lido">{{manga.ultimoLido}}</ion-badge> </span>
+        
+        <ion-row>
+          <button small ion-button icon-only clear (click)="irParaEditarManga(manga);$event.stopPropagation();"><ion-icon name="create"></ion-icon>  </button>
+          <button small ion-button icon-only clear (click)="apagarManga(manga);$event.stopPropagation();"><ion-icon name="trash"></ion-icon></button>
+          <button small ion-button icon-start clear (click)="toggleCompleto(manga);$event.stopPropagation();" [ngClass]="manga.completo? 'completo' : 'incompleto'">
+            <ion-icon [hidden]="!manga.completo" name="checkmark-circle"></ion-icon>
+            <ion-icon [hidden]="manga.completo" name="radio-button-off"></ion-icon>
+            Completo
+          </button>
+        </ion-row>
       
-      <div class="numeros-container">
-        <span> Último comprado: <ion-badge color="comprado">{{manga.ultimoComprado}}</ion-badge> </span>
-        <br/>
-        <span> Último lido: <ion-badge color="lido">{{manga.ultimoLido}}</ion-badge> </span>
-      </div>
-      <ion-row>
-        <button small ion-button icon-only clear (click)="irParaEditarManga(manga);$event.stopPropagation();"><ion-icon name="create"></ion-icon>  </button>
-        <button small ion-button icon-only clear (click)="apagarManga(manga);$event.stopPropagation();"><ion-icon name="trash"></ion-icon></button>
-        <button small ion-button icon-start clear (click)="toggleCompleto(manga);$event.stopPropagation();" [ngClass]="manga.completo? 'completo' : 'incompleto'">
-          <ion-icon [hidden]="!manga.completo" name="checkmark-circle"></ion-icon>
-          <ion-icon [hidden]="manga.completo" name="radio-button-off"></ion-icon>
-          Completo
-        </button>
-      </ion-row>
-    
-    </ion-item>
-  </ion-card>
-
-
-    
-
-</div>
+      </ion-item>
+    </ion-card>
+  </div>
 </ion-content>

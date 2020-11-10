@@ -14,12 +14,13 @@ import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { MalapiProvider } from '../providers/malapi/malapi';
 import { QuantitativosPage } from '../pages/quantitativos/quantitativos';
-
+import { AjudaPage } from '../pages/ajuda/ajuda';
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    QuantitativosPage
+    QuantitativosPage,
+    AjudaPage
   ],
   imports: [
     BrowserModule,
@@ -33,8 +34,8 @@ import { QuantitativosPage } from '../pages/quantitativos/quantitativos';
   entryComponents: [
     MyApp,
     HomePage,
-    QuantitativosPage
-
+    QuantitativosPage,
+    AjudaPage
   ],
   providers: [
     StatusBar,

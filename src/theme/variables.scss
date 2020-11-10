@@ -38,20 +38,23 @@ $colors: (
   secondary:  #cc592c,
   background: #e7f4e9,
   background-2: #eeffee,
-  card-background: #a7d089,
+  card-background: #d3e9e2,
   card-background-2: #c7e0a9,
+  strong-button: cadetblue,
   //lido: #4fa93f,
   //comprado: #439efb,
-  //naocomprado: #b5b3b3,
-  lido: #39a166 ,
-  comprado: 	#FFBF00,
-  naocomprado: #b5b3b3,
+  //naocomprado: #b5b3b3,#c9e0c7,
+  comprado: #2e9edf,
+  lido:  #17c54c,
+  naocomprado: #bad3b8,
   card-bg: white,
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222
+  
 );
 
+//$text-input-placeholder-color: white;
 
 // App iOS Variables
 // --------------------------------------------------

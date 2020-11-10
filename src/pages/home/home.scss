@@ -1,7 +1,13 @@
+@import "ionic.globals";
 page-home {
-    /*.card{
-        background: linear-gradient(color($colors, card-background-2), color($colors, card-background));
-    }*/
+    #search-input{
+        color:white;
+    }
+
+    .placeholder-text{
+        color: black;
+        font-size: 1.2em;
+    }
 
     .button-md{
         border: 1px solid;
@@ -20,6 +26,7 @@ page-home {
     .item-manga{
         height: 120px !important;
         padding-left: 0px;
+        background: color($colors, card-background) !important;
     }
 
     img{
@@ -28,7 +35,7 @@ page-home {
 
     .numeros-container{
         padding: 3px;
-        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        //font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
         border: 1px solid black;
         border-radius: 5px;
         background: color($colors, card-background-2);
@@ -37,6 +44,8 @@ page-home {
 
     ion-card-title{
         padding: 0px !important;
+        font-size: 1.6rem !important;
+        font-weight: 600;
     }
-    
+    $text-input-placeholder-color: white;
 }

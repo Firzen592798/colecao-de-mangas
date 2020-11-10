@@ -12,38 +12,47 @@
 
 <ion-content padding>
   <ion-list>
-
-    <ion-item>
-      <ion-label >Total de mangás possuidos:</ion-label>
-      <ion-label fixed>{{totalColecoesPossuidas}}</ion-label>
+    <ion-item (click)="mostrarInfo(0)">
+      <ion-row>
+      <span>Número de coleções:</span>
+      <ion-badge color="primary">{{totalColecoesPossuidas}}</ion-badge> 
+      </ion-row>
+    </ion-item>
+    
+    <ion-item (click)="mostrarInfo(1)">
+      <ion-row>
+      <span>Total de coleções completos:</span>
+      <ion-badge color="primary">{{totalColecoesCompletas}}</ion-badge> 
+      </ion-row>
     </ion-item>
 
-    <ion-item>
-      <ion-label >Total de mangás completos:</ion-label>
-      <ion-label fixed>{{totalColecoesCompletas}}</ion-label>
+    <ion-item (click)="mostrarInfo(2)"> 
+      <ion-row>
+      <span>Total de volumes de mangá possuidos:</span>
+      <ion-badge color="primary">{{totalVolumesMangaPossuidos}}</ion-badge> 
+      </ion-row>
     </ion-item>
 
-    <ion-item>
-      <ion-label >Total de volumes de mangá possuidos:</ion-label>
-      <ion-label fixed>{{totalVolumesMangaPossuidos}}</ion-label>
-    </ion-item>
-  
-    <ion-item>
-      <ion-label >Total de volumes de mangá lidos:</ion-label>
-      <ion-label fixed>{{totalVolumesMangaLidos}}</ion-label>
-    </ion-item>
-  
-    <ion-item>
-      <ion-label >Total de volumes mangás que faltam ler:</ion-label>
-      <ion-label fixed>{{totalVolumesMangaFaltaLer}}</ion-label>
+    <ion-item (click)="mostrarInfo(3)">
+      <ion-row>
+      <span>Total de volumes de mangá lidos:</span>
+      <ion-badge color="primary">{{totalVolumesMangaLidos}}</ion-badge> 
+      </ion-row>
     </ion-item>
 
-    <ion-item>
-      <ion-label >Total de buracos na coleção:</ion-label>
-      <ion-label fixed>{{totalVolumesMangaFaltaComprar}}</ion-label>
+    <ion-item (click)="mostrarInfo(4)">
+      <ion-row>
+      <span>Total de volumes mangás que faltam ler:</span>
+      <ion-badge color="primary">{{totalVolumesMangaFaltaLer}}</ion-badge> 
+      </ion-row>
     </ion-item>
 
-
+    <ion-item (click)="mostrarInfo(5)">
+      <ion-row>
+      <span>Total de buracos na coleção:</span>
+      <ion-badge color="primary">{{totalVolumesMangaFaltaComprar}}</ion-badge> 
+      </ion-row>
+    </ion-item>
   </ion-list>
 
 </ion-content>

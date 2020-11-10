@@ -34,7 +34,13 @@ page-adicionar-manga {
         margin: 0px !important;
     }
 
+    #manga-img{
+        padding: 5px;
+        margin: auto !important;
+        display: table;
+    }
+
     ion-list{
-        border: 1px solid darkcyan;
+        border: color($colors, strong-button)
     }
 }

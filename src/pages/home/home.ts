@@ -1,22 +1,27 @@
 
-import { Component } from '@angular/core';
-import { NavController, AlertController, ToastController, Checkbox } from 'ionic-angular';
+import { Component, ViewChild, ElementRef, Input } from '@angular/core';
+import { NavController, AlertController, ToastController, Checkbox, TextInput, FabContainer } from 'ionic-angular';
 import { AdicionarMangaPage } from '../adicionar-manga/adicionar-manga';
 import { QuantitativosPage } from '../quantitativos/quantitativos';
 import { MangaProvider } from '../../providers/manga/manga';
 import { CapitulosMangaPage } from '../capitulos-manga/capitulos-manga';
 import { MalapiProvider } from '../../providers/malapi/malapi';
-
+import { AjudaPage } from '../ajuda/ajuda';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
+
 export class HomePage {
   public lista_mangas: any;
   public lista_mangas_filtrado: any;
   public query: String;
   public apenasNaoCompletos: boolean = false;
+  public isSearching: boolean = false;
+
+  @ViewChild('search') search:TextInput;
+
   constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public mangaProvider: MangaProvider, public alertCtrl: AlertController, public toastCtrl: ToastController) {
   }
 
@@ -28,7 +33,9 @@ export class HomePage {
     }).catch(err => console.log(err));
   }
 
-  irParaAdicionarManga(){
+  irParaAdicionarManga(fab: FabContainer){
+    if(fab)
+      fab.close();
     this.navCtrl.push(AdicionarMangaPage)
   }
 
@@ -36,12 +43,18 @@ export class HomePage {
     this.navCtrl.push(AdicionarMangaPage, {manga: manga})
   }
 
-  irParaQuantitativos(){
+  irParaQuantitativos(fab: FabContainer){
+    if(fab)
+      fab.close();
     this.navCtrl.push(QuantitativosPage, {lista_mangas: this.lista_mangas})
   }
 
   irParaCapitulos(manga){
     this.navCtrl.push(CapitulosMangaPage, {manga: manga});
+  }
+
+  irParaAjuda(){
+    this.navCtrl.push(AjudaPage)
   }
 
   editarManga(manga) {
@@ -167,5 +180,19 @@ export class HomePage {
   
   filtrar(){
     this.lista_mangas_filtrado = this.lista_mangas.filter((x) => {return x.titulo.toUpperCase().includes(this.query.toUpperCase())});
+  }
+
+  mostrarBusca(){
+    this.isSearching = true;
+    this.query = "";
+    this.search.setElementStyle("display", "block");
+    this.search.setFocus();
+  }
+
+  esconderBusca(){
+    this.search.setElementStyle("display", "none");
+    this.isSearching = false;
+    this.query = "";
+    this.lista_mangas_filtrado = this.lista_mangas;
   }
 }
