@@ -1,14 +1,12 @@
 <ion-header>
-
   <ion-navbar>
-
+      <button color="light" [hidden]="isSearching" ion-button icon-end menuToggle > <ion-icon name="menu"></ion-icon> </button> 
     <ion-title [hidden]="isSearching">
       Coleção de Mangás
     </ion-title>
     <ion-input #search style="display: none;" id="search-input" placeholder="Buscar" (ionChange)="filtrar()" [(ngModel)]="query"></ion-input>
     
     <ion-buttons end>
-      <button color="light" [hidden]="isSearching" ion-button icon-end (click)="irParaAjuda();"> <ion-icon name="help"></ion-icon> </button> 
       <button color="light" [hidden]="isSearching" ion-button icon-end (click)="mostrarFiltro();"> <ion-icon name="options"></ion-icon> </button> 
       <button color="light" [hidden]="isSearching" ion-button icon-end (click)="mostrarBusca();"> <ion-icon name="search"></ion-icon> </button> 
       <button color="light" [hidden]="!isSearching" ion-button icon-end (click)="esconderBusca()"> <ion-icon name="close"></ion-icon> </button> 
@@ -16,28 +14,43 @@
 
   </ion-navbar>
 </ion-header>
-  
+
+<ion-nav #mycontent [root]="rootPage"></ion-nav>
+<ion-menu [content]="mycontent">
+  <ion-content>
+    <ion-list>
+
+      <div color="background">
+        <ion-row>
+          <ion-col col-3> 
+            <img width="50" height="50" src="../assets/imgs/icon_small.png">
+          </ion-col>
+          <ion-col style="padding-top: 12px;">
+            <strong>Coleção de Mangás</strong>
+            <br>
+            <small>Desenvolvido por: Firzen592798</small>
+          </ion-col>
+        </ion-row>
+      </div>
+      <ion-item class="menu-item" menuToggle  color="primary" (click)="irParaAjuda(fab)">
+        <ion-icon class="menu-icon" name="help" item-start></ion-icon>
+        Como usar o aplicativo?
+      </ion-item>
+      <ion-item class="menu-item" menuToggle  color="primary" (click)="irParaQuantitativos(fab)" >
+        <ion-icon class="menu-icon" name="podium" item-start></ion-icon>
+        Meus Quantitativos
+      </ion-item>
+      <ion-item class="menu-item" menuToggle (click)="sair" color="primary" >
+        <ion-icon class="menu-icon" name="close" item-start></ion-icon>
+        Sair
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
   <ion-fab right bottom #fab >
-    <button ion-fab ><ion-icon name="arrow-up"></ion-icon></button>
-    <ion-fab-list side="top">
-      <button ion-fab color="primary" (click)="irParaAdicionarManga(fab)" style="background-color: cadetblue"><ion-icon name="add"></ion-icon></button>
-      <button ion-fab color="primary" (click)="irParaQuantitativos(fab)" style="background-color: cadetblue"><ion-icon name="podium"></ion-icon></button>
-      <!--<button ion-button style="border: 1px solid transparent; background-color: cadetblue !important" (click)="irParaAdicionarManga()">Novo Mangá</button>
-      <button ion-button style="border: 1px solid transparent; background-color: cadetblue !important" (click)="irParaQuantitativos()">Estatísticas</button>-->
-    </ion-fab-list>
-    
+    <button ion-fab (click)="irParaAdicionarManga(fab)"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
-  <!--<ion-item>
-    <ion-label>Gaming</ion-label>
-    <ion-select [(ngModel)]="gaming">
-      <ion-option value="nes">NES</ion-option>
-      <ion-option value="n64">Nintendo64</ion-option>
-      <ion-option value="ps">PlayStation</ion-option>
-      <ion-option value="genesis">Sega Genesis</ion-option>
-      <ion-option value="saturn">Sega Saturn</ion-option>
-      <ion-option value="snes">SNES</ion-option>
-    </ion-select>
-  </ion-item>-->
 
   <ion-content>
     <ion-row>
@@ -59,12 +72,9 @@
         <ion-card-title>
           {{manga.titulo}}
         </ion-card-title>
-        
-        
-          <span> Último comprado: <ion-badge color="comprado">{{manga.ultimoComprado}}</ion-badge> </span>
-          <br/>
-          <span> Último lido: <ion-badge color="lido">{{manga.ultimoLido}}</ion-badge> </span>
-        
+        <span> Último comprado: <ion-badge color="comprado">{{manga.ultimoComprado}}</ion-badge> </span>
+        <br/>
+        <span> Último lido: <ion-badge color="lido">{{manga.ultimoLido}}</ion-badge> </span>        
         <ion-row>
           <button small ion-button icon-only clear (click)="irParaEditarManga(manga);$event.stopPropagation();"><ion-icon name="create"></ion-icon>  </button>
           <button small ion-button icon-only clear (click)="apagarManga(manga);$event.stopPropagation();"><ion-icon name="trash"></ion-icon></button>

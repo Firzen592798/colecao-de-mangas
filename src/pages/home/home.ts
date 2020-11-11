@@ -39,6 +39,10 @@ export class HomePage {
     this.navCtrl.push(AdicionarMangaPage)
   }
 
+  sair(){
+    this.navCtrl.pop();
+  }
+
   irParaEditarManga(manga){
     this.navCtrl.push(AdicionarMangaPage, {manga: manga})
   }

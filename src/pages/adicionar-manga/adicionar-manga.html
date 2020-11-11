@@ -13,12 +13,13 @@
 <ion-content padding (click) = "fecharAutocomplete()">
   <div class="row">
     <!--(ionInput)="carregarAutocomplete()-->
-    <ion-col class="ion-float-left"> 
+    <ion-col id="col-titulo" class="ion-float-left"> 
       <ion-item> 
-        <ion-input placeholder="Nome do mangá..." [(ngModel)]="manga.titulo" ></ion-input>
+        <ion-label floating >Nome do mangá</ion-label>
+        <ion-input type="text" [(ngModel)]="manga.titulo"></ion-input>
       </ion-item>
     </ion-col>
-    <button ion-button class="ion-button ion-float-right" (click)="carregarAutocomplete()"><ion-icon name="search"></ion-icon>
+    <button id="btn-search" ion-button class="ion-button ion-float-right" (click)="carregarAutocomplete()"><ion-icon name="search"></ion-icon>
     </button>
   </div>
   <ion-list *ngIf="mangaAutocomplete?.length > 0">
@@ -31,17 +32,20 @@
       <!--<img fixed [src]="manga.imagem">-->
     
     </ion-item>
+    
   </ion-list>
 
   <!-- or with standalone set to true -->
-
-  <ion-item> 
-    <ion-input type="number" placeholder="Último volume comprado"  [(ngModel)]="manga.ultimoComprado" ></ion-input>
+  <ion-item>
+    <ion-label floating >Último volume comprado</ion-label>
+    <ion-input width=20 type="number" [(ngModel)]="manga.ultimoComprado"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-input type="number" placeholder="Último volume lido"  [(ngModel)]="manga.ultimoLido" ></ion-input>
-  </ion-item>  
+    <ion-label floating>Último volume lido</ion-label>
+    <ion-input type="number" [(ngModel)]="manga.ultimoLido"></ion-input>
+  </ion-item>
+
   
   <ion-thumbnail id="manga-img">
     <img *ngIf="manga.imagem" [src]="manga.imagem">

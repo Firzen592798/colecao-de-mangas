@@ -2,9 +2,19 @@ page-quantitativos {
     ion-item{
         background: color($colors, card-background) !important;
     }
+
+    ion-card{
+        margin: 0px 0px 10px 0px !important;
+    }
+
+    .card-md{
+        width: 100%;
+    }
     
     ion-badge{
         position: fixed;
         right: 20px;
     }
+
+    
 }

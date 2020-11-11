@@ -43,4 +43,25 @@ page-adicionar-manga {
     ion-list{
         border: color($colors, strong-button)
     }
+
+    #col-titulo{
+        padding-left: 0px;
+    }
+
+    #btn-search{
+        margin-top: 25px;
+    }
+
+    ion-label{
+        margin-top: 5px !important;
+    }
+
+    ion-input{
+        margin: 0px !important;
+    }
+    
+    .scroll-content{
+        padding-top: 0px !important;
+        //margin-top: 0px !important;
+    }
 }

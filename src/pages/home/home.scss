@@ -29,7 +29,11 @@ page-home {
         background: color($colors, card-background) !important;
     }
 
-    img{
+    ion-thumbnail{
+        margin-right: 0px !important;
+    }
+
+    ion-thumbnail>img{
         height: 120px !important;
     }
 
@@ -47,5 +51,18 @@ page-home {
         font-size: 1.6rem !important;
         font-weight: 600;
     }
+
+    .menu-icon{
+        margin: 0px !important;
+    }
+
+    .item-inner{
+        margin-left: 12px !important;
+    }
+
+    .menu-item{
+        padding-left: 12px !important;
+    }
+
     $text-input-placeholder-color: white;
 }

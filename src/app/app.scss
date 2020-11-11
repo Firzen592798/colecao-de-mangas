@@ -25,3 +25,7 @@
 .content{
     background: linear-gradient(to bottom right, color($colors, background-2),color($colors, background));
 }
+
+.alert-wrapper{
+    background: color($colors, background) !important;
+}
