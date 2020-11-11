@@ -26,11 +26,19 @@ export class HomePage {
   }
 
   ionViewDidEnter(){
+    console.log("didEnter");
     this.mangaProvider.listar().then(data => {
+      console.log("listou");
       this.lista_mangas = data;
+      console.log("Data: "+data);
+      console.log(data);
       //alert(JSON.stringify(data));
       this.lista_mangas_filtrado = data;
-    }).catch(err => console.log(err));
+    }).catch(err => {
+      console.log("Erro");
+      this.lista_mangas = [];
+      this.lista_mangas_filtrado = [];
+    });
   }
 
   irParaAdicionarManga(fab: FabContainer){

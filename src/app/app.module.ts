@@ -15,6 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MalapiProvider } from '../providers/malapi/malapi';
 import { QuantitativosPage } from '../pages/quantitativos/quantitativos';
 import { AjudaPage } from '../pages/ajuda/ajuda';
+import { AdMobFree } from '@ionic-native/admob-free';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -45,6 +47,7 @@ import { AjudaPage } from '../pages/ajuda/ajuda';
     MalapiProvider,
     DatePipe,
     IonicStorageModule,
+    AdMobFree,
   ]
 })
 export class AppModule {}
