@@ -22,8 +22,7 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       //statusBar.overlaysWebView(true);
-      statusBar.backgroundColorByName("primary")
-      //statusBar.backgroundColorByHexString("#288266");
+      statusBar.backgroundColorByHexString("#288266");
       statusBar.styleDefault();
       splashScreen.hide();
     });
@@ -37,14 +36,14 @@ export class MyApp {
     admob.banner.config({
       id: admobid.banner,
       isTesting: true,
-      autoShow: true,
+      autoShow: false,
     })
     admob.banner.prepare()
 
     admob.interstitial.config({
       id: admobid.interstitial,
       isTesting: true,
-      autoShow: false,
+      autoShow: true,
     })
     admob.interstitial.prepare()
 

@@ -49,6 +49,7 @@ export class HomePage {
 
   sair(){
     this.navCtrl.pop();
+    this.navCtrl.pop();
   }
 
   irParaEditarManga(manga){
