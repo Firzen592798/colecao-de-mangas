@@ -36,18 +36,22 @@ export class AdicionarMangaPage {
   }
 
   carregarAutocomplete(){
+    console.log("a");
+    this.mangaAutocomplete = [{titulo: "Carregando...", imagem: null}];
     if(this.manga.titulo === undefined || this.manga.titulo.length == 0){
       this.mangaAutocomplete = [];
     }else{
       if(this.manga.titulo.length >= 3){
         this.mangaAutocomplete = [{titulo: "Carregando...", imagem: null}];
+        //this.mangaAutocomplete = [{"titulo":"Bleach","imagem":"https://cdn.myanimelist.net/images/manga/2/180089.jpg?s=6370e41455cb4d19c56a475065a69cde"}];
         this.malProvider.getMangas(this.manga.titulo).then((mangas) => {
-          
           this.mangaAutocomplete = mangas;
         }).catch((error) => {
-          this.presentToast("É necessário uma conexão com a internet para usar essa busca");
+          this.presentToast("Não foi possível obter informações sobre esse mangá. Verifique sua conexão com a internet");
           this.mangaAutocomplete = [];
         });
+      }else{
+        this.presentToast("É necessário digitar no mínimo 3 caracteres");
       }
     }
   }
@@ -91,5 +95,9 @@ export class AdicionarMangaPage {
 
   fecharAutocomplete(){
     this.mangaAutocomplete = [];
+  }
+
+  nextInput(nextInput){
+    nextInput.setFocus();
   }
 }

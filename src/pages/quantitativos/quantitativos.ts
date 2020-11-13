@@ -55,19 +55,19 @@ export class QuantitativosPage {
     var texto = "Número de coleções:";
     switch(i){
       case 0:
-        texto = "Total de coleções de mangá que você possui com pelo menos um volume cadastrado" 
+        texto = "Número de títulos de mangá dos quais você tem ao menos um mangá" 
         break;
       case 1:
-        texto = "Total de coleções de mangá que você possui todos os volumes disponíveis" 
+        texto = "Número de títulos de mangá dos quais você tem a coleção completa, ou seja, todos os mangás" 
         break;
       case 2:
-        texto = "Total de volumes individuais de mangá que você possui na coleção" 
+        texto = "Número de mangás que você possui na coleção somando-se todos os títulos" 
         break;
       case 3:
-        texto = "Total de volumes individuais de mangá que você já leu" 
+        texto = "Número de mangás que você já leu somando-se todos os títulos" 
         break;
       case 4:
-        texto = "Quantidade de volumes de mangá que você comprou mas ainda não leu" 
+        texto = "Número de mangás que você comprou mas ainda não leu somando-se todos os títulos" 
         break;
       case 5:
         texto = "Quantidade de volumes de mangás que deveriam estar na coleção mas você não possui, deixando um buraco na coleção" 

@@ -40,10 +40,10 @@
         <ion-icon class="menu-icon" name="podium" item-start></ion-icon>
         Meus Quantitativos
       </ion-item>
-      <ion-item class="menu-item" menuToggle (click)="sair()" color="primary" >
+      <!--<ion-item class="menu-item" menuToggle (click)="sair()" color="primary" >
         <ion-icon class="menu-icon" name="close" item-start></ion-icon>
         Sair
-      </ion-item>
+      </ion-item>-->
     </ion-list>
   </ion-content>
 </ion-menu>
@@ -69,7 +69,7 @@
           <img *ngIf="manga.imagem" [src]="manga.imagem">
           <img *ngIf="!manga.imagem" src="../assets/imgs/manga.png">
         </ion-thumbnail>
-        <ion-card-title>
+        <ion-card-title text-wrap>
           {{manga.titulo}}
         </ion-card-title>
         <span> Último comprado: <ion-badge color="comprado">{{manga.ultimoComprado}}</ion-badge> </span>

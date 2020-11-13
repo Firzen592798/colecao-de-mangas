@@ -16,14 +16,14 @@
     <ion-col id="col-titulo" class="ion-float-left"> 
       <ion-item> 
         <ion-label floating >Nome do mangá</ion-label>
-        <ion-input type="text" [(ngModel)]="manga.titulo"></ion-input>
+        <ion-input #input1 (keyup.enter)="carregarAutocomplete()" type="text" [(ngModel)]="manga.titulo"></ion-input>
       </ion-item>
     </ion-col>
-    <button id="btn-search" ion-button class="ion-button ion-float-right" (click)="carregarAutocomplete()"><ion-icon name="search"></ion-icon>
+    <button id="btn-search" ion-button class="ion-button ion-float-right" (click)="$event.stopPropagation(); carregarAutocomplete()"><ion-icon name="search"></ion-icon>
     </button>
   </div>
   <ion-list *ngIf="mangaAutocomplete?.length > 0">
-		<ion-item *ngFor="let manga of mangaAutocomplete" (click)="carregarInfo(manga)">
+		<ion-item *ngFor="let manga of mangaAutocomplete" (click)="carregarInfo(manga); nextInput(input2)">
       <ion-thumbnail item-start>
         <img *ngIf="manga.imagem" fixed [src]="manga.imagem" class="img-query">
       </ion-thumbnail>
@@ -38,12 +38,12 @@
   <!-- or with standalone set to true -->
   <ion-item>
     <ion-label floating >Último volume comprado</ion-label>
-    <ion-input width=20 type="number" [(ngModel)]="manga.ultimoComprado"></ion-input>
+    <ion-input #input2 (keyup.enter)="nextInput(input3)" width=20 type="number" [(ngModel)]="manga.ultimoComprado"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label floating>Último volume lido</ion-label>
-    <ion-input type="number" [(ngModel)]="manga.ultimoLido"></ion-input>
+    <ion-input #input3 (keyup.enter) = "salvar()" type="number" [(ngModel)]="manga.ultimoLido"></ion-input>
   </ion-item>
 
   

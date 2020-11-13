@@ -31,6 +31,7 @@ export class MalapiProvider {
             //resolve(result.results);
           },
           (error) => {
+            console.log(error);
             reject(error);
           });
       });
