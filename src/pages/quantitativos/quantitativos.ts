@@ -8,7 +8,7 @@ import { AjudaPage } from '../ajuda/ajuda';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var admob;
 @IonicPage()
 @Component({
   selector: 'page-quantitativos',
@@ -49,6 +49,7 @@ export class QuantitativosPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad QuantitativosPage');
+    this.runBanner();
   }
   
   mostrarInfo(i){
@@ -88,6 +89,23 @@ export class QuantitativosPage {
     });
   
     toast.present();
+  }
+
+  runBanner() {
+    const admobid = {
+      banner: 'ca-app-pub-8275051926630772/6420033576',
+      interstitial: 'ca-app-pub-8275051926630772/7364383928',
+    }
+    admob.banner.config({
+      id: admobid.banner,
+      isTesting: true,
+      autoShow: true,
+    })
+    admob.banner.prepare();
+  }
+
+  ionViewDidLeave(){
+    admob.banner.hide();
   }
 
 }
