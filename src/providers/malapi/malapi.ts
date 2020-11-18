@@ -18,7 +18,6 @@ export class MalapiProvider {
   getMangas(query: String) {
     return new Promise((resolve, reject) => {
         let url = this.apiUrl+'/search/manga?limit=5&q='+query;
-        console.log(url);
         this.http.get(url)
           .subscribe((result: any) => {
             //resolve(result);
@@ -31,7 +30,6 @@ export class MalapiProvider {
             //resolve(result.results);
           },
           (error) => {
-            console.log(error);
             reject(error);
           });
       });

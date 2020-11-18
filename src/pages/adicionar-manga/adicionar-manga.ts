@@ -4,13 +4,14 @@ import { IonicPage, NavController, NavParams, Toast } from 'ionic-angular';
 import { DatePipe } from '@angular/common';
 import { ToastController } from 'ionic-angular';
 import { MalapiProvider } from '../../providers/malapi/malapi';
+import { AdsProvider } from '../../providers/ads/ads';
 /**
  * Generated class for the AdicionarMangaPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var admob;
 @IonicPage()
 @Component({
   selector: 'page-adicionar-manga',
@@ -22,21 +23,25 @@ export class AdicionarMangaPage {
 
   public mangaAutocomplete: any = [];
 
-  constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public navParams: NavParams, public mangaProvider: MangaProvider, private datepipe: DatePipe, private toastCtrl:ToastController) {
+  constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public navParams: NavParams, public mangaProvider: MangaProvider, private datepipe: DatePipe, private toastCtrl:ToastController, public ads: AdsProvider) {
     var param = navParams.get("manga");
     if(param)
       this.manga = param;
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AdicionarMangaPage');
+    //console.log('ionViewDidLoad AdicionarMangaPage');
     /*this.malProvider.getMangas("One Piece").then((mangas) => {
       console.log(mangas);
     });*/
   }
 
+  ionViewDidEnter(){
+    this.ads.showInterstitial();
+  }
+
   carregarAutocomplete(){
-    console.log("a");
+    //console.log("a");
     this.mangaAutocomplete = [{titulo: "Carregando...", imagem: null}];
     if(this.manga.titulo === undefined || this.manga.titulo.length == 0){
       this.mangaAutocomplete = [];
@@ -87,7 +92,7 @@ export class AdicionarMangaPage {
     });
   
     toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
+      //console.log('Dismissed toast');
     });
   
     toast.present();

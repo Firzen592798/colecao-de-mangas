@@ -7,7 +7,10 @@ import { MangaProvider } from '../../providers/manga/manga';
 import { CapitulosMangaPage } from '../capitulos-manga/capitulos-manga';
 import { MalapiProvider } from '../../providers/malapi/malapi';
 import { AjudaPage } from '../ajuda/ajuda';
+import { AdMobFree } from '@ionic-native/admob-free';
+import { AdsProvider } from '../../providers/ads/ads';
 
+declare var admob;
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -22,20 +25,16 @@ export class HomePage {
 
   @ViewChild('search') search:TextInput;
 
-  constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public mangaProvider: MangaProvider, public alertCtrl: AlertController, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public mangaProvider: MangaProvider, public alertCtrl: AlertController, public toastCtrl: ToastController, public ads: AdsProvider) {
   }
 
   ionViewDidEnter(){
-    console.log("didEnter");
+    this.ads.loadInterstitial();
     this.mangaProvider.listar().then(data => {
-      console.log("listou");
       this.lista_mangas = data;
-      console.log("Data: "+data);
-      console.log(data);
       //alert(JSON.stringify(data));
       this.lista_mangas_filtrado = data;
     }).catch(err => {
-      console.log("Erro");
       this.lista_mangas = [];
       this.lista_mangas_filtrado = [];
     });
@@ -44,7 +43,7 @@ export class HomePage {
   irParaAdicionarManga(fab: FabContainer){
     if(fab)
       fab.close();
-    this.navCtrl.push(AdicionarMangaPage)
+    this.navCtrl.push(AdicionarMangaPage);
   }
 
   sair(){
@@ -110,7 +109,7 @@ export class HomePage {
           text: 'Cancelar',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+            //console.log('Cancel clicked');
           }
         },
         {
@@ -145,7 +144,7 @@ export class HomePage {
     });
   
     toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
+      //console.log('Dismissed toast');
     });
   
     toast.present();
@@ -207,5 +206,19 @@ export class HomePage {
     this.isSearching = false;
     this.query = "";
     this.lista_mangas_filtrado = this.lista_mangas;
+  }
+
+  prepareAds(){
+    const admobid = {
+      interstitial: 'ca-app-pub-8275051926630772/7364383928',
+    }
+
+    admob.interstitial.config({
+      id: admobid.interstitial,
+      isTesting: true,
+      autoShow: false,
+    })
+
+    admob.interstitial.prepare();
   }
 }

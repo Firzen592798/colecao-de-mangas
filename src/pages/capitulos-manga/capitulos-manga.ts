@@ -23,7 +23,7 @@ export class CapitulosMangaPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CapitulosMangaPage');
+    
   }
 
   adicionarVolume(){
@@ -87,7 +87,7 @@ export class CapitulosMangaPage {
     });
   
     toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
+      //('Dismissed toast');
     });
   
     toast.present();

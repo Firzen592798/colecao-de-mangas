@@ -13,21 +13,22 @@ import { DatePipe } from '@angular/common';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { MalapiProvider } from '../providers/malapi/malapi';
-import { QuantitativosPage } from '../pages/quantitativos/quantitativos';
-import { AjudaPage } from '../pages/ajuda/ajuda';
 import { AdMobFree } from '@ionic-native/admob-free';
+import { AjudaPageModule } from '../pages/ajuda/ajuda.module';
+import { QuantitativosPageModule } from '../pages/quantitativos/quantitativos.module';
+import { AdsProvider } from '../providers/ads/ads';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    QuantitativosPage,
-    AjudaPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp, {_forceStatusbarPadding: true}),
     CapitulosMangaPageModule,
+    AjudaPageModule,
+    QuantitativosPageModule,
     AdicionarMangaPageModule,
     IonicStorageModule.forRoot(),
     HttpClientModule
@@ -36,8 +37,6 @@ import { AdMobFree } from '@ionic-native/admob-free';
   entryComponents: [
     MyApp,
     HomePage,
-    QuantitativosPage,
-    AjudaPage
   ],
   providers: [
     StatusBar,
@@ -48,6 +47,7 @@ import { AdMobFree } from '@ionic-native/admob-free';
     DatePipe,
     IonicStorageModule,
     AdMobFree,
+    AdsProvider,
   ]
 })
 export class AppModule {}

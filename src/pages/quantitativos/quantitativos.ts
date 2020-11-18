@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { AdsProvider } from '../../providers/ads/ads';
 import { AjudaPage } from '../ajuda/ajuda';
 
 /**
@@ -23,7 +24,7 @@ export class QuantitativosPage {
   totalVolumesMangaFaltaLer: number = 0;
   totalVolumesMangaFaltaComprar: number = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public ads: AdsProvider) {
     this.lista_mangas = navParams.get("lista_mangas");
     this.totalColecoesPossuidas = this.lista_mangas.length;
     this.totalColecoesCompletas =  this.lista_mangas.reduce((total, mangaItem) => {
@@ -44,12 +45,11 @@ export class QuantitativosPage {
       }, 0); 
     });
     this.totalVolumesMangaFaltaLer = this.totalVolumesMangaPossuidos - this.totalVolumesMangaLidos;
-    console.log(this.lista_mangas);
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad QuantitativosPage');
-    this.runBanner();
+    this.ads.showBanner();
+    //this.runBanner();
   }
   
   mostrarInfo(i){
@@ -85,27 +85,14 @@ export class QuantitativosPage {
     });
   
     toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
+      //console.log('Dismissed toast');
     });
   
     toast.present();
   }
 
-  runBanner() {
-    const admobid = {
-      banner: 'ca-app-pub-8275051926630772/6420033576',
-      interstitial: 'ca-app-pub-8275051926630772/7364383928',
-    }
-    admob.banner.config({
-      id: admobid.banner,
-      isTesting: true,
-      autoShow: true,
-    })
-    admob.banner.prepare();
-  }
-
   ionViewDidLeave(){
-    admob.banner.hide();
+    this.ads.hideBanner();
   }
 
 }
