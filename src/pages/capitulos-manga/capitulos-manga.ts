@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage,  Navbar, NavController, NavParams, ToastController } from 'ionic-angular';
 import { MangaProvider } from '../../providers/manga/manga';
 
 /**
@@ -15,15 +15,24 @@ import { MangaProvider } from '../../providers/manga/manga';
   templateUrl: 'capitulos-manga.html',
 })
 export class CapitulosMangaPage {
+  @ViewChild(Navbar) nav: Navbar;
 
   manga :any = {};
+  isNovoManga: boolean;
   classeAdd = "add";
   constructor(public navCtrl: NavController, public navParams: NavParams, public provider: MangaProvider, public toastCtrl: ToastController) {
     this.manga = navParams.get("manga");
+    this.isNovoManga = navParams.get("novoManga");
   }
 
   ionViewDidLoad() {
-    
+    this.nav.backButtonClick = () => {
+      this.navCtrl.pop()
+      if(this.isNovoManga){
+        this.navCtrl.pop()
+      }
+      
+    }
   }
 
   adicionarVolume(){
@@ -92,4 +101,14 @@ export class CapitulosMangaPage {
   
     toast.present();
   }
+
+  /*salvar(){
+    if(this.isNovoManga){
+      this.navCtrl.pop();
+      this.navCtrl.pop();
+    }else{
+      this.navCtrl.pop();
+    }
+  }*/
+
 }

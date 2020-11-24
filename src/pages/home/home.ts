@@ -46,11 +46,6 @@ export class HomePage {
     this.navCtrl.push(AdicionarMangaPage);
   }
 
-  sair(){
-    this.navCtrl.pop();
-    this.navCtrl.pop();
-  }
-
   irParaEditarManga(manga){
     this.navCtrl.push(AdicionarMangaPage, {manga: manga})
   }
@@ -62,7 +57,7 @@ export class HomePage {
   }
 
   irParaCapitulos(manga){
-    this.navCtrl.push(CapitulosMangaPage, {manga: manga});
+    this.navCtrl.push(CapitulosMangaPage, {manga: manga,novoManga: false});
   }
 
   irParaAjuda(){

@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { ToastController } from 'ionic-angular';
 import { MalapiProvider } from '../../providers/malapi/malapi';
 import { AdsProvider } from '../../providers/ads/ads';
+import { CapitulosMangaPage } from '../capitulos-manga/capitulos-manga';
 /**
  * Generated class for the AdicionarMangaPage page.
  *
@@ -76,10 +77,12 @@ export class AdicionarMangaPage {
       if(!this.manga.key){
         let key = this.datepipe.transform(new Date(), "ddMMyyyyHHmmss");
         this.mangaProvider.salvarManga(key, this.manga);
+        this.navCtrl.push(CapitulosMangaPage, {manga: this.manga, novoManga: true});
       }else{
         this.mangaProvider.salvarManga(this.manga.key, this.manga);
+        this.navCtrl.pop();
+        //this.navCtrl.push(CapitulosMangaPage, {manga: this.manga, novoManga: false});
       } 
-      this.navCtrl.pop();
       this.presentToast("Mangá salvo com sucesso");
     }
   }

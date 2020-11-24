@@ -17,6 +17,7 @@ import { AdMobFree } from '@ionic-native/admob-free';
 import { AjudaPageModule } from '../pages/ajuda/ajuda.module';
 import { QuantitativosPageModule } from '../pages/quantitativos/quantitativos.module';
 import { AdsProvider } from '../providers/ads/ads';
+import { Navbar } from 'ionic-angular';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { AdsProvider } from '../providers/ads/ads';
     DatePipe,
     IonicStorageModule,
     AdMobFree,
-    AdsProvider,
+    AdsProvider
   ]
 })
 export class AppModule {}
