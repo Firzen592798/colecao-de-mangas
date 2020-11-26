@@ -5,7 +5,9 @@ import { DatePipe } from '@angular/common';
 import { ToastController } from 'ionic-angular';
 import { MalapiProvider } from '../../providers/malapi/malapi';
 import { AdsProvider } from '../../providers/ads/ads';
+import { DomSanitizer } from '@angular/platform-browser';
 import { CapitulosMangaPage } from '../capitulos-manga/capitulos-manga';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 /**
  * Generated class for the AdicionarMangaPage page.
  *
@@ -24,7 +26,9 @@ export class AdicionarMangaPage {
 
   public mangaAutocomplete: any = [];
 
-  constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public navParams: NavParams, public mangaProvider: MangaProvider, private datepipe: DatePipe, private toastCtrl:ToastController, public ads: AdsProvider) {
+  public image: any;
+
+  constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public navParams: NavParams, public mangaProvider: MangaProvider, private datepipe: DatePipe, private toastCtrl:ToastController, public ads: AdsProvider, private camera: Camera, private domSanitizer: DomSanitizer) {
     var param = navParams.get("manga");
     if(param)
       this.manga = param;
@@ -107,5 +111,30 @@ export class AdicionarMangaPage {
 
   nextInput(nextInput){
     nextInput.setFocus();
+  }
+
+  tirarFoto(){
+    const options: CameraOptions = {
+      quality: 70,
+      //saveToPhotoAlbum: true,
+      //destinationType: this.camera.DestinationType.DATA_URL,
+      //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      //allowEdit: true
+    }
+    
+    this.camera.getPicture(options).then((imageData) => {
+    // imageData is either a base64 encoded string or a file URI
+    // If it's base64 (DATA_URL):
+    //alert(imageData);
+    this.image = 'data:image/jpeg;base64,' + imageData;
+    //alert(this.image);
+    alert(this.domSanitizer.bypassSecurityTrustUrl(this.image));
+    }, (err) => {
+      alert(err);
+    // Handle error
+    });
   }
 }

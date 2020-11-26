@@ -51,6 +51,17 @@
     <img *ngIf="manga.imagem" [src]="manga.imagem">
   </ion-thumbnail>
 
+  <button ion-button icon-right (click)="tirarFoto()">
+    Foto <ion-icon name="camera"></ion-icon>
+  </button>
+
+  <!--<img *ngIf="image" [src]="domSanitizer.bypassSecurityTrustUrl(image)" />-->
+
+
+
+  <!--<img *ngIf="image" [src]="image" />-->
+  <img *ngIf="image" [src]="domSanitizer.bypassSecurityTrustUrl(image)" />
+  
   <button ion-button block (click) = "salvar()">
     Salvar
   </button>
