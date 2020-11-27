@@ -75,16 +75,29 @@ page-capitulos-manga {
    background-color: color($colors, naocomprado);
  }
 
-  button{
-    width: 50px !important;
-    height: 50px !important;
-  }
-
  .toolbar-btn{
    width: 50px;
    height: 50px;
-   border: 1px solid grey;
    border-radius: 30px;
-   background-color: cadetblue;
+   background-color: color($colors, primary)
+ }
+
+ #finalizar-btn{
+   width: 80%;
+   margin-left: 10%;
+   margin-bottom: 8px;
+   margin-top: 5px;
+ }
+
+ .footer-md::before{
+    height: 0px !important;
+ }
+
+ .footer{
+   background: color($colors, card-background);
+ }
+
+ ion-toolbar{
+   padding: 0px !important;
  }
 }

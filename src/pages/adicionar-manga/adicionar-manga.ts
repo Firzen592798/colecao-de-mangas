@@ -5,7 +5,6 @@ import { DatePipe } from '@angular/common';
 import { ToastController } from 'ionic-angular';
 import { MalapiProvider } from '../../providers/malapi/malapi';
 import { AdsProvider } from '../../providers/ads/ads';
-import { DomSanitizer } from '@angular/platform-browser';
 import { CapitulosMangaPage } from '../capitulos-manga/capitulos-manga';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 /**
@@ -28,7 +27,7 @@ export class AdicionarMangaPage {
 
   public image: any;
 
-  constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public navParams: NavParams, public mangaProvider: MangaProvider, private datepipe: DatePipe, private toastCtrl:ToastController, public ads: AdsProvider, private camera: Camera, private domSanitizer: DomSanitizer) {
+  constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public navParams: NavParams, public mangaProvider: MangaProvider, private datepipe: DatePipe, private toastCtrl:ToastController, public ads: AdsProvider, private camera: Camera) {
     var param = navParams.get("manga");
     if(param)
       this.manga = param;
@@ -85,9 +84,9 @@ export class AdicionarMangaPage {
       }else{
         this.mangaProvider.salvarManga(this.manga.key, this.manga);
         this.navCtrl.pop();
+        this.presentToast("Mangá salvo com sucesso");
         //this.navCtrl.push(CapitulosMangaPage, {manga: this.manga, novoManga: false});
       } 
-      this.presentToast("Mangá salvo com sucesso");
     }
   }
 
@@ -116,12 +115,14 @@ export class AdicionarMangaPage {
   tirarFoto(){
     const options: CameraOptions = {
       quality: 70,
+      targetHeight: 350, 
+      targetWidth: 225,
       //saveToPhotoAlbum: true,
-      //destinationType: this.camera.DestinationType.DATA_URL,
-      //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
+      //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      //destinationType: this.camera.DestinationType.FILE_URI,
       //allowEdit: true
     }
     
@@ -129,9 +130,9 @@ export class AdicionarMangaPage {
     // imageData is either a base64 encoded string or a file URI
     // If it's base64 (DATA_URL):
     //alert(imageData);
-    this.image = 'data:image/jpeg;base64,' + imageData;
+    this.manga.imagem = 'data:image/jpeg;base64,' + imageData;
     //alert(this.image);
-    alert(this.domSanitizer.bypassSecurityTrustUrl(this.image));
+    //alert(this.domSanitizer.bypassSecurityTrustUrl(this.image));
     }, (err) => {
       alert(err);
     // Handle error

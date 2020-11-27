@@ -14,18 +14,22 @@
   <div *ngFor="let volume of manga.lista" [class]="volume.status" (click)="alterarStatus(volume)">
     <div class="text">{{volume.numero}}</div>
   </div>
+  <!--*ngIf="isNovoManga" -->
+
 </ion-content>
 
-<ion-footer>
+<ion-footer class="footer">
+  <!--*ngIf="isNovoManga"-->
+
     <ion-toolbar>
      <!--<ion-buttons left class="toolbar-btn">
           <button icon-only ion-button round large (click)=removerVolume()> 
               <ion-icon name="remove"></ion-icon>
           </button>
       </ion-buttons>-->
-      <ion-row>
+      <ion-row class="footer">
         <div col-3 text-center>
-        <button icon-only ion-button round color="strong-button" (click)=removerVolume()> 
+        <button icon-only ion-button round class="toolbar-btn" (click)=removerVolume()> 
           <ion-icon name="remove"></ion-icon>
         </button>
         </div>
@@ -35,12 +39,15 @@
             <span><div class="naocomprado-legenda"></div> Não possui</span>
         </div>
       <div col-3 text-center>
-        <button icon-only ion-button round color="strong-button" (click)=adicionarVolume()>
+        <button icon-only ion-button round class="toolbar-btn" (click)=adicionarVolume()>
           <ion-icon name="add"></ion-icon>
         </button>
-      </div>
+      </div>      
       </ion-row>
       <!--<ion-buttons end class="toolbar-btn" color="secondary">
       </ion-buttons>-->
     </ion-toolbar>
+    <button *ngIf="isNovoManga" (click)="finalizar()" id="finalizar-btn" block ion-button>
+      Finalizar
+    </button>
   </ion-footer>

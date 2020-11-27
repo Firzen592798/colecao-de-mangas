@@ -30,6 +30,7 @@
     "cordova-admob-sdk": "^0.24.1",
     "cordova-android": "^9.0.0",
     "cordova-plugin-admob-free": "^0.27.0",
+    "cordova-plugin-android-permissions": "^1.1.2",
     "cordova-plugin-camera": "^4.1.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
@@ -65,7 +66,8 @@
       },
       "cordova-plugin-camera": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
-      }
+      },
+      "cordova-plugin-android-permissions": {}
     },
     "platforms": [
       "android"

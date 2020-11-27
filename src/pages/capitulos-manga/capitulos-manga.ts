@@ -27,11 +27,15 @@ export class CapitulosMangaPage {
 
   ionViewDidLoad() {
     this.nav.backButtonClick = () => {
+      this.finalizar();
+    }
+  }
+
+  finalizar(){
+    this.presentToast("Mangá salvo com sucesso");
+    this.navCtrl.pop()
+    if(this.isNovoManga){
       this.navCtrl.pop()
-      if(this.isNovoManga){
-        this.navCtrl.pop()
-      }
-      
     }
   }
 
@@ -101,14 +105,4 @@ export class CapitulosMangaPage {
   
     toast.present();
   }
-
-  /*salvar(){
-    if(this.isNovoManga){
-      this.navCtrl.pop();
-      this.navCtrl.pop();
-    }else{
-      this.navCtrl.pop();
-    }
-  }*/
-
 }
