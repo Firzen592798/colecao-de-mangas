@@ -108,4 +108,7 @@
     </plugin>
     <plugin name="cordova-plugin-android-permissions" spec="^1.1.2" />
     <engine name="android" spec="^9.0.0" />
+    <plugin name="cordova-plugin-firebase-authentication" spec="^4.0.1">
+        <variable name="FIREBASE_AUTH_VERSION" value="version" />
+    </plugin>
 </widget>

@@ -19,6 +19,7 @@ import { QuantitativosPageModule } from '../pages/quantitativos/quantitativos.mo
 import { AdsProvider } from '../providers/ads/ads';
 import { Navbar } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
+import { AuthProvider } from '../providers/auth/auth';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { Camera } from '@ionic-native/camera';
     IonicStorageModule,
     AdMobFree,
     AdsProvider,
-    Camera
+    Camera,
+    AuthProvider
   ]
 })
 export class AppModule {}
