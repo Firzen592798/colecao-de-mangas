@@ -64,9 +64,9 @@ export class AdsProvider {
         autoShow: false
       };
       this.admobFree.interstitial.config(interConfig);
-      /*this.admobFree.interstitial.isReady().then(() => {
+      this.admobFree.interstitial.isReady().then(() => {
         this.admobFree.interstitial.show().catch(e => console.log("show: " + e))
-      }).catch(e => console.log("not ready: " + e))*/
+      }).catch(e => console.log("not ready: " + e))
     });
   }
 
