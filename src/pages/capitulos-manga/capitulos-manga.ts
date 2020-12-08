@@ -32,9 +32,9 @@ export class CapitulosMangaPage {
   }
 
   finalizar(){
-    this.presentToast("Mangá salvo com sucesso");
     this.navCtrl.pop()
     if(this.isNovoManga){
+      this.presentToast("Mangá salvo com sucesso");
       this.navCtrl.pop()
     }
   }
