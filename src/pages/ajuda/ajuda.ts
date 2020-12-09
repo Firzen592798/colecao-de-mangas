@@ -21,7 +21,7 @@ export class AjudaPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public ads: AdsProvider) {
   }
 
-  ionViewDidEnter() {
+  ionViewDidLoad() {
     this.ads.showBanner();
     //console.log('ionViewDidLoad AjudaPage');
   }

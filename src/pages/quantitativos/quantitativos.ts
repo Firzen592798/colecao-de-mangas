@@ -47,7 +47,7 @@ export class QuantitativosPage {
     this.totalVolumesMangaFaltaLer = this.totalVolumesMangaPossuidos - this.totalVolumesMangaLidos;
   }
 
-  ionViewDidEnter() {
+  ionViewDidLoad() {
     this.ads.showBanner();
     //this.runBanner();
   }

@@ -1,8 +1,9 @@
 
 Executar jarsigner
+(caminho C:\Program Files\Java\jdk-14.0.1\bin)
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore C:\Users\USER\Desktop\Flutter\colecao-de-mangas\colecao.keystore C:\Users\USER\Desktop\Flutter\colecao-de-mangas\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk colecao
 alias_name: colecao
 senha: colecao
 
 Executar zipalign
-C:\Users\USER\AppData\Local\Android\Sdk\build-tools\28.0.3\zipalign -v 4 C:\Users\USER\Desktop\Flutter\colecao-de-mangas\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk C:\Users\USER\Desktop\Flutter\colecao-de-mangas\Colecao_v2_0_1.apk
+C:\Users\USER\AppData\Local\Android\Sdk\build-tools\28.0.3\zipalign -v 4 C:\Users\USER\Desktop\Flutter\colecao-de-mangas\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk C:\Users\USER\Desktop\Flutter\colecao-de-mangas\Colecao_v2_0_4.apk

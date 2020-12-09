@@ -10,15 +10,17 @@ import { Platform } from 'ionic-angular';
 */
 @Injectable()
 export class AdsProvider {
-  isTesting: boolean = true;
+  isTesting: boolean = false;
   bannerId: string = "ca-app-pub-8275051926630772/6420033576";
   intersId: string = "ca-app-pub-8275051926630772/7364383928";
   constructor(private admobFree: AdMobFree, public platform: Platform) {}
 
   showBanner() {
+    console.log("chamou banner")
     this.platform
       .ready()
       .then(() => {
+        console.log("then")
         const bannerConfig: AdMobFreeBannerConfig = {
           id: this.bannerId,
           isTesting: this.isTesting,
@@ -28,7 +30,8 @@ export class AdsProvider {
         this.admobFree.banner
           .prepare()
           .then(() => {
-            this.admobFree.banner.show();
+            console.log("show")
+            this.admobFree.banner.show() .catch(e => console.log(e));
           })
           .catch(e => console.log(e));
       })
