@@ -27,6 +27,8 @@ export class AdicionarMangaPage {
 
   public image: any;
 
+  public mostrarAd: boolean = true;
+
   constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public navParams: NavParams, public mangaProvider: MangaProvider, private datepipe: DatePipe, private toastCtrl:ToastController, public ads: AdsProvider, private camera: Camera) {
     var param = navParams.get("manga");
     if(param)
@@ -41,7 +43,10 @@ export class AdicionarMangaPage {
   }
 
   ionViewDidEnter(){
-    this.ads.showInterstitial();
+    if(this.mostrarAd){
+      //console.log("Mostrar ad");
+      this.ads.showInterstitial();
+    }
   }
 
   carregarAutocomplete(){
@@ -61,6 +66,7 @@ export class AdicionarMangaPage {
         });
       }else{
         this.presentToast("É necessário digitar no mínimo 3 caracteres");
+        this.mangaAutocomplete = [];
       }
     }
   }
@@ -77,6 +83,7 @@ export class AdicionarMangaPage {
     }else if(this.manga.ultimoComprado > 200){
       this.presentToast("Não é permitido adicionar mais de 200 volumes. Se existir um mangá maior do que isso, parabens =)");
     }else{
+      this.mostrarAd = false;
       if(!this.manga.key){
         let key = this.datepipe.transform(new Date(), "ddMMyyyyHHmmss");
         this.mangaProvider.salvarManga(key, this.manga);
@@ -117,6 +124,7 @@ export class AdicionarMangaPage {
       quality: 70,
       targetHeight: 350, 
       targetWidth: 225,
+      correctOrientation: true,
       //saveToPhotoAlbum: true,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,

@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AdMobFree, AdMobFreeBannerConfig, AdMobFreeInterstitialConfig } from '@ionic-native/admob-free';
 import { Platform } from 'ionic-angular';
@@ -17,9 +16,11 @@ export class AdsProvider {
   constructor(private admobFree: AdMobFree, public platform: Platform) {}
 
   showBanner() {
+    console.log("chamou banner")
     this.platform
       .ready()
       .then(() => {
+        console.log("then")
         const bannerConfig: AdMobFreeBannerConfig = {
           id: this.bannerId,
           isTesting: this.isTesting,
@@ -29,7 +30,8 @@ export class AdsProvider {
         this.admobFree.banner
           .prepare()
           .then(() => {
-            this.admobFree.banner.show();
+            console.log("show")
+            this.admobFree.banner.show() .catch(e => console.log(e));
           })
           .catch(e => console.log(e));
       })
@@ -65,9 +67,9 @@ export class AdsProvider {
         autoShow: false
       };
       this.admobFree.interstitial.config(interConfig);
-      /*this.admobFree.interstitial.isReady().then(() => {
+      this.admobFree.interstitial.isReady().then(() => {
         this.admobFree.interstitial.show().catch(e => console.log("show: " + e))
-      }).catch(e => console.log("not ready: " + e))*/
+      }).catch(e => console.log("not ready: " + e))
     });
   }
 
