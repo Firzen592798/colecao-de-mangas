@@ -10,7 +10,7 @@ import { Platform } from 'ionic-angular';
 */
 @Injectable()
 export class AdsProvider {
-  isTesting: boolean = false;
+  isTesting: boolean = true;
   bannerId: string = "ca-app-pub-8275051926630772/6420033576";
   intersId: string = "ca-app-pub-8275051926630772/7364383928";
   constructor(private admobFree: AdMobFree, public platform: Platform) {}
