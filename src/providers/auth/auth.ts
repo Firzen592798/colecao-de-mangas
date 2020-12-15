@@ -14,4 +14,14 @@ export class AuthProvider {
 
   }
 
+  criarUsuario(email, senha){
+    this.firebaseAuthentication.createUserWithEmailAndPassword(email, senha);
+  }
+
+  logar(email, senha){
+    this.firebaseAuthentication.signInWithEmailAndPassword(email, senha)
+    .then((res: any) => console.log(res))
+    .catch((error: any) => console.error(error));
+  }
+
 }

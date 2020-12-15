@@ -22,23 +22,27 @@
     "@ionic-native/admob-free": "^4.20.0",
     "@ionic-native/camera": "^4.20.0",
     "@ionic-native/core": "4.20.0",
+    "@ionic-native/firebase": "^4.20.0",
     "@ionic-native/firebase-authentication": "^4.20.0",
     "@ionic-native/splash-screen": "4.20.0",
     "@ionic-native/status-bar": "4.20.0",
     "@ionic/angular": "^4.0.0-beta.15",
+    "@ionic/cloud-angular": "^0.12.0",
     "@ionic/storage": "2.2.0",
     "bower": "^1.8.8",
     "cordova-admob-sdk": "^0.24.1",
-    "cordova-android": "^9.0.0",
+    "cordova-android": "7.1.4",
     "cordova-plugin-admob-free": "^0.27.0",
     "cordova-plugin-android-permissions": "^1.1.2",
     "cordova-plugin-camera": "^4.1.0",
+    "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-firebase": "^2.0.5",
     "cordova-plugin-firebase-authentication": "^4.0.1",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-ionic-webview": "^4.1.3",
     "cordova-plugin-splashscreen": "^5.0.2",
-    "cordova-plugin-statusbar": "git+https://github.com/apache/cordova-plugin-statusbar.git",
+    "cordova-plugin-statusbar": "^2.4.3",
     "cordova-plugin-telerik-imagepicker": "^2.3.5",
     "cordova-plugin-whitelist": "^1.3.3",
     "cordova-promise-polyfill": "0.0.2",
@@ -62,7 +66,6 @@
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-statusbar": {},
       "cordova-plugin-admob-free": {
         "ADMOB_APP_ID": "ca-app-pub-8275051926630772~5789478180"
       },
@@ -70,9 +73,10 @@
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
       "cordova-plugin-android-permissions": {},
-      "cordova-plugin-firebase-authentication": {
-        "FIREBASE_AUTH_VERSION": "version"
-      }
+      "cordova-plugin-firebase-authentication": {},
+      "cordova-plugin-firebase": {},
+      "cordova-plugin-compat": {},
+      "cordova-plugin-statusbar": {}
     },
     "platforms": [
       "android"

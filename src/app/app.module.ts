@@ -17,14 +17,16 @@ import { AdMobFree } from '@ionic-native/admob-free';
 import { AjudaPageModule } from '../pages/ajuda/ajuda.module';
 import { QuantitativosPageModule } from '../pages/quantitativos/quantitativos.module';
 import { AdsProvider } from '../providers/ads/ads';
-import { Navbar } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import { AuthProvider } from '../providers/auth/auth';
+import { LoginPage } from '../pages/login/login';
+import { FirebaseAuthentication } from '@ionic-native/firebase-authentication';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
+    LoginPage,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +41,7 @@ import { AuthProvider } from '../providers/auth/auth';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    LoginPage,
     HomePage,
   ],
   providers: [
@@ -52,7 +55,8 @@ import { AuthProvider } from '../providers/auth/auth';
     AdMobFree,
     AdsProvider,
     Camera,
-    AuthProvider
+    AuthProvider,
+    FirebaseAuthentication
   ]
 })
 export class AppModule {}
