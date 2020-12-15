@@ -11,11 +11,13 @@ import { Platform } from 'ionic-angular';
 @Injectable()
 export class AdsProvider {
   isTesting: boolean = true;
+  mostrarAd: boolean = false;
   bannerId: string = "ca-app-pub-8275051926630772/6420033576";
   intersId: string = "ca-app-pub-8275051926630772/7364383928";
   constructor(private admobFree: AdMobFree, public platform: Platform) {}
 
   showBanner() {
+    if(this.mostrarAd){
     console.log("chamou banner")
     this.platform
       .ready()
@@ -36,6 +38,7 @@ export class AdsProvider {
           .catch(e => console.log(e));
       })
       .catch(e => console.log(e));
+    }
   }
 
   hideBanner() {
@@ -60,17 +63,19 @@ export class AdsProvider {
   }
 
   showInterstitial() {
-    this.platform.ready().then(() => {
-      const interConfig: AdMobFreeInterstitialConfig = {
-        id: this.intersId,
-        isTesting: this.isTesting,
-        autoShow: false
-      };
-      this.admobFree.interstitial.config(interConfig);
-      this.admobFree.interstitial.isReady().then(() => {
-        this.admobFree.interstitial.show().catch(e => console.log("show: " + e))
-      }).catch(e => console.log("not ready: " + e))
-    });
+    if(this.mostrarAd){
+      this.platform.ready().then(() => {
+        const interConfig: AdMobFreeInterstitialConfig = {
+          id: this.intersId,
+          isTesting: this.isTesting,
+          autoShow: false
+        };
+        this.admobFree.interstitial.config(interConfig);
+        this.admobFree.interstitial.isReady().then(() => {
+          this.admobFree.interstitial.show().catch(e => console.log("show: " + e))
+        }).catch(e => console.log("not ready: " + e))
+      });
+    }
   }
 
 }
