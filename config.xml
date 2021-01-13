@@ -111,7 +111,7 @@
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
     </plugin>
     <plugin name="cordova-plugin-android-permissions" spec="^1.1.2" />
-    <plugin name="cordova-plugin-firebase-authentication" spec="^4.0.1" />
     <plugin name="cordova-plugin-compat" spec="^1.2.0" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.3" />
+    <engine name="android" spec="9.0.0" />
 </widget>

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FirebaseAuthentication } from '@ionic-native/firebase-authentication';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
 /*
   Generated class for the AuthProvider provider.
 
@@ -9,19 +10,33 @@ import { FirebaseAuthentication } from '@ionic-native/firebase-authentication';
 */
 @Injectable()
 export class AuthProvider {
-
-  constructor(private firebaseAuthentication: FirebaseAuthentication) {
-
+  private user: firebase.User;
+  constructor(private afAuth: AngularFireAuth) {
+    afAuth.authState.subscribe(user => {
+			this.user = user;
+		});
   }
 
   criarUsuario(email, senha){
-    this.firebaseAuthentication.createUserWithEmailAndPassword(email, senha);
+    try{
+      const result = this.afAuth.auth.createUserWithEmailAndPassword(email, senha);
+      console.log(result);
+    }catch(e){
+      console.error(e);
+    }
   }
 
+  get authenticated(): boolean {
+		return this.user !== null;
+	}
+
   logar(email, senha){
-    this.firebaseAuthentication.signInWithEmailAndPassword(email, senha)
-    .then((res: any) => console.log(res))
-    .catch((error: any) => console.error(error));
+    try{
+      const result = this.afAuth.auth.signInWithEmailAndPassword(email, senha);
+      console.log(result);
+    }catch(e){
+      console.error(e);
+    }
   }
 
 }

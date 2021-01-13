@@ -20,7 +20,20 @@ import { AdsProvider } from '../providers/ads/ads';
 import { Camera } from '@ionic-native/camera';
 import { AuthProvider } from '../providers/auth/auth';
 import { LoginPage } from '../pages/login/login';
-import { FirebaseAuthentication } from '@ionic-native/firebase-authentication';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuth, AngularFireAuthModule } from 'angularfire2/auth';
+//import { FirebaseAuthentication } from '@ionic-native/firebase-authentication';
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyAe2MrIL21lFnrYWuF9O5z4gX665CIiXZs",
+  authDomain: "colecaodemangas.firebaseapp.com",
+  databaseURL: "https://colecaodemangas.firebaseio.com",
+  projectId: "colecaodemangas",
+  storageBucket: "colecaodemangas.appspot.com",
+  messagingSenderId: "117284070821",
+  appId: "1:117284070821:web:9c87eaa026b852c47a344c",
+  measurementId: "G-9M74SHBZ7Q"
+};
 
 @NgModule({
   declarations: [
@@ -36,7 +49,9 @@ import { FirebaseAuthentication } from '@ionic-native/firebase-authentication';
     QuantitativosPageModule,
     AdicionarMangaPageModule,
     IonicStorageModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -56,7 +71,8 @@ import { FirebaseAuthentication } from '@ionic-native/firebase-authentication';
     AdsProvider,
     Camera,
     AuthProvider,
-    FirebaseAuthentication
+    AngularFireAuth
+    //FirebaseAuthentication
   ]
 })
 export class AppModule {}
