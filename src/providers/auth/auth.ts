@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 /*
   Generated class for the AuthProvider provider.
@@ -11,7 +12,7 @@ import * as firebase from 'firebase/app';
 @Injectable()
 export class AuthProvider {
   private user: firebase.User;
-  constructor(private afAuth: AngularFireAuth) {
+  constructor(private afAuth: AngularFireAuth, private fbDb: AngularFireDatabase) {
     afAuth.authState.subscribe(user => {
 			this.user = user;
 		});
@@ -37,6 +38,16 @@ export class AuthProvider {
     }catch(e){
       console.error(e);
     }
+  }
+
+  listar(){
+    try{
+      var items = this.fbDb.list('/usuario');
+    }catch(e){
+      console.log(e);
+    }
+    console.log(items);
+    
   }
 
 }

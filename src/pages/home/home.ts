@@ -9,6 +9,7 @@ import { MalapiProvider } from '../../providers/malapi/malapi';
 import { AjudaPage } from '../ajuda/ajuda';
 import { AdMobFree } from '@ionic-native/admob-free';
 import { AdsProvider } from '../../providers/ads/ads';
+import { AuthProvider } from '../../providers/auth/auth';
 
 declare var admob;
 @Component({
@@ -25,10 +26,11 @@ export class HomePage {
 
   @ViewChild('search') search:TextInput;
 
-  constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public mangaProvider: MangaProvider, public alertCtrl: AlertController, public toastCtrl: ToastController, public ads: AdsProvider) {
+  constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public mangaProvider: MangaProvider, public alertCtrl: AlertController, public toastCtrl: ToastController, public ads: AdsProvider, public auth: AuthProvider) {
   }
 
   ionViewDidEnter(){
+    this.auth.listar();
     this.ads.loadInterstitial();
     this.mangaProvider.listar().then(data => {
       this.lista_mangas = data;

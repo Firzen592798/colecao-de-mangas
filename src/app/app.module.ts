@@ -19,8 +19,8 @@ import { QuantitativosPageModule } from '../pages/quantitativos/quantitativos.mo
 import { AdsProvider } from '../providers/ads/ads';
 import { Camera } from '@ionic-native/camera';
 import { AuthProvider } from '../providers/auth/auth';
-import { LoginPage } from '../pages/login/login';
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth, AngularFireAuthModule } from 'angularfire2/auth';
 //import { FirebaseAuthentication } from '@ionic-native/firebase-authentication';
 
@@ -39,7 +39,6 @@ export const firebaseConfig = {
   declarations: [
     MyApp,
     HomePage,
-    LoginPage,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +55,6 @@ export const firebaseConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    LoginPage,
     HomePage,
   ],
   providers: [
@@ -71,7 +69,9 @@ export const firebaseConfig = {
     AdsProvider,
     Camera,
     AuthProvider,
-    AngularFireAuth
+    AngularFireAuth,
+    AngularFireAuthModule,
+    AngularFireDatabase
     //FirebaseAuthentication
   ]
 })
