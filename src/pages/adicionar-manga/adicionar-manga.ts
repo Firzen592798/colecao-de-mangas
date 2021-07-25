@@ -36,6 +36,7 @@ export class AdicionarMangaPage {
   }
 
   ionViewDidLoad() {
+    
     //console.log('ionViewDidLoad AdicionarMangaPage');
     /*this.malProvider.getMangas("One Piece").then((mangas) => {
       console.log(mangas);

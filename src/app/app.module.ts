@@ -19,7 +19,7 @@ import { QuantitativosPageModule } from '../pages/quantitativos/quantitativos.mo
 import { AdsProvider } from '../providers/ads/ads';
 import { Navbar } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
-
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 @NgModule({
   declarations: [
     MyApp,
@@ -50,7 +50,8 @@ import { Camera } from '@ionic-native/camera';
     IonicStorageModule,
     AdMobFree,
     AdsProvider,
-    Camera
+    Camera,
+    EmailComposer
   ]
 })
 export class AppModule {}

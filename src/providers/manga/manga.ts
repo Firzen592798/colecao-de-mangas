@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
-
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 /*
   Generated class for the MangaProvider provider.
 
@@ -10,8 +10,7 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class MangaProvider {
-
-  constructor(public localStorage: Storage) {
+  constructor(public localStorage: Storage, private emailComposer: EmailComposer) {
 
   }
 
@@ -70,5 +69,16 @@ export class MangaProvider {
   
   public excluirManga(chave){
     this.localStorage.remove(chave);
+  }
+
+  public enviarEmail(json: string){
+    //alert(json);
+    let email = {
+      to: 'firzen592798@gmail.com',
+      subject: 'Cordova Icons',
+      body: "body",
+      isHtml: true
+    }
+    this.emailComposer.open(email);
   }
 }
