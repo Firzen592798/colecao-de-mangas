@@ -32,8 +32,6 @@ export class HomePage {
     //this.ads.loadInterstitial();
     this.mangaProvider.listar().then(data => {
       this.lista_mangas = data;
-      //alert(data.toString());
-      //this.mangaProvider.enviarEmail("");
       this.lista_mangas_filtrado = data;
     }).catch(err => {
       this.lista_mangas = [];

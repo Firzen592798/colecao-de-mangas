@@ -19,7 +19,7 @@ import { QuantitativosPageModule } from '../pages/quantitativos/quantitativos.mo
 import { AdsProvider } from '../providers/ads/ads';
 import { Navbar } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
-import { EmailComposer } from '@ionic-native/email-composer/ngx';
+import { MangaapiProvider } from '../providers/mangaapi/mangaapi';
 @NgModule({
   declarations: [
     MyApp,
@@ -51,7 +51,7 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
     AdMobFree,
     AdsProvider,
     Camera,
-    EmailComposer
+    MangaapiProvider,
   ]
 })
 export class AppModule {}

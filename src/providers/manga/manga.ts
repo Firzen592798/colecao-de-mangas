@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
-import { EmailComposer } from '@ionic-native/email-composer/ngx';
+import { MangaapiProvider } from '../mangaapi/mangaapi';
 /*
   Generated class for the MangaProvider provider.
 
@@ -10,7 +10,7 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
 */
 @Injectable()
 export class MangaProvider {
-  constructor(public localStorage: Storage, private emailComposer: EmailComposer) {
+  constructor(public localStorage: Storage, public http: HttpClient, public mangaapi: MangaapiProvider) {
 
   }
 
@@ -34,16 +34,19 @@ export class MangaProvider {
       }
     }
     this.localStorage.set(key, manga); 
+    this.mangaapi.salvarManga(key, manga);
   }
 
   public atualizarManga(key: string, manga: any) {
     manga.dataModificacao = new Date();
     this.localStorage.set(key, manga); 
+    this.mangaapi.atualizarManga(key, manga);
   }
 
   public atualizarMangaAndUltimoLidoAndUltimoComprado(key: string, manga: any) {
     manga.dataModificacao = new Date();
     this.localStorage.set(key, manga); 
+    this.mangaapi.atualizarManga(key, manga);
   }
  
   public listar() {
@@ -69,16 +72,5 @@ export class MangaProvider {
   
   public excluirManga(chave){
     this.localStorage.remove(chave);
-  }
-
-  public enviarEmail(json: string){
-    //alert(json);
-    let email = {
-      to: 'firzen592798@gmail.com',
-      subject: 'Cordova Icons',
-      body: "body",
-      isHtml: true
-    }
-    this.emailComposer.open(email);
   }
 }
