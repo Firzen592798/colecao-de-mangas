@@ -10,8 +10,12 @@ import { MangaapiProvider } from '../mangaapi/mangaapi';
 */
 @Injectable()
 export class MangaProvider {
-  constructor(public localStorage: Storage, public http: HttpClient, public mangaapi: MangaapiProvider) {
+  private usuario: any;
 
+  constructor(public localStorage: Storage, public http: HttpClient, public mangaapi: MangaapiProvider) {
+    this.localStorage.get("usuario").then((output) => {
+      this.usuario  = output;
+    });
   }
 
   public salvarManga(key: string, manga: any){
@@ -34,29 +38,36 @@ export class MangaProvider {
       }
     }
     this.localStorage.set(key, manga); 
-    this.mangaapi.salvarManga(key, manga);
+    if(this.usuario){
+      this.mangaapi.salvarManga(key, this.usuario.idUsuario, manga);
+    }
   }
 
   public atualizarManga(key: string, manga: any) {
     manga.dataModificacao = new Date();
     this.localStorage.set(key, manga); 
-    this.mangaapi.atualizarManga(key, manga);
+    if(this.usuario){
+      this.mangaapi.atualizarManga(key, this.usuario.id, manga);
+    }
   }
 
   public atualizarMangaAndUltimoLidoAndUltimoComprado(key: string, manga: any) {
     manga.dataModificacao = new Date();
     this.localStorage.set(key, manga); 
-    this.mangaapi.atualizarManga(key, manga);
+    if(this.usuario){
+      this.mangaapi.atualizarManga(key, this.usuario.id, manga);
+    }
   }
  
   public listar() {
     let lista = [];
-    return this.localStorage.forEach((value: any, key: string, iterationNumber: Number) => {
-
-      let manga;
-      manga = value;
-      manga.key = key;
-      lista.push(manga);
+    return this.localStorage.forEach((value: any, key: string, iterationNumber: Number) => {  
+      if(key != "usuario"){
+        let manga;
+        manga = value;
+        manga.key = key;
+        lista.push(manga);
+      }  
     })
     .then(() => {
 

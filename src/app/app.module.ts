@@ -16,6 +16,7 @@ import { MalapiProvider } from '../providers/malapi/malapi';
 import { AdMobFree } from '@ionic-native/admob-free';
 import { AjudaPageModule } from '../pages/ajuda/ajuda.module';
 import { QuantitativosPageModule } from '../pages/quantitativos/quantitativos.module';
+import { SincronizacaoPageModule } from '../pages/sincronizacao/sincronizacao.module';
 import { AdsProvider } from '../providers/ads/ads';
 import { Navbar } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
@@ -31,6 +32,7 @@ import { MangaapiProvider } from '../providers/mangaapi/mangaapi';
     CapitulosMangaPageModule,
     AjudaPageModule,
     QuantitativosPageModule,
+    SincronizacaoPageModule,
     AdicionarMangaPageModule,
     IonicStorageModule.forRoot(),
     HttpClientModule

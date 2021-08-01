@@ -9,6 +9,7 @@ import { MalapiProvider } from '../../providers/malapi/malapi';
 import { AjudaPage } from '../ajuda/ajuda';
 import { AdMobFree } from '@ionic-native/admob-free';
 import { AdsProvider } from '../../providers/ads/ads';
+import { SincronizacaoPage } from '../sincronizacao/sincronizacao';
 
 declare var admob;
 @Component({
@@ -57,6 +58,10 @@ export class HomePage {
 
   irParaCapitulos(manga){
     this.navCtrl.push(CapitulosMangaPage, {manga: manga,novoManga: false});
+  }
+
+  irParaSincronizar(){
+    this.navCtrl.push(SincronizacaoPage);
   }
 
   irParaAjuda(){
