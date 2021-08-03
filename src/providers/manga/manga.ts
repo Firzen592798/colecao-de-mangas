@@ -70,7 +70,6 @@ export class MangaProvider {
       }  
     })
     .then(() => {
-
       lista.sort((n1, n2) => 
         n1.titulo < n2.titulo ? -1 : 1
       );

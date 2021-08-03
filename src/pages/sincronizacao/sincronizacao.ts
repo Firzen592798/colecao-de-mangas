@@ -34,7 +34,8 @@ export class SincronizacaoPage {
   ativarSincronizacao(){
     if(this.senha == this.confirmasenha){
       if(this.validarEmail(this.email)){
-        this.mangaApi.ativarSincronizacao(this.email, Md5.hashStr(this.senha));
+        var listaMangas = this.navParams.get("lista_mangas");
+        this.mangaApi.ativarSincronizacao(this.email, Md5.hashStr(this.senha), listaMangas);
         this.presentToast("Sincronização de dados ativada com sucesso");
       }else{
         this.presentToast("E-mail inválido");

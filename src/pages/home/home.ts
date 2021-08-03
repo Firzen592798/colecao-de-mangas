@@ -61,7 +61,7 @@ export class HomePage {
   }
 
   irParaSincronizar(){
-    this.navCtrl.push(SincronizacaoPage);
+    this.navCtrl.push(SincronizacaoPage, {lista_mangas: this.lista_mangas});
   }
 
   irParaAjuda(){
