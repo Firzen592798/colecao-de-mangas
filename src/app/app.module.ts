@@ -21,6 +21,7 @@ import { AdsProvider } from '../providers/ads/ads';
 import { Navbar } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import { MangaapiProvider } from '../providers/mangaapi/mangaapi';
+import { CadastroUsuarioPageModule } from '../pages/cadastro-usuario/cadastro-usuario.module';
 @NgModule({
   declarations: [
     MyApp,
@@ -33,6 +34,7 @@ import { MangaapiProvider } from '../providers/mangaapi/mangaapi';
     AjudaPageModule,
     QuantitativosPageModule,
     SincronizacaoPageModule,
+    CadastroUsuarioPageModule,
     AdicionarMangaPageModule,
     IonicStorageModule.forRoot(),
     HttpClientModule

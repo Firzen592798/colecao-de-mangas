@@ -11,22 +11,40 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-item>
-    <ion-label floating >E-mail</ion-label>
-    <ion-input type="email" [(ngModel)]="email"></ion-input>
-  </ion-item>
+  <div *ngIf="!usuario">
+    <strong>Já possui um cadastro?</strong>
+    <ion-item>
+      <ion-label floating >E-mail</ion-label>
+      <ion-input type="email" [(ngModel)]="email"></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label floating>Senha</ion-label>
-    <ion-input type="password" [(ngModel)]="senha"></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label floating>Senha</ion-label>
+      <ion-input type="password" [(ngModel)]="senha"></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label floating>Confirmar senha</ion-label>
-    <ion-input type="password" [(ngModel)]="confirmasenha"></ion-input>
-  </ion-item>
+    <button (click)="atualizarDados()" block ion-button>
+      Entrar
+    </button>
 
-  <button (click)="ativarSincronizacao()" block ion-button>
-    Ativar sincronização
-  </button>
+    <button (click)="recuperarSenha()" block ion-button>
+      Recuperar senha
+    </button>
+
+    <strong>Não possui cadastro?</strong>
+    <button (click)="irParaCadastro()" block ion-button>
+      Criar cadastro
+    </button>
+    
+  </div>
+  <div *ngIf="usuario">
+    <strong>E-mail: </strong> {{ usuario.email }}
+    <p>Seus dados estão sincronizados</p>
+    <button (click)="desativarSincronizacao()" block ion-button>
+      Desativar sincronização
+    </button>
+  </div>
+  <div *ngIf="!usuario"  (click)="irParaCadastro()" >
+
+  </div>
 </ion-content>

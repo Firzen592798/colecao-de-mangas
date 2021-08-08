@@ -10,7 +10,7 @@ import { MangaapiProvider } from '../mangaapi/mangaapi';
 */
 @Injectable()
 export class MangaProvider {
-  private usuario: any;
+  public usuario: any;
 
   constructor(public localStorage: Storage, public http: HttpClient, public mangaapi: MangaapiProvider) {
     this.localStorage.get("usuario").then((output) => {
@@ -18,6 +18,15 @@ export class MangaProvider {
     });
   }
 
+  public salvarUsuario(usuario: any){
+    this.localStorage.set("usuario", usuario); 
+    this.usuario = usuario;
+  }
+  
+  public removerUsuario(){
+    this.localStorage.remove("usuario"); 
+    this.usuario = null;
+  }
   public salvarManga(key: string, manga: any){
     manga.key = key;
     manga.dataModificacao = new Date();
@@ -82,5 +91,9 @@ export class MangaProvider {
   
   public excluirManga(chave){
     this.localStorage.remove(chave);
+  }
+
+  public sincronizarMangas(dados: any){
+
   }
 }

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Md5 } from 'ts-md5/dist/md5';
+import { MangaProvider } from '../../providers/manga/manga';
 import { MangaapiProvider } from '../../providers/mangaapi/mangaapi';
+import { CadastroUsuarioPage } from '../cadastro-usuario/cadastro-usuario';
 
 /**
  * Generated class for the SincronizacaoPage page.
@@ -19,7 +21,14 @@ export class SincronizacaoPage {
   email: string = "";
   senha: string = "";
   confirmasenha: string = "";
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public mangaApi: MangaapiProvider) {
+  usuario: any = null;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public mangaProvider: MangaProvider, public mangaApi: MangaapiProvider) {
+  }
+
+  ionViewDidEnter(){
+    this.usuario = this.mangaProvider.usuario;
+    console.log('ionViewDidEnter SincronizacaoPage');
+    console.log(this.usuario);
   }
 
   ionViewDidLoad() {
@@ -31,25 +40,31 @@ export class SincronizacaoPage {
     return re.test(email);
   }
 
-  ativarSincronizacao(){
-    if(this.senha == this.confirmasenha){
-      if(this.validarEmail(this.email)){
-        var listaMangas = this.navParams.get("lista_mangas");
-        this.mangaApi.ativarSincronizacao(this.email, Md5.hashStr(this.senha), listaMangas);
-        this.presentToast("Sincronização de dados ativada com sucesso");
-      }else{
-        this.presentToast("E-mail inválido");
-      }
-    }else{
-      this.presentToast("Senhas não se correspondem");
-    }
-    
+  atualizarDados(){
+
+  }
+
+  irParaCadastro(){
+      this.navCtrl.push(CadastroUsuarioPage, {lista_mangas: this.navParams.get("lista_mangas")});
+  }
+
+  desativarSincronizacao(){
+    console.log("desativar");
+    console.log(this.usuario);
+    this.mangaApi.desativarSincronizacao(this.usuario.email).subscribe(data => {
+      console.log(data);
+      this.mangaProvider.removerUsuario();
+      this.usuario = null;
+      this.presentToast("Sincronização de dados desativada com sucesso");
+    }, errorData => {
+      this.presentToast("Ocorreu um erro");
+    });
   }
 
   presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
-      duration: 2000,
+      duration: 4000,
       position: 'bottom'
     });
   
