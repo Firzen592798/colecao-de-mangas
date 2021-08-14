@@ -10,6 +10,7 @@ import { AjudaPage } from '../ajuda/ajuda';
 import { AdMobFree } from '@ionic-native/admob-free';
 import { AdsProvider } from '../../providers/ads/ads';
 import { SincronizacaoPage } from '../sincronizacao/sincronizacao';
+import { MangaapiProvider } from '../../providers/mangaapi/mangaapi';
 
 declare var admob;
 @Component({
@@ -26,13 +27,14 @@ export class HomePage {
 
   @ViewChild('search') search:TextInput;
 
-  constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public mangaProvider: MangaProvider, public alertCtrl: AlertController, public toastCtrl: ToastController, public ads: AdsProvider) {
+  constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public mangaProvider: MangaProvider, public mangaApi: MangaapiProvider, public alertCtrl: AlertController, public toastCtrl: ToastController, public ads: AdsProvider) {
   }
 
   ionViewDidEnter(){
     //this.ads.loadInterstitial();
     this.mangaProvider.listar().then(data => {
       this.lista_mangas = data;
+      this.mangaApi
       this.lista_mangas_filtrado = data;
     }).catch(err => {
       this.lista_mangas = [];

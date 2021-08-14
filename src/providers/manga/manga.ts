@@ -27,6 +27,7 @@ export class MangaProvider {
     this.localStorage.remove("usuario"); 
     this.usuario = null;
   }
+  
   public salvarManga(key: string, manga: any){
     manga.key = key;
     manga.dataModificacao = new Date();

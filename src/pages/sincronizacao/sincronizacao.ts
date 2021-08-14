@@ -29,6 +29,15 @@ export class SincronizacaoPage {
     this.usuario = this.mangaProvider.usuario;
     console.log('ionViewDidEnter SincronizacaoPage');
     console.log(this.usuario);
+    this.mangaApi.listarMangasPorUsuario(62).subscribe(data => {
+      console.log("Listar");
+      var array = data as Array<any>;
+      for(let manga of array){
+        this.mangaProvider.salvarManga(manga["key"], manga);
+      } 
+    }, errorData => {
+
+    });
   }
 
   ionViewDidLoad() {
@@ -38,10 +47,6 @@ export class SincronizacaoPage {
   validarEmail(email) {
     var re = /\S+@\S+\.\S+/;
     return re.test(email);
-  }
-
-  atualizarDados(){
-
   }
 
   irParaCadastro(){
@@ -59,6 +64,17 @@ export class SincronizacaoPage {
     }, errorData => {
       this.presentToast("Ocorreu um erro");
     });
+  }
+
+  entrar(){
+    this.mangaApi.login(this.email, Md5.hashStr(this.senha)).subscribe(data => {
+      this.mangaProvider.salvarUsuario(data);
+      this.usuario = data;
+      this.presentToast("Seus mangás foram sincronizados");
+    }, errorData => {
+      this.presentToast(errorData.error.mensagem);
+    });
+    
   }
 
   presentToast(msg) {

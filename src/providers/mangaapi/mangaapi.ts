@@ -15,13 +15,19 @@ export class MangaapiProvider {
     
   }
 
+  listarMangasPorUsuario(idUsuario){
+    console.log("Salvando em lote");
+    let url = this.apiUrl+'/manga/list?usuario='+idUsuario;
+    return this.http.get(url);
+  }
+
   salvarMangaEmLote(idUsuario, mangaLista){
     console.log("Salvando em lote");
     let url = this.apiUrl+'/manga/salvarEmLote';
     var jsonDados = {usuario: idUsuario, dados: mangaLista};
     console.log(jsonDados);
     let postData = JSON.stringify(jsonDados);
-    console.log(JSON.stringify(jsonDados));
+    console.log(postData);
     this.http.post(url, postData).subscribe((result: any) => {
       console.log(result['_body']);
     }, error => {
@@ -61,6 +67,16 @@ export class MangaapiProvider {
 
   public ativarSincronizacao(email, senha, listaMangas){
     let url = this.apiUrl+'/manga/cadastrarUsuario';
+    let postData = {
+      "email": email,
+      "senha": senha,
+    }
+    //this.salvarMangaEmLote(13, listaMangas);
+    return this.http.post(url, postData);
+  }
+
+  login(email, senha){
+    let url = this.apiUrl+'/manga/login';
     let postData = {
       "email": email,
       "senha": senha,
