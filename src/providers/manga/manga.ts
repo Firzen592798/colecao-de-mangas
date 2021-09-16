@@ -13,6 +13,7 @@ export class MangaProvider {
   public usuario: any;
 
   constructor(public localStorage: Storage, public http: HttpClient, public mangaapi: MangaapiProvider) {
+    this.atualizarVersaoDados();
     this.localStorage.get("usuario").then((output) => {
       this.usuario  = output;
     });
@@ -29,50 +30,67 @@ export class MangaProvider {
   }
   
   public salvarManga(key: string, manga: any){
+    var novo = manga.key ? false : true;
     manga.key = key;
     manga.dataModificacao = new Date();
-    manga.ultimoLido = manga.ultimoLido ? parseInt(manga.ultimoLido) : 0;
-    manga.ultimoComprado = manga.ultimoComprado ? parseInt(manga.ultimoComprado) : 0;
+    manga.uLido = manga.uLido ? parseInt(manga.uLido) : 0;
+    manga.uComprado = manga.uComprado ? parseInt(manga.uComprado) : 0;
     manga.lista = []
-    if(manga.ultimoComprado){
-      manga.ultimoComprado = parseInt(manga.ultimoComprado);
-      for(let i = 1; i <= manga.ultimoComprado; i++){
-        let volume = {numero: i, status: "comprado"};
-        if(i <= manga.ultimoLido){
-          volume.status = "lido";
+    if(manga.uComprado){
+      manga.uComprado = parseInt(manga.uComprado);
+      for(let i = 1; i <= manga.uComprado; i++){
+        let volume = {st: "c"};
+        if(i <= manga.uLido){
+          volume.st = "l";
         } 
         manga.lista.push(volume); 
       }
-      if(manga.ultimoLido > manga.ultimoComprado){
-        manga.ultimoLido = manga.ultimoComprado;
+      if(manga.uLido > manga.uComprado){
+        manga.uLido = manga.uComprado;
       }
     }
     this.localStorage.set(key, manga); 
     if(this.usuario){
-      this.mangaapi.salvarManga(key, this.usuario.idUsuario, manga);
+      if(novo){
+        this.mangaapi.salvarManga(key, this.usuario.idUsuario, manga);
+      }else{
+        this.mangaapi.atualizarManga(key, this.usuario.idUsuario, manga).subscribe(data => {
+          console.log(data);
+        }, errorData => {
+          console.log(errorData);
+        });
+      }
     }
   }
 
   public atualizarManga(key: string, manga: any) {
+    console.log("Atualizando");
+    console.log(this.usuario);
     manga.dataModificacao = new Date();
     this.localStorage.set(key, manga); 
     if(this.usuario){
-      this.mangaapi.atualizarManga(key, this.usuario.id, manga);
+      this.mangaapi.atualizarManga(key, this.usuario.idUsuario, manga).subscribe(data => {
+        console.log(data);
+      }, errorData => {
+        console.log(errorData);
+      });
     }
   }
 
   public atualizarMangaAndUltimoLidoAndUltimoComprado(key: string, manga: any) {
+    console.log("Atualizando");
+    console.log(this.usuario);
     manga.dataModificacao = new Date();
     this.localStorage.set(key, manga); 
     if(this.usuario){
-      this.mangaapi.atualizarManga(key, this.usuario.id, manga);
+      this.mangaapi.atualizarManga(key, this.usuario.idUsuario, manga);
     }
   }
  
   public listar() {
     let lista = [];
     return this.localStorage.forEach((value: any, key: string, iterationNumber: Number) => {  
-      if(key != "usuario"){
+      if(key != "usuario" && key != "versao"){
         let manga;
         manga = value;
         manga.key = key;
@@ -92,6 +110,48 @@ export class MangaProvider {
   
   public excluirManga(chave){
     this.localStorage.remove(chave);
+    this.mangaapi.removerManga(chave, this.usuario.idUsuario);
+  }
+
+  public atualizarVersaoDados(){
+    this.localStorage.get("versao").then((versao) => {
+      if(!versao){
+        versao = 1;
+      }
+      if(versao == 1){
+        this.localStorage.set("versao", 2);
+        this.localStorage.forEach((value: any, key: string, iterationNumber: Number) => {  
+          if(key != "usuario" && key != "versao"){
+            var manga = value;  
+            var novaLista = [];
+            for(let volumeIt of manga.lista){
+              var status;
+              switch(volumeIt.st){
+                case 'c': 
+                  status = 'c';
+                  break;
+                case 'l':
+                  status = 'l';
+                  break;
+                case 'nc':
+                  status = 'nc';
+              }
+              let volume = {st: status};
+              novaLista.push(volume);
+            }
+            manga.lista = novaLista;
+            manga.uComprado = manga.ultimoComprado;
+            manga.uLido = manga.ultimoLido;
+            manga.img = manga.imagem;
+            delete manga.ultimoComprado;
+            delete manga.ultimoLido;
+            delete manga.img;
+            this.localStorage.set(key, manga); 
+            console.log(manga);
+          }  
+        })
+      }
+    });
   }
 
   public sincronizarMangas(dados: any){

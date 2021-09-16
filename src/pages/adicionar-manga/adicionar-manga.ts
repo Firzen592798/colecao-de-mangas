@@ -73,6 +73,9 @@ export class AdicionarMangaPage {
   }
 
   carregarInfo(mangaSelecionado){
+    this.malProvider.getAutores(mangaSelecionado.malId).then((autores) => {
+      this.manga.autor = autores;
+    });
     this.mangaAutocomplete = [];
     this.manga.titulo = mangaSelecionado.titulo;
     this.manga.imagem = mangaSelecionado.imagem;
@@ -81,7 +84,7 @@ export class AdicionarMangaPage {
   salvar(){
     if(!this.manga.titulo){
       this.presentToast("É necessário preencher um título");
-    }else if(this.manga.ultimoComprado > 200){
+    }else if(this.manga.uComprado > 200){
       this.presentToast("Não é permitido adicionar mais de 200 volumes. Se existir um mangá maior do que isso, parabens =)");
     }else{
       this.mostrarAd = false;

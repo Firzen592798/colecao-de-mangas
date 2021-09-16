@@ -11,8 +11,8 @@
 </ion-header>
 
 <ion-content padding>
-  <div *ngFor="let volume of manga.lista" [class]="volume.status" (click)="alterarStatus(volume)">
-    <div class="text">{{volume.numero}}</div>
+  <div *ngFor="let volume of manga.lista; let idx = index" [class]="volume.st" (click)="alterarStatus(volume, idx+1)">
+    <div class="text">{{idx + 1}}</div>
   </div>
   <!--*ngIf="isNovoManga" -->
 
@@ -34,9 +34,9 @@
         </button>
         </div>
         <div style="text-align: center;" col-6>
-            <span><div class="comprado-legenda"></div> Comprado</span><br/>
-            <span><div class="lido-legenda"></div> Lido</span><br/>
-            <span><div class="naocomprado-legenda"></div> Não possui</span>
+            <span><div class="c-legenda"></div> Comprado</span><br/>
+            <span><div class="l-legenda"></div> Lido</span><br/>
+            <span><div class="nc-legenda"></div> Não possui</span>
         </div>
       <div col-3 text-center>
         <button icon-only ion-button round class="toolbar-btn" (click)=adicionarVolume()>

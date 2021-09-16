@@ -40,52 +40,56 @@ export class CapitulosMangaPage {
   }
 
   adicionarVolume(){
-    let novoVolume = {numero: this.manga.lista.length + 1, status: "comprado"}
-    this.manga.ultimoComprado = novoVolume.numero;
+    let novoVolume = {st: "c"}
+    this.manga.uComprado =this.manga.lista.length + 1;
     this.manga.lista.push(novoVolume);
     this.provider.atualizarManga(this.manga.key, this.manga);
   }
 
   removerVolume(){
     if(this.manga.lista.length > 0){
-      if(this.manga.ultimoComprado == this.manga.lista.length)
-        this.manga.ultimoComprado--;
-      if(this.manga.ultimoLido == this.manga.lista.length)
-        this.manga.ultimoLido--;
+      if(this.manga.uComprado == this.manga.lista.length)
+        this.manga.uComprado--;
+      if(this.manga.uLido == this.manga.lista.length)
+        this.manga.uLido--;
       this.manga.lista.pop();
       this.provider.atualizarManga(this.manga.key, this.manga);
     }
   }
 
-  alterarStatus(volume){
-    switch(volume.status){
-      case "comprado":
-        volume.status = "lido"
-        if(volume.numero > this.manga.ultimoLido){
-          this.manga.ultimoLido = volume.numero;
+  alterarStatus(volume, numero){
+    console.log(volume);
+    console.log(numero);
+    switch(volume.st){
+      case "c":
+        volume.st = "l";
+        if(numero > this.manga.uLido){
+          this.manga.uLido = numero;
         }
         this.presentToast("Status do volume alterado para \"Lido\"")
         break;
-      case "lido":
-      this.presentToast("Status do volume alterado para \"Não possui\"")
-        volume.status = "naocomprado"
+      case "l":
+        this.presentToast("Status do volume alterado para \"Não possui\"")
+        volume.st = "nc";
         var novoUltimoLido = 0, novoUltimoComprado = 0;
-        for(let volumeIt of this.manga.lista){
-          if(volumeIt.status == "comprado" || volumeIt.status == "lido" && volumeIt.numero > novoUltimoComprado)
-            novoUltimoComprado = volumeIt.numero;
-          if(volumeIt.status == "lido" && volumeIt.numero > novoUltimoLido)
-            novoUltimoLido = volumeIt.numero;
+        for(let i = 0; i < this.manga.lista.length; i++){
+          var volumeIt = this.manga.lista[i];
+          var volumeItNumero = i+1;
+          if(volumeIt.st == "c" || volumeIt.st == "l" && volumeItNumero > novoUltimoComprado)
+            novoUltimoComprado = volumeItNumero;
+          if(volumeIt.st == "l" && volumeItNumero > novoUltimoLido)
+            novoUltimoLido = volumeItNumero;
         }
-        this.manga.ultimoComprado = novoUltimoComprado;
-        this.manga.ultimoLido = novoUltimoLido;
+        this.manga.uComprado = novoUltimoComprado;
+        this.manga.uLido = novoUltimoLido;
         
         break;
-      case "naocomprado":
-      this.presentToast("Status do volume alterado para \"Comprado\"")
-        if(volume.numero > this.manga.ultimoComprado){
-          this.manga.ultimoComprado = volume.numero;
+      case "nc":
+        this.presentToast("Status do volume alterado para \"Comprado\"")
+        if(numero > this.manga.uComprado){
+          this.manga.uComprado = numero;
         }
-        volume.status = "comprado"
+        volume.st = "c"
         break;
     }
     

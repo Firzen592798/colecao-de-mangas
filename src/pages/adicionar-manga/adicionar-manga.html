@@ -35,15 +35,19 @@
     
   </ion-list>
 
-  <!-- or with standalone set to true -->
   <ion-item>
     <ion-label floating >Último volume comprado</ion-label>
-    <ion-input #input2 (keyup.enter)="nextInput(input3)" width=20 type="number" [(ngModel)]="manga.ultimoComprado"></ion-input>
+    <ion-input #input2 (keyup.enter)="nextInput(input3)" width=20 type="number" [(ngModel)]="manga.uComprado"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label floating>Último volume lido</ion-label>
-    <ion-input #input3 (keyup.enter) = "salvar()" type="number" [(ngModel)]="manga.ultimoLido"></ion-input>
+    <ion-input #input3 (keyup.enter) = "salvar()" type="number" [(ngModel)]="manga.uLido"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating >Autor</ion-label>
+    <ion-input #input4 maxlength=48 type="text" [(ngModel)]="manga.autor"></ion-input>
   </ion-item>
 
   

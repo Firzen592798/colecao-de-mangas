@@ -3,7 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-
+import { Network } from '@ionic-native/network';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { MangaProvider } from '../providers/manga/manga';
@@ -37,6 +37,7 @@ import { CadastroUsuarioPageModule } from '../pages/cadastro-usuario/cadastro-us
     CadastroUsuarioPageModule,
     AdicionarMangaPageModule,
     IonicStorageModule.forRoot(),
+    
     HttpClientModule
   ],
   bootstrap: [IonicApp],
@@ -55,6 +56,7 @@ import { CadastroUsuarioPageModule } from '../pages/cadastro-usuario/cadastro-us
     AdMobFree,
     AdsProvider,
     Camera,
+    Network,
     MangaapiProvider,
   ]
 })

@@ -45,6 +45,7 @@ export class CadastroUsuarioPage {
           this.mangaProvider.salvarUsuario(usuario);
           this.presentToast("Cadastro finalizado com sucesso. Os dados dos seus mangás já estão guardados no nosso banco de dados online e serão atualizados a cada mangá adicionado e/ou atualizado");
           this.navCtrl.pop();
+          this.navCtrl.pop();
         }, errorData => {
           this.presentToast(errorData.error.mensagem);
         });

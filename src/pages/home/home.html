@@ -76,9 +76,13 @@
         <ion-card-title text-wrap>
           {{manga.titulo}}
         </ion-card-title>
-        <span> Último comprado: <ion-badge color="comprado">{{manga.ultimoComprado}}</ion-badge> </span>
+        <span style="font-weight: bold; color: grey; font-size: 1.3rem; margin-bottom: 5px;">{{manga.autor}}</span>  
+        <br>    
+        <span> Último comprado: <ion-badge color="comprado">{{manga.uComprado}}</ion-badge> </span>
         <br/>
-        <span> Último lido: <ion-badge color="lido">{{manga.ultimoLido}}</ion-badge> </span>        
+        <span> Último lido: <ion-badge color="lido">{{manga.uLido}}</ion-badge> </span>     
+        <br>   
+          
         <ion-row>
           <button small ion-button icon-only clear (click)="irParaEditarManga(manga);$event.stopPropagation();"><ion-icon name="create"></ion-icon>  </button>
           <button small ion-button icon-only clear (click)="apagarManga(manga);$event.stopPropagation();"><ion-icon name="trash"></ion-icon></button>
@@ -88,7 +92,6 @@
             Completo
           </button>
         </ion-row>
-      
       </ion-item>
     </ion-card>
   </div>

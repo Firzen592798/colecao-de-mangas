@@ -21,13 +21,32 @@ export class MalapiProvider {
         this.http.get(url)
           .subscribe((result: any) => {
             //resolve(result);
+            console.log(result);
             resolve(result.results.map(function(item){
               return {
+                malId: item.mal_id,
                 titulo: item.title,
                 imagem: item.image_url
               }
             }));
             //resolve(result.results);
+          },
+          (error) => {
+            reject(error);
+          });
+      });
+  }
+
+  getAutores(malId: number) {
+    return new Promise((resolve, reject) => {
+        let url = this.apiUrl+'/manga/'+malId;
+        this.http.get(url)
+          .subscribe((result: any) => {
+            resolve(
+              result.authors.reduce(function(result, item){  
+                return result == "" ? item.name.split(",").reverse().join(" ") : result+";"+item.name.split(",").reverse().join(" ")   //authors.name  
+              }, "")
+            );
           },
           (error) => {
             reject(error);

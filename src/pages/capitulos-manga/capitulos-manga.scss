@@ -37,17 +37,17 @@ page-capitulos-manga {
     margin: 1.2%;
  }
 
- .lido{
+ .l{
     @extend .container;
     background-color: color($colors, lido);
  }
 
- .comprado{
+ .c{
     @extend .container;
      background-color: color($colors, comprado);
  }
 
- .naocomprado{
+ .nc{
     @extend .container;
     background-color: color($colors, naocomprado);
  }
@@ -62,15 +62,15 @@ page-capitulos-manga {
  .legenda{
    display: inline-block; height: 10px; width: 10px;  border: 1px solid grey;
  }
- .lido-legenda{
+ .l-legenda{
    @extend .legenda;
    background-color: color($colors, lido);
  }
- .comprado-legenda{
+ .c-legenda{
    @extend .legenda;
    background-color: color($colors, comprado);
  }
- .naocomprado-legenda{
+ .nc-legenda{
    @extend .legenda;
    background-color: color($colors, naocomprado);
  }

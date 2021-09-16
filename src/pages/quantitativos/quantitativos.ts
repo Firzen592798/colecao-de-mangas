@@ -33,15 +33,15 @@ export class QuantitativosPage {
 
     this.lista_mangas.forEach(mangaItem => {
       this.totalVolumesMangaPossuidos += mangaItem.lista.reduce((total, volumeItem) => {
-        return volumeItem.status != "naocomprado" ? ++total : total;
+        return volumeItem.st != "nc" ? ++total : total;
       }, 0); 
 
       this.totalVolumesMangaLidos += mangaItem.lista.reduce((total, volumeItem) => {
-        return volumeItem.status == "lido" ? ++total : total;
+        return volumeItem.st == "l" ? ++total : total;
       }, 0); 
 
       this.totalVolumesMangaFaltaComprar += mangaItem.lista.reduce((total, volumeItem) => {
-        return volumeItem.status == "naocomprado" ? ++total : total;
+        return volumeItem.st == "nc" ? ++total : total;
       }, 0); 
     });
     this.totalVolumesMangaFaltaLer = this.totalVolumesMangaPossuidos - this.totalVolumesMangaLidos;

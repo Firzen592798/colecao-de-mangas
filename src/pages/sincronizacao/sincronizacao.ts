@@ -27,17 +27,6 @@ export class SincronizacaoPage {
 
   ionViewDidEnter(){
     this.usuario = this.mangaProvider.usuario;
-    console.log('ionViewDidEnter SincronizacaoPage');
-    console.log(this.usuario);
-    this.mangaApi.listarMangasPorUsuario(62).subscribe(data => {
-      console.log("Listar");
-      var array = data as Array<any>;
-      for(let manga of array){
-        this.mangaProvider.salvarManga(manga["key"], manga);
-      } 
-    }, errorData => {
-
-    });
   }
 
   ionViewDidLoad() {
@@ -54,25 +43,35 @@ export class SincronizacaoPage {
   }
 
   desativarSincronizacao(){
-    console.log("desativar");
     console.log(this.usuario);
-    this.mangaApi.desativarSincronizacao(this.usuario.email).subscribe(data => {
-      console.log(data);
-      this.mangaProvider.removerUsuario();
-      this.usuario = null;
-      this.presentToast("Sincronização de dados desativada com sucesso");
-    }, errorData => {
-      this.presentToast("Ocorreu um erro");
-    });
+    this.mangaProvider.removerUsuario();
+    this.usuario = null;
+    this.presentToast("Sincronização de dados desativada com sucesso");
   }
 
   entrar(){
     this.mangaApi.login(this.email, Md5.hashStr(this.senha)).subscribe(data => {
       this.mangaProvider.salvarUsuario(data);
       this.usuario = data;
-      this.presentToast("Seus mangás foram sincronizados");
+      this.mangaApi.listarMangasPorUsuario(this.usuario.id_usuario).subscribe(data => {
+        var array = data as Array<any>;
+        console.log(data);
+        for(let manga of array){
+          console.log(manga);
+          this.mangaProvider.salvarManga(manga["key"], manga);
+        } 
+        this.presentToast("Seus mangás foram sincronizados");
+        this.navCtrl.pop();
+      }, errorData => {
+        console.log(errorData);
+        this.presentToast("Erro");
+      });
     }, errorData => {
-      this.presentToast(errorData.error.mensagem);
+      if(errorData.statusText == "Unknown Error"){
+        this.presentToast("Ocorreu um erro de conexão");
+      }else{
+        this.presentToast(errorData.error.mensagem);
+      }
     });
     
   }
@@ -83,6 +82,7 @@ export class SincronizacaoPage {
       duration: 4000,
       position: 'bottom'
     });
+    console.log(toast);
   
     toast.onDidDismiss(() => {
       //console.log('Dismissed toast');
@@ -91,5 +91,7 @@ export class SincronizacaoPage {
     toast.present();
   }
 
-
+  recuperarSenha(){
+    this.presentToast("Por favor entre em contato com o desenvolvedor através do e-mail firzen592798@gmail.com");
+  }
 }
