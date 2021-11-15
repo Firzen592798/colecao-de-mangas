@@ -32,9 +32,10 @@ export class HomePage {
 
   ionViewDidEnter(){
     //this.ads.loadInterstitial();
+
     this.mangaProvider.listar().then(data => {
       this.lista_mangas = data;
-      this.mangaApi
+      this.mangaProvider.sincronizarMangas(this.lista_mangas);
       this.lista_mangas_filtrado = data;
     }).catch(err => {
       this.lista_mangas = [];
@@ -69,37 +70,6 @@ export class HomePage {
   irParaAjuda(){
     this.navCtrl.push(AjudaPage)
   }
-
-  editarManga(manga) {
-    let alert = this.alertCtrl.create({
-      title: 'Editar mangá',
-      inputs: [
-        {
-          name: 'titulo',
-          placeholder: 'Titulo',
-          value: manga.titulo
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: data => {
-            
-          }
-        },
-        {
-          text: 'Confirmar',
-          handler: data => {
-            manga.titulo = data.titulo;
-            this.mangaProvider.atualizarManga(manga.key, manga);
-            this.presentToast("Mangá editado com sucesso");
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
   
   apagarManga(manga) {
     let alert = this.alertCtrl.create({
@@ -116,7 +86,9 @@ export class HomePage {
         {
           text: 'Excluir',
           handler: () => {
-            this.mangaProvider.excluirManga(manga.key);
+            this.mangaProvider.excluirManga(manga.key).subscribe(data => {
+              console.log(data);
+            });
             var index = this.lista_mangas_filtrado.indexOf(manga);
             if (index !== -1) {
               this.lista_mangas_filtrado.splice(index, 1);
@@ -151,19 +123,22 @@ export class HomePage {
     toast.present();
   }
 
+
   toggleFiltro(){
     this.apenasNaoCompletos = !this.apenasNaoCompletos;
   }
 
+  //Alterna o status de um mangá para completo ou incompleto(toggle)
   toggleCompleto(manga){
     manga.completo = !manga.completo;
-    this.mangaProvider.atualizarManga(manga.key, manga);
+    this.mangaProvider.salvarManga(manga.key, manga);
     if(manga.completo)
       this.presentToast("Mangá marcado como completo");
     else
       this.presentToast("Mangá marcado como não completo");
   }
   
+  //Exibe um alert com a opção pra filtrar todos os manás ou apenas os completos
   mostrarFiltro(){
     let alert = this.alertCtrl.create({
       title: 'Modo de exibição',
@@ -191,10 +166,12 @@ export class HomePage {
     alert.present();
   }
   
+  //Traz o resultado de acordo com o texto digitado no filtro
   filtrar(){
     this.lista_mangas_filtrado = this.lista_mangas.filter((x) => {return x.titulo.toUpperCase().includes(this.query.toUpperCase())});
   }
 
+  //Exibe a barra de pesquisa de mangá
   mostrarBusca(){
     this.isSearching = true;
     this.query = "";

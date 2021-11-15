@@ -5,10 +5,7 @@ import { Network } from '@ionic-native/network';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/empty' 
 /*
-  Generated class for the MangaapiProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
+  Classe que sincroniza os dados salvos com a API externa
 */
 @Injectable()
 export class MangaapiProvider {
@@ -22,7 +19,22 @@ export class MangaapiProvider {
       console.log(url);
       return this.http.get(url);
   }
+  
+  //Quando a aplicação é aberta, verifica se algum mangá falta ser sincronizado com a nuvem para manter a base de dados atualziada
+  sincronizarMangasNaEntrada(idUsuario, mangaLista){
+    for(let manga of mangaLista){
+      manga = this.removerImagemSeMuitoGrande(manga);
+      delete manga.dataModificacao;
+      delete manga.sync;
+    }
+    let url = this.apiUrl+'/manga/sincronizarNaEntrada';
+    var jsonDados = {usuario: idUsuario, dados: mangaLista};
+    let postData = JSON.stringify(jsonDados);
+    console.log(postData);
+    return this.http.post(url, postData);
+  }
 
+  //Método usado quando a sincronização é ativada e os mangás salvos localmente são sincronizados pela primeira vez
   salvarMangaEmLote(idUsuario, mangaLista){
     for(let manga of mangaLista){
       manga = this.removerImagemSeMuitoGrande(manga);
@@ -45,6 +57,7 @@ export class MangaapiProvider {
     let mangaSalvar = Object.assign({}, manga);
     this.removerImagemSeMuitoGrande(mangaSalvar);
     delete mangaSalvar.dataModificacao;
+    delete mangaSalvar.sync;
     let url = this.apiUrl+'/manga/post';
     let postData = {
       "novo": true,
@@ -61,6 +74,7 @@ export class MangaapiProvider {
     let mangaSalvar = Object.assign({}, manga);
     this.removerImagemSeMuitoGrande(mangaSalvar);
     delete mangaSalvar.dataModificacao;
+    delete mangaSalvar.sync;
     let url = this.apiUrl+'/manga/post';
     let postData = {
       "novo": false,
@@ -79,11 +93,10 @@ export class MangaapiProvider {
       "chave": chave,
       "id_usuario": idUsuario,
     }
-    console.log(url);
-    console.log(JSON.stringify(postData));
-    return this.http.post(url, postData)
+    return this.http.post(url, postData);
   }
 
+  //Se a imagem tiver o arquivo no formato blob(no caso uma foto tirada pela camera), remove a foto pra não sobrecarregar
   private removerImagemSeMuitoGrande(manga){
     if(manga.imagem && manga.imagem.length > 150){
       console.log("removeu imagem");
@@ -92,7 +105,8 @@ export class MangaapiProvider {
     return manga;
   }
 
-  public ativarSincronizacao(email, senha, listaMangas){
+  //Cadastra o usuário no banco de dados externo e ativa a sincronização
+  public ativarSincronizacao(email, senha){
       let url = this.apiUrl+'/manga/cadastrarUsuario';
       let postData = {
         "email": email,
@@ -102,6 +116,7 @@ export class MangaapiProvider {
       return this.http.post(url, postData);
   }
 
+  //Método de login, somente usado quando o usuário está cadastrado
   login(email, senha){
       let url = this.apiUrl+'/manga/login';
       let postData = {
@@ -113,6 +128,7 @@ export class MangaapiProvider {
       return this.http.post(url, postData);
   }
 
+  //Método de logoff, usado pra sair da conta que está logada
   desativarSincronizacao(email){
     let url = this.apiUrl+'/manga/apagarDadosUsuario';
     let postData = {

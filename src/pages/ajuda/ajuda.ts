@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AdMobFree } from '@ionic-native/admob-free';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AdsProvider } from '../../providers/ads/ads';
+import { SincronizacaoPage } from '../sincronizacao/sincronizacao';
 
 /**
  * Generated class for the AjudaPage page.
@@ -29,5 +30,9 @@ export class AjudaPage {
   ionViewDidLeave(){
     this.ads.hideBanner();
   }
+
+  irParaSincronizacao(){
+    this.navCtrl.push(SincronizacaoPage);
+}
 
 }

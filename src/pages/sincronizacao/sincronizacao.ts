@@ -51,9 +51,11 @@ export class SincronizacaoPage {
 
   entrar(){
     this.mangaApi.login(this.email, Md5.hashStr(this.senha)).subscribe(data => {
+      console.log("Usuario");
+      console.log(data);
       this.mangaProvider.salvarUsuario(data);
       this.usuario = data;
-      this.mangaApi.listarMangasPorUsuario(this.usuario.id_usuario).subscribe(data => {
+      this.mangaApi.listarMangasPorUsuario(this.usuario.idUsuario).subscribe(data => {
         var array = data as Array<any>;
         console.log(data);
         for(let manga of array){

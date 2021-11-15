@@ -36,6 +36,8 @@ export class CapitulosMangaPage {
     if(this.isNovoManga){
       this.presentToast("Mangá salvo com sucesso");
       this.navCtrl.pop()
+    }else{
+      this.provider.salvarManga(this.manga.key, this.manga);
     }
   }
 
@@ -43,7 +45,7 @@ export class CapitulosMangaPage {
     let novoVolume = {st: "c"}
     this.manga.uComprado =this.manga.lista.length + 1;
     this.manga.lista.push(novoVolume);
-    this.provider.atualizarManga(this.manga.key, this.manga);
+    this.provider.atualizarVolumeManga(this.manga.key, this.manga);
   }
 
   removerVolume(){
@@ -53,7 +55,7 @@ export class CapitulosMangaPage {
       if(this.manga.uLido == this.manga.lista.length)
         this.manga.uLido--;
       this.manga.lista.pop();
-      this.provider.atualizarManga(this.manga.key, this.manga);
+      this.provider.atualizarVolumeManga(this.manga.key, this.manga);
     }
   }
 
@@ -93,7 +95,7 @@ export class CapitulosMangaPage {
         break;
     }
     
-    this.provider.atualizarManga(this.manga.key, this.manga);
+    this.provider.atualizarVolumeManga(this.manga.key, this.manga);
   }
 
   presentToast(msg) {

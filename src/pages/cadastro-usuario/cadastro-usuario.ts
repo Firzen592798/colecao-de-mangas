@@ -34,11 +34,12 @@ export class CadastroUsuarioPage {
     return re.test(email);
   }
 
+  //Prossegue com o cadastro de um usuário no banco de dados. Caso o usuário já tenha mangás cadastrados, faz a sincronização com o servidor
   cadastrar(){
     if(this.senha == this.confirmasenha){
       if(this.validarEmail(this.email)){
         var listaMangas = this.navParams.get("lista_mangas");
-        this.mangaApi.ativarSincronizacao(this.email, Md5.hashStr(this.senha), listaMangas).subscribe(usuario => {
+        this.mangaApi.ativarSincronizacao(this.email, Md5.hashStr(this.senha)).subscribe(usuario => {
           this.mangaApi.salvarMangaEmLote(usuario["idUsuario"], listaMangas)
           console.log("Acerto");
           console.log(usuario);
