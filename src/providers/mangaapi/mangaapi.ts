@@ -1,16 +1,17 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Network } from '@ionic-native/network';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/empty' 
+import { AppConstants } from '../../app/app.constants';
 /*
   Classe que sincroniza os dados salvos com a API externa
 */
 @Injectable()
 export class MangaapiProvider {
-  apiUrl: String = "http://localhost/index.php";  
-  constructor(public http: HttpClient, public localStorage: Storage, public network: Network) {
+  apiUrl: String = this.constants.apiUrl;  
+  constructor(public http: HttpClient, public localStorage: Storage, public network: Network, public constants: AppConstants) {
     
   }
 
@@ -31,7 +32,10 @@ export class MangaapiProvider {
     var jsonDados = {usuario: idUsuario, dados: mangaLista};
     let postData = JSON.stringify(jsonDados);
     console.log(postData);
-    return this.http.post(url, postData);
+    return fetch(url, {
+      method: 'post',
+      body: JSON.stringify(postData)
+    });
   }
 
   //Método usado quando a sincronização é ativada e os mangás salvos localmente são sincronizados pela primeira vez
@@ -46,10 +50,9 @@ export class MangaapiProvider {
     console.log(jsonDados);
     let postData = JSON.stringify(jsonDados);
     console.log(postData);
-    this.http.post(url, postData).subscribe((result: any) => {
-      console.log(result['_body']);
-    }, error => {
-      console.log(error);
+    return fetch(url, {
+      method: 'post',
+      body: JSON.stringify(postData)
     });
   }
 
@@ -67,7 +70,10 @@ export class MangaapiProvider {
     }
     console.log("Enviando data");
     console.log(postData);
-    return this.http.post(url, postData);
+    return fetch(url, {
+      method: 'post',
+      body: JSON.stringify(postData)
+    });
   }
 
   atualizarManga(key, idUsuario, manga){
@@ -84,7 +90,10 @@ export class MangaapiProvider {
     }
     console.log("Enviando data");
     console.log(JSON.stringify(postData));
-    return this.http.post(url, postData);
+    return fetch(url, {
+      method: 'post',
+      body: JSON.stringify(postData)
+    });
   }
   
   removerManga(chave, idUsuario){
@@ -93,7 +102,10 @@ export class MangaapiProvider {
       "chave": chave,
       "id_usuario": idUsuario,
     }
-    return this.http.post(url, postData);
+    return fetch(url, {
+      method: 'post',
+      body: JSON.stringify(postData)
+    });
   }
 
   //Se a imagem tiver o arquivo no formato blob(no caso uma foto tirada pela camera), remove a foto pra não sobrecarregar
@@ -113,7 +125,10 @@ export class MangaapiProvider {
         "senha": senha,
       }
       //this.salvarMangaEmLote(13, listaMangas);
-      return this.http.post(url, postData);
+      return fetch(url, {
+        method: 'post',
+        body: JSON.stringify(postData)
+      });
   }
 
   //Método de login, somente usado quando o usuário está cadastrado
@@ -125,7 +140,10 @@ export class MangaapiProvider {
       }
       console.log(url);
       console.log(postData);
-      return this.http.post(url, postData);
+      return fetch(url, {
+        method: 'post',
+        body: JSON.stringify(postData)
+      });
   }
 
   //Método de logoff, usado pra sair da conta que está logada
@@ -134,7 +152,9 @@ export class MangaapiProvider {
     let postData = {
       "email": email,
     }
-    console.log(postData);
-    return this.http.post(url, postData);
+    return fetch(url, {
+      method: 'post',
+      body: JSON.stringify(postData)
+    });
   }
 }

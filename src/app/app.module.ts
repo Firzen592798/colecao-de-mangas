@@ -22,6 +22,7 @@ import { Navbar } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import { MangaapiProvider } from '../providers/mangaapi/mangaapi';
 import { CadastroUsuarioPageModule } from '../pages/cadastro-usuario/cadastro-usuario.module';
+import { AppConstants } from './app.constants';
 @NgModule({
   declarations: [
     MyApp,
@@ -58,6 +59,7 @@ import { CadastroUsuarioPageModule } from '../pages/cadastro-usuario/cadastro-us
     Camera,
     Network,
     MangaapiProvider,
+    AppConstants
   ]
 })
 export class AppModule {}

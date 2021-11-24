@@ -11,7 +11,7 @@ import { AdMobFree } from '@ionic-native/admob-free';
 import { AdsProvider } from '../../providers/ads/ads';
 import { SincronizacaoPage } from '../sincronizacao/sincronizacao';
 import { MangaapiProvider } from '../../providers/mangaapi/mangaapi';
-
+import { AppConstants } from '../../app/app.constants';
 declare var admob;
 @Component({
   selector: 'page-home',
@@ -27,12 +27,14 @@ export class HomePage {
 
   @ViewChild('search') search:TextInput;
 
-  constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public mangaProvider: MangaProvider, public mangaApi: MangaapiProvider, public alertCtrl: AlertController, public toastCtrl: ToastController, public ads: AdsProvider) {
+  constructor(private constants: AppConstants, public navCtrl: NavController, public malProvider: MalapiProvider, public mangaProvider: MangaProvider, public mangaApi: MangaapiProvider, public alertCtrl: AlertController, public toastCtrl: ToastController, public ads: AdsProvider) {
   }
 
   ionViewDidEnter(){
-    //this.ads.loadInterstitial();
-
+    this.ads.loadInterstitial();
+    /*this.mangaApi.listarMangasPorUsuario(74).subscribe(data => {
+      console.log(data);
+    });*/
     this.mangaProvider.listar().then(data => {
       this.lista_mangas = data;
       this.mangaProvider.sincronizarMangas(this.lista_mangas);
@@ -86,7 +88,7 @@ export class HomePage {
         {
           text: 'Excluir',
           handler: () => {
-            this.mangaProvider.excluirManga(manga.key).subscribe(data => {
+            this.mangaProvider.excluirManga(manga.key).then(data => {
               console.log(data);
             });
             var index = this.lista_mangas_filtrado.indexOf(manga);

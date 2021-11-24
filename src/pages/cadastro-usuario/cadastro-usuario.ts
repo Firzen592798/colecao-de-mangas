@@ -39,7 +39,7 @@ export class CadastroUsuarioPage {
     if(this.senha == this.confirmasenha){
       if(this.validarEmail(this.email)){
         var listaMangas = this.navParams.get("lista_mangas");
-        this.mangaApi.ativarSincronizacao(this.email, Md5.hashStr(this.senha)).subscribe(usuario => {
+        this.mangaApi.ativarSincronizacao(this.email, Md5.hashStr(this.senha)).then(usuario => {
           this.mangaApi.salvarMangaEmLote(usuario["idUsuario"], listaMangas)
           console.log("Acerto");
           console.log(usuario);

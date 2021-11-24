@@ -21,6 +21,8 @@ export class MangaProvider {
   }
 
   public salvarUsuario(usuario: any){
+    console.log("salvando usuario");
+    console.log(usuario);
     this.localStorage.set("usuario", usuario); 
     this.usuario = usuario;
   }
@@ -54,30 +56,24 @@ export class MangaProvider {
 
     if(this.usuario){//Se o usuário está logado, o app vai tentar não só salvar mas sincronizar os dados na nuvem
       if(novo){
-        this.mangaapi.salvarManga(key, this.usuario.idUsuario, manga).subscribe(data => {
+        this.mangaapi.salvarManga(key, this.usuario.idUsuario, manga).then(data => {
           console.log(data);
           manga.sync = true;
           console.log("acerto");
-        }, errorData => {
+          this.localStorage.set(key, manga);
+        }).catch((error) => {
           manga.sync = false;
-          console.log(errorData);
-          console.log("error data");
-        }).add(()=>{
-            console.log("complete novo");
-            this.localStorage.set(key, manga); 
+          console.log(error);
         });
       }else{
-        this.mangaapi.atualizarManga(key, this.usuario.idUsuario, manga).subscribe(data => {
+        this.mangaapi.atualizarManga(key, this.usuario.idUsuario, manga).then(data => {
           console.log(data);
           console.log("acerto");
           manga.sync = true;
-        }, errorData => {
-          console.log("error data");
-          console.log(errorData);
-          manga.sync = false;
-        }).add(()=>{
-          console.log("complete att");
           this.localStorage.set(key, manga); 
+        }).catch((error) => {
+          manga.sync = false;
+          console.log(error);
         });
       }
     }else{
@@ -173,7 +169,7 @@ export class MangaProvider {
   public sincronizarMangas(listaMangas: any){
     let listaMangasSync =  listaMangas.filter(x => x.sync == false)
     if(this.usuario && listaMangasSync.length > 0){
-      this.mangaapi.sincronizarMangasNaEntrada(this.usuario.idUsuario, listaMangasSync).subscribe(result => {
+      this.mangaapi.sincronizarMangasNaEntrada(this.usuario.idUsuario, listaMangasSync).then(result => {
         console.log(result["linhasAfetadas"]);
         if(result["linhasAfetadas"] > 0){
           for(let manga of listaMangasSync){

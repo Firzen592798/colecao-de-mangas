@@ -50,14 +50,15 @@ export class SincronizacaoPage {
   }
 
   entrar(){
-    this.mangaApi.login(this.email, Md5.hashStr(this.senha)).subscribe(data => {
-      console.log("Usuario");
-      console.log(data);
-      this.mangaProvider.salvarUsuario(data);
-      this.usuario = data;
+    this.mangaApi.login(this.email, Md5.hashStr(this.senha))
+    .then((resp) => resp.json())
+    .then(function(usuario) {
+      console.log(usuario);
+      this.mangaProvider.salvarUsuario(usuario);
+      this.usuario = usuario;
       this.mangaApi.listarMangasPorUsuario(this.usuario.idUsuario).subscribe(data => {
         var array = data as Array<any>;
-        console.log(data);
+        
         for(let manga of array){
           console.log(manga);
           this.mangaProvider.salvarManga(manga["key"], manga);
@@ -68,12 +69,13 @@ export class SincronizacaoPage {
         console.log(errorData);
         this.presentToast("Erro");
       });
-    }, errorData => {
-      if(errorData.statusText == "Unknown Error"){
+    }).catch(errorData => {
+      console.log(errorData);
+      /*if(errorData.statusText == "Unknown Error"){
         this.presentToast("Ocorreu um erro de conexão");
       }else{
         this.presentToast(errorData.error.mensagem);
-      }
+      }*/
     });
     
   }
