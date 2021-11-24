@@ -11,6 +11,7 @@ import { AdMobFree } from '@ionic-native/admob-free';
 import { AdsProvider } from '../../providers/ads/ads';
 import { SincronizacaoPage } from '../sincronizacao/sincronizacao';
 import { MangaapiProvider } from '../../providers/mangaapi/mangaapi';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 declare var admob;
 @Component({
@@ -27,11 +28,27 @@ export class HomePage {
 
   @ViewChild('search') search:TextInput;
 
-  constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public mangaProvider: MangaProvider, public mangaApi: MangaapiProvider, public alertCtrl: AlertController, public toastCtrl: ToastController, public ads: AdsProvider) {
+  constructor(public http: HttpClient,public navCtrl: NavController, public malProvider: MalapiProvider, public mangaProvider: MangaProvider, public mangaApi: MangaapiProvider, public alertCtrl: AlertController, public toastCtrl: ToastController, public ads: AdsProvider) {
   }
 
   ionViewDidEnter(){
     //this.ads.loadInterstitial();
+    //let url = "https://colecaodemangas.000webhostapp.com/index.php/manga/list?usuario=74";
+    let url = "https://colecaodemangas.000webhostapp.com/index.php/manga/login";
+    console.log(url);
+    var data = {"email" : "augusto@imd.ufrn.br", "senha" : "202cb962ac59075b964b07152d234b70"};
+    this.http.post(url, data).subscribe(data => {
+      console.log(data);
+    });
+
+    fetch(url, {
+      method: 'post',
+      body: JSON.stringify(data)
+    }).then((resp) => resp.json())
+    .then(function(data) {
+      console.log("Fetch");
+      console.log(data);
+    });
 
     this.mangaProvider.listar().then(data => {
       this.lista_mangas = data;

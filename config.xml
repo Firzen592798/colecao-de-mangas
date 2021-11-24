@@ -5,8 +5,13 @@
     <author email="firzen592798@gmail.com" href="http://ionicframework.com/">Firzen</author>
     <content src="index.html" />
     <access origin="*" />
+    <allow-intent href="*" />
+    <allow-navigation href="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+    <allow-navigation href="http://*/*" />
+    <allow-navigation href="https://*/*" />
+    <allow-navigation href="data:*" />
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
@@ -99,7 +104,6 @@
     <plugin name="cordova-plugin-whitelist" spec="1.3.3" />
     <plugin name="cordova-plugin-device" spec="2.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
-    <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-statusbar" spec="https://github.com/apache/cordova-plugin-statusbar.git" />
     <plugin name="cordova-plugin-admob-free" spec="^0.27.0">
@@ -110,5 +114,6 @@
     </plugin>
     <plugin name="cordova-plugin-android-permissions" spec="^1.1.2" />
     <plugin name="cordova-plugin-network-information" spec="^2.0.2" />
+    <plugin name="cordova-plugin-ionic-webview" spec="^5.0.0" />
     <engine name="android" spec="9.0.0" />
 </widget>

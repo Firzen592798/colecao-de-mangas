@@ -60,8 +60,6 @@ export class CapitulosMangaPage {
   }
 
   alterarStatus(volume, numero){
-    console.log(volume);
-    console.log(numero);
     switch(volume.st){
       case "c":
         volume.st = "l";

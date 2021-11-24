@@ -23,7 +23,7 @@
       <div color="background">
         <ion-row>
           <ion-col col-3> 
-            <img width="50" height="50" src="../assets/imgs/icon_small.png">
+            <img width="50" height="50" src="../../assets/imgs/icon_small.png">
           </ion-col>
           <ion-col style="padding-top: 12px;">
             <strong>Coleção de Mangás</strong>
@@ -71,7 +71,7 @@
       <ion-item class="item-manga">
         <ion-thumbnail item-start>
           <img *ngIf="manga.imagem" [src]="manga.imagem">
-          <img *ngIf="!manga.imagem" src="../assets/imgs/manga.png">
+          <img *ngIf="!manga.imagem" src="../../assets/imgs/manga.png">
         </ion-thumbnail>
         <ion-card-title text-wrap>
           {{manga.titulo}}

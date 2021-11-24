@@ -4,13 +4,14 @@ import { Storage } from '@ionic/storage';
 import { Network } from '@ionic-native/network';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/empty' 
+import { AppConstants } from '../../app/app.constants';
 /*
   Classe que sincroniza os dados salvos com a API externa
 */
 @Injectable()
 export class MangaapiProvider {
-  apiUrl: String = "http://localhost/index.php";  
-  constructor(public http: HttpClient, public localStorage: Storage, public network: Network) {
+  apiUrl: String = this.appConstants.apiUrl;  
+  constructor(public http: HttpClient, public localStorage: Storage, public network: Network, public appConstants: AppConstants) {
     
   }
 
@@ -119,6 +120,7 @@ export class MangaapiProvider {
   //Método de login, somente usado quando o usuário está cadastrado
   login(email, senha){
       let url = this.apiUrl+'/manga/login';
+      console.log(url);
       let postData = {
         "email": email,
         "senha": senha,
