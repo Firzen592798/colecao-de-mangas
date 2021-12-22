@@ -21,6 +21,8 @@ export class MangaProvider {
   }
 
   public salvarUsuario(usuario: any){
+    console.log("salvando usuario");
+    console.log(usuario);
     this.localStorage.set("usuario", usuario); 
     this.usuario = usuario;
   }

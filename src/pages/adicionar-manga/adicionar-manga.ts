@@ -36,29 +36,22 @@ export class AdicionarMangaPage {
   }
 
   ionViewDidLoad() {
-    
-    //console.log('ionViewDidLoad AdicionarMangaPage');
-    /*this.malProvider.getMangas("One Piece").then((mangas) => {
-      console.log(mangas);
-    });*/
+
   }
 
   ionViewDidEnter(){
     if(this.mostrarAd){
-      //console.log("Mostrar ad");
       this.ads.showInterstitial();
     }
   }
 
   carregarAutocomplete(){
-    //console.log("a");
     this.mangaAutocomplete = [{titulo: "Carregando...", imagem: null}];
     if(this.manga.titulo === undefined || this.manga.titulo.length == 0){
       this.mangaAutocomplete = [];
     }else{
       if(this.manga.titulo.length >= 3){
         this.mangaAutocomplete = [{titulo: "Carregando...", imagem: null}];
-        //this.mangaAutocomplete = [{"titulo":"Bleach","imagem":"https://cdn.myanimelist.net/images/manga/2/180089.jpg?s=6370e41455cb4d19c56a475065a69cde"}];
         this.malProvider.getMangas(this.manga.titulo).then((mangas) => {
           this.mangaAutocomplete = mangas;
         }).catch((error) => {
@@ -96,7 +89,6 @@ export class AdicionarMangaPage {
         this.mangaProvider.salvarManga(this.manga.key, this.manga);
         this.navCtrl.pop();
         this.presentToast("Mangá salvo com sucesso");
-        //this.navCtrl.push(CapitulosMangaPage, {manga: this.manga, novoManga: false});
       } 
     }
   }
@@ -109,7 +101,7 @@ export class AdicionarMangaPage {
     });
   
     toast.onDidDismiss(() => {
-      //console.log('Dismissed toast');
+
     });
   
     toast.present();
@@ -129,25 +121,15 @@ export class AdicionarMangaPage {
       targetHeight: 350, 
       targetWidth: 225,
       correctOrientation: true,
-      //saveToPhotoAlbum: true,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      //destinationType: this.camera.DestinationType.FILE_URI,
-      //allowEdit: true
     }
     
     this.camera.getPicture(options).then((imageData) => {
-    // imageData is either a base64 encoded string or a file URI
-    // If it's base64 (DATA_URL):
-    //alert(imageData);
     this.manga.imagem = 'data:image/jpeg;base64,' + imageData;
-    //alert(this.image);
-    //alert(this.domSanitizer.bypassSecurityTrustUrl(this.image));
     }, (err) => {
       alert(err);
-    // Handle error
     });
   }
 }

@@ -57,7 +57,7 @@ export class SincronizacaoPage {
       that.mangaProvider.salvarUsuario(data);
       that.mangaApi.listarMangasPorUsuario(data.idUsuario).subscribe(data => {
         var array = data as Array<any>;
-        console.log(data);
+        
         for(let manga of array){
           console.log(manga);
           that.mangaProvider.salvarManga(manga["key"], manga);
