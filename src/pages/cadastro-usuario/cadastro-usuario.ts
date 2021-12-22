@@ -39,7 +39,7 @@ export class CadastroUsuarioPage {
     if(this.senha == this.confirmasenha){
       if(this.validarEmail(this.email)){
         var listaMangas = this.navParams.get("lista_mangas");
-        this.mangaApi.ativarSincronizacao(this.email, Md5.hashStr(this.senha)).subscribe(usuario => {
+        this.mangaApi.ativarSincronizacao(this.email, Md5.hashStr(this.senha)).then(usuario => {
           this.mangaApi.salvarMangaEmLote(usuario["idUsuario"], listaMangas)
           console.log("Acerto");
           console.log(usuario);
@@ -47,9 +47,9 @@ export class CadastroUsuarioPage {
           this.presentToast("Cadastro finalizado com sucesso. Os dados dos seus mangás já estão guardados no nosso banco de dados online e serão atualizados a cada mangá adicionado e/ou atualizado");
           this.navCtrl.pop();
           this.navCtrl.pop();
-        }, errorData => {
-          this.presentToast(errorData.error.mensagem);
-        });
+        }).catch(error => {
+          this.presentToast(error.message);
+        });  
       }else{
         this.presentToast("E-mail inválido");
       }

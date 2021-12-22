@@ -21,12 +21,13 @@ export class SincronizacaoPage {
   email: string = "";
   senha: string = "";
   confirmasenha: string = "";
-  usuario: any = null;
+  usuario: any = {};
   constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public mangaProvider: MangaProvider, public mangaApi: MangaapiProvider) {
   }
 
   ionViewDidEnter(){
     this.usuario = this.mangaProvider.usuario;
+    console.log(this.usuario);
   }
 
   ionViewDidLoad() {
@@ -50,32 +51,26 @@ export class SincronizacaoPage {
   }
 
   entrar(){
-    this.mangaApi.login(this.email, Md5.hashStr(this.senha)).subscribe(data => {
-      console.log("Usuario");
-      console.log(data);
-      this.mangaProvider.salvarUsuario(data);
-      this.usuario = data;
-      this.mangaApi.listarMangasPorUsuario(this.usuario.idUsuario).subscribe(data => {
+    var that = this;
+    this.mangaApi.login(this.email, Md5.hashStr(this.senha)).then(function(data){
+      that.usuario = data;
+      that.mangaProvider.salvarUsuario(data);
+      that.mangaApi.listarMangasPorUsuario(data.idUsuario).subscribe(data => {
         var array = data as Array<any>;
         console.log(data);
         for(let manga of array){
           console.log(manga);
-          this.mangaProvider.salvarManga(manga["key"], manga);
+          that.mangaProvider.salvarManga(manga["key"], manga);
         } 
-        this.presentToast("Seus mangás foram sincronizados");
-        this.navCtrl.pop();
+        that.presentToast("Seus mangás foram sincronizados");
+        that.navCtrl.pop();
       }, errorData => {
         console.log(errorData);
-        this.presentToast("Erro");
+        that.presentToast("Erro");
       });
-    }, errorData => {
-      if(errorData.statusText == "Unknown Error"){
-        this.presentToast("Ocorreu um erro de conexão");
-      }else{
-        this.presentToast(errorData.error.mensagem);
-      }
-    });
-    
+    }).catch(error => {
+      this.presentToast(error.message);
+    });    
   }
 
   presentToast(msg) {

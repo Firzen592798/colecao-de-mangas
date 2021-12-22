@@ -51,37 +51,34 @@ export class MangaProvider {
         manga.uLido = manga.uComprado;
       }
     }
-
+    var that = this;
     if(this.usuario){//Se o usuário está logado, o app vai tentar não só salvar mas sincronizar os dados na nuvem
       if(novo){
-        this.mangaapi.salvarManga(key, this.usuario.idUsuario, manga).subscribe(data => {
+        this.mangaapi.salvarManga(key, this.usuario.idUsuario, manga).then(function(data){
           console.log(data);
           manga.sync = true;
           console.log("acerto");
-        }, errorData => {
+          that.localStorage.set(key, manga); 
+        }).catch(error => {
+          console.log(error);
           manga.sync = false;
-          console.log(errorData);
-          console.log("error data");
-        }).add(()=>{
-            console.log("complete novo");
-            this.localStorage.set(key, manga); 
-        });
+          that.localStorage.set(key, manga);
+        });  
+        //}).add(()=>{
+            //console.log("complete novo");
+            //this.localStorage.set(key, manga); 
       }else{
-        this.mangaapi.atualizarManga(key, this.usuario.idUsuario, manga).subscribe(data => {
+        this.mangaapi.atualizarManga(key, this.usuario.idUsuario, manga).then(function(data){
           console.log(data);
-          console.log("acerto");
           manga.sync = true;
-        }, errorData => {
-          console.log("error data");
-          console.log(errorData);
+          that.localStorage.set(key, manga); 
+        }).catch(error => {
+          console.log(error);
           manga.sync = false;
-        }).add(()=>{
-          console.log("complete att");
-          this.localStorage.set(key, manga); 
-        });
+          that.localStorage.set(key, manga); 
+        });   
       }
     }else{
-      console.log("Não tem usuario");
       console.log(manga);
       manga.sync = false;
       this.localStorage.set(key, manga); 
@@ -172,18 +169,22 @@ export class MangaProvider {
   //Ao abrir o aplicativo, pega todos os mangás que estão com sync = false e tentam sincronizar com o banco de dados exterior
   public sincronizarMangas(listaMangas: any){
     let listaMangasSync =  listaMangas.filter(x => x.sync == false)
+    var that = this;
     if(this.usuario && listaMangasSync.length > 0){
-      this.mangaapi.sincronizarMangasNaEntrada(this.usuario.idUsuario, listaMangasSync).subscribe(result => {
-        console.log(result["linhasAfetadas"]);
+      this.mangaapi.sincronizarMangasNaEntrada(this.usuario.idUsuario, listaMangasSync).then(function(result){
+        //console.log("sincronizarNaEntrada");
+        //console.log(result);
         if(result["linhasAfetadas"] > 0){
           for(let manga of listaMangasSync){
             manga.sync = true;
-            this.localStorage.set(manga.key, manga); 
+            that.localStorage.set(manga.key, manga); 
           }
         }
-      }, errorData => {
-        console.log(errorData);
-      });
+      }).catch(error => {
+        console.log(error);
+        return error;
+        //this.presentToast(error.message);
+      });  
     }
   }
 }

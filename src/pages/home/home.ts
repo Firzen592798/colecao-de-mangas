@@ -34,21 +34,36 @@ export class HomePage {
   ionViewDidEnter(){
     //this.ads.loadInterstitial();
     //let url = "https://colecaodemangas.000webhostapp.com/index.php/manga/list?usuario=74";
-    let url = "https://colecaodemangas.000webhostapp.com/index.php/manga/login";
+    //let url = "https://colecaodemangas.000webhostapp.com/index.php/manga/login";
+    /*let url = "http://localhost/index.php/manga/login";
     console.log(url);
-    var data = {"email" : "augusto@imd.ufrn.br", "senha" : "202cb962ac59075b964b07152d234b70"};
+    var data = {"email" : "augusto@imd.ufrn.br", "senha" : "202cb962ac59075b964b07152d234b70a"};
     this.http.post(url, data).subscribe(data => {
       console.log(data);
-    });
+    });*/
 
+    /*fetch(url, {
+      method: 'post',
+      body: JSON.stringify(data)
+    }).then(function(data) {
+      
+      data.json().then(function(result) {
+        console.log(result);
+      })
+    }).catch(function(err) { 
+      console.error(err);
+    });*/
+
+    /*});
     fetch(url, {
       method: 'post',
       body: JSON.stringify(data)
     }).then((resp) => resp.json())
     .then(function(data) {
-      console.log("Fetch");
       console.log(data);
-    });
+    }).catch(function(error){
+
+    });*/
 
     this.mangaProvider.listar().then(data => {
       this.lista_mangas = data;
@@ -103,7 +118,7 @@ export class HomePage {
         {
           text: 'Excluir',
           handler: () => {
-            this.mangaProvider.excluirManga(manga.key).subscribe(data => {
+            this.mangaProvider.excluirManga(manga.key).then(data => {
               console.log(data);
             });
             var index = this.lista_mangas_filtrado.indexOf(manga);

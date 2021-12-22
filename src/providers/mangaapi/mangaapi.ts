@@ -31,8 +31,24 @@ export class MangaapiProvider {
     let url = this.apiUrl+'/manga/sincronizarNaEntrada';
     var jsonDados = {usuario: idUsuario, dados: mangaLista};
     let postData = JSON.stringify(jsonDados);
+    console.log(url);
+    console.log("Post data");
     console.log(postData);
-    return this.http.post(url, postData);
+    return fetch(url, {
+      method: 'post',
+      body: postData
+    }).then((response) => {
+      if(response.ok){
+        //console.log(response.text);
+        //return response.text();
+        return response.json();
+      }else{
+        return response.json().then(data => {
+        throw new Error(data.mensagem);
+        }
+       );
+     }
+    });
   }
 
   //Método usado quando a sincronização é ativada e os mangás salvos localmente são sincronizados pela primeira vez
@@ -47,11 +63,20 @@ export class MangaapiProvider {
     console.log(jsonDados);
     let postData = JSON.stringify(jsonDados);
     console.log(postData);
-    this.http.post(url, postData).subscribe((result: any) => {
+
+    return fetch(url, {
+      method: 'post',
+      body: postData
+    }).then((response) => {
+      if(response.ok){
+        return response.json();
+      }
+    });
+    /*(this.http.post(url, postData).subscribe((result: any) => {
       console.log(result['_body']);
     }, error => {
       console.log(error);
-    });
+    });*/
   }
 
   salvarManga(key, idUsuario, manga){
@@ -68,7 +93,16 @@ export class MangaapiProvider {
     }
     console.log("Enviando data");
     console.log(postData);
-    return this.http.post(url, postData);
+    //return this.http.post(url, postData);
+
+    return fetch(url, {
+      method: 'post',
+      body: JSON.stringify(postData)
+    }).then((response) => {
+      if(response.ok){
+        return response.json();
+      }
+    });
   }
 
   atualizarManga(key, idUsuario, manga){
@@ -85,7 +119,16 @@ export class MangaapiProvider {
     }
     console.log("Enviando data");
     console.log(JSON.stringify(postData));
-    return this.http.post(url, postData);
+    //return this.http.post(url, postData);
+
+    return fetch(url, {
+      method: 'post',
+      body: JSON.stringify(postData)
+    }).then((response) => {
+      if(response.ok){
+        return response.json();
+      }
+    });
   }
   
   removerManga(chave, idUsuario){
@@ -94,7 +137,16 @@ export class MangaapiProvider {
       "chave": chave,
       "id_usuario": idUsuario,
     }
-    return this.http.post(url, postData);
+    //return this.http.post(url, postData);
+
+    return fetch(url, {
+      method: 'post',
+      body: JSON.stringify(postData)
+    }).then((response) => {
+      if(response.ok){
+        return response.json();
+      }
+    });
   }
 
   //Se a imagem tiver o arquivo no formato blob(no caso uma foto tirada pela camera), remove a foto pra não sobrecarregar
@@ -114,7 +166,15 @@ export class MangaapiProvider {
         "senha": senha,
       }
       //this.salvarMangaEmLote(13, listaMangas);
-      return this.http.post(url, postData);
+
+      return fetch(url, {
+        method: 'post',
+        body: JSON.stringify(postData)
+      }).then((response) => {
+        if(response.ok){
+          return response.json();
+        }
+      });
   }
 
   //Método de login, somente usado quando o usuário está cadastrado
@@ -125,18 +185,31 @@ export class MangaapiProvider {
         "email": email,
         "senha": senha,
       }
-      console.log(url);
-      console.log(postData);
-      return this.http.post(url, postData);
+      return fetch(url, {
+        method: 'post',
+        body: JSON.stringify(postData)
+      }).then((response) => {
+        if(response.ok){
+          return response.json();
+        }else{
+           return response.json().then(data => {
+            throw new Error(data.mensagem);
+           }
+          );
+        }
+      });
   }
 
   //Método de logoff, usado pra sair da conta que está logada
-  desativarSincronizacao(email){
+  /*desativarSincronizacao(email){
     let url = this.apiUrl+'/manga/apagarDadosUsuario';
     let postData = {
       "email": email,
     }
     console.log(postData);
-    return this.http.post(url, postData);
-  }
+    return fetch(url, {
+      method: 'post',
+      body: JSON.stringify(postData)
+    });
+  }*/
 }
