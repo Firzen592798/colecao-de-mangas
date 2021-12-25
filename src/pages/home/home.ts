@@ -12,6 +12,7 @@ import { AdsProvider } from '../../providers/ads/ads';
 import { SincronizacaoPage } from '../sincronizacao/sincronizacao';
 import { MangaapiProvider } from '../../providers/mangaapi/mangaapi';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { StatusBar } from '@ionic-native/status-bar';
 
 declare var admob;
 @Component({
@@ -28,11 +29,13 @@ export class HomePage {
 
   @ViewChild('search') search:TextInput;
 
-  constructor(public http: HttpClient,public navCtrl: NavController, public malProvider: MalapiProvider, public mangaProvider: MangaProvider, public mangaApi: MangaapiProvider, public alertCtrl: AlertController, public toastCtrl: ToastController, public ads: AdsProvider) {
+  constructor(public http: HttpClient,public navCtrl: NavController, public malProvider: MalapiProvider, public mangaProvider: MangaProvider, public mangaApi: MangaapiProvider, public alertCtrl: AlertController, public toastCtrl: ToastController, public ads: AdsProvider, public statusBar: StatusBar) {
   }
 
   ionViewDidEnter(){
-    //this.ads.loadInterstitial();
+    //.overlaysWebView(true);
+    //this.statusBar.backgroundColorByHexString("#288266");
+    this.ads.loadInterstitial();
     this.mangaProvider.listar().then(data => {
       this.lista_mangas = data;
       this.mangaProvider.sincronizarMangas(this.lista_mangas);

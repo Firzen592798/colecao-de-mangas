@@ -31,9 +31,6 @@ export class MangaapiProvider {
     let url = this.apiUrl+'/manga/sincronizarNaEntrada';
     var jsonDados = {usuario: idUsuario, dados: mangaLista};
     let postData = JSON.stringify(jsonDados);
-    console.log(url);
-    console.log("Post data");
-    console.log(postData);
     return fetch(url, {
       method: 'post',
       body: postData
