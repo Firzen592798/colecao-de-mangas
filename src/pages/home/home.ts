@@ -33,8 +33,6 @@ export class HomePage {
   }
 
   ionViewDidEnter(){
-    //.overlaysWebView(true);
-    //this.statusBar.backgroundColorByHexString("#288266");
     this.ads.loadInterstitial();
     this.mangaProvider.listar().then(data => {
       this.lista_mangas = data;

@@ -170,7 +170,12 @@ export class MangaapiProvider {
       }).then((response) => {
         if(response.ok){
           return response.json();
-        }
+        }else{
+          return response.json().then(data => {
+           throw new Error(data.mensagem);
+          }
+         );
+       }
       });
   }
 

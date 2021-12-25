@@ -11,43 +11,48 @@
 </ion-header>
 
 <ion-content padding>
-  <div *ngIf="!usuario">
-    <h3>Crie um cadastro para manter sua coleção guardada no banco de dados online</h3>
-    <br>
-    <strong>Já possui um cadastro?</strong>
-    <ion-item>
-      <ion-label floating >E-mail</ion-label>
-      <ion-input type="email" [(ngModel)]="email"></ion-input>
-    </ion-item>
+  <div *ngIf="loading">
 
-    <ion-item>
-      <ion-label floating>Senha</ion-label>
-      <ion-input type="password" [(ngModel)]="senha"></ion-input>
-    </ion-item>
+  </div>
+  <div *ngIf="!loading">
+    <div *ngIf="!usuario">
+      <h3>Crie um cadastro para manter sua coleção guardada no banco de dados online</h3>
+      <br>
+      <strong>Já possui um cadastro?</strong>
+      <ion-item>
+        <ion-label floating >E-mail</ion-label>
+        <ion-input type="email" [(ngModel)]="email"></ion-input>
+      </ion-item>
 
-    <button (click)="entrar()" block ion-button>
-      Entrar
-    </button>
+      <ion-item>
+        <ion-label floating>Senha</ion-label>
+        <ion-input type="password" [(ngModel)]="senha"></ion-input>
+      </ion-item>
 
-    <button (click)="recuperarSenha()" block ion-button>
-      Recuperar senha
-    </button>
-    <br>
-    <strong>Não possui cadastro?</strong>
-    <button (click)="irParaCadastro()" block ion-button>
-      Criar cadastro
-    </button>
+      <button (click)="entrar()" block ion-button>
+        Entrar
+      </button>
+
+      <button (click)="recuperarSenha()" block ion-button>
+        Recuperar senha
+      </button>
+      <br>
+      <strong>Não possui cadastro?</strong>
+      <button (click)="irParaCadastro()" block ion-button>
+        Criar cadastro
+      </button>
+      
+    </div>
+    <div *ngIf="usuario">
     
-  </div>
-  <div *ngIf="usuario">
-   
-    <h3>Seu usuário está logado e seus mangás estão sincronizados</h3>
-    <strong>E-mail: </strong> {{ usuario.email }}
-    <button (click)="desativarSincronizacao()" block ion-button>
-      Fazer logoff
-    </button>
-  </div>
-  <div *ngIf="!usuario"  (click)="irParaCadastro()" >
+      <h3>Seu usuário está logado e seus mangás estão sincronizados</h3>
+      <strong>E-mail: </strong> {{ usuario.email }}
+      <button (click)="desativarSincronizacao()" block ion-button>
+        Fazer logoff
+      </button>
+    </div>
+    <div *ngIf="!usuario"  (click)="irParaCadastro()" >
 
+    </div>
   </div>
 </ion-content>

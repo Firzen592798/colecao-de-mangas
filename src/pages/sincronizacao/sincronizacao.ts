@@ -22,12 +22,13 @@ export class SincronizacaoPage {
   senha: string = "";
   confirmasenha: string = "";
   usuario: any = {};
+  loading: boolean = true;
   constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public mangaProvider: MangaProvider, public mangaApi: MangaapiProvider) {
   }
 
   ionViewDidEnter(){
     this.usuario = this.mangaProvider.usuario;
-    console.log(this.usuario);
+    this.loading = false;
   }
 
   ionViewDidLoad() {
@@ -89,6 +90,6 @@ export class SincronizacaoPage {
   }
 
   recuperarSenha(){
-    this.presentToast("Por favor entre em contato com o desenvolvedor através do e-mail firzen592798@gmail.com");
+    this.presentToast("Em construção. Por favor entre em contato conosco através do e-mail firzen592798@gmail.com");
   }
 }
