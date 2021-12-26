@@ -33,6 +33,12 @@ export class HomePage {
   }
 
   ionViewDidEnter(){
+    this.mangaProvider.isPrimeiroAcesso().then(primeiroAcesso => {
+      if(primeiroAcesso){
+        this.irParaAjuda();
+      }
+    })
+
     this.ads.loadInterstitial();
     this.mangaProvider.listar().then(data => {
       this.lista_mangas = data;
@@ -98,10 +104,6 @@ export class HomePage {
             if (index !== -1) {
               this.lista_mangas.splice(index, 1);
             }
-            /*this.mangaProvider.listar().then(data => {
-              this.lista_mangas = data;
-              console.log(data);
-            });*/
             this.presentToast("Mangá excluído com sucesso");
           }
         }

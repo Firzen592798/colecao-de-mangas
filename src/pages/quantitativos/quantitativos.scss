@@ -1,6 +1,6 @@
 page-quantitativos {
     ion-item{
-        background: color($colors, card-background) !important;
+        background: color($colors, card-background-2) !important;
     }
 
     ion-card{
@@ -13,7 +13,9 @@ page-quantitativos {
     
     ion-badge{
         position: fixed;
-        right: 20px;
+        right: 1rem;
+        width: 4.5rem;
+        background-color: color($colors, secondary);
     }
 
     

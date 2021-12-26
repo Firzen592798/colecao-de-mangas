@@ -44,10 +44,6 @@
         <ion-icon class="menu-icon" name="contact" item-start></ion-icon>
         Meu cadastro
       </ion-item>
-      <!--<ion-item class="menu-item" menuToggle (click)="sair()" color="primary" >
-        <ion-icon class="menu-icon" name="close" item-start></ion-icon>
-        Sair
-      </ion-item>-->
     </ion-list>
   </ion-content>
 </ion-menu>
@@ -58,10 +54,6 @@
 
   <ion-content>
     <ion-row>
-      <!--<ion-item>
-        <ion-label>Apenas Incompletos</ion-label>
-        <ion-toggle [(ngModel)]="apenasNaoCompletos" (change)="mostrarFiltro($event)"></ion-toggle>
-      </ion-item>-->
     </ion-row>   
     <div padding *ngIf="lista_mangas && !lista_mangas.length"> 
       Você não possui mangás adicionados. <a (click)="irParaAdicionarManga()"> Clique aqui </a> para adicionar
@@ -73,8 +65,8 @@
           <img *ngIf="manga.imagem" [src]="manga.imagem">
           <img *ngIf="!manga.imagem" src="../../assets/imgs/manga.png">
         </ion-thumbnail>
-        <ion-card-title text-wrap>
-          {{manga.titulo}}
+        <ion-card-title class="cut-text">
+            {{manga.titulo}}
         </ion-card-title>
         <span style="font-weight: bold; color: grey; font-size: 1.3rem; margin-bottom: 5px;">{{manga.autor}}</span>  
         <br>    

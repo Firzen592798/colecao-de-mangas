@@ -37,15 +37,6 @@ page-home {
         height: 120px !important;
     }
 
-    .numeros-container{
-        padding: 3px;
-        //font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-        border: 1px solid black;
-        border-radius: 5px;
-        background: color($colors, card-background-2);
-        width: 190px;
-    }
-
     ion-card-title{
         padding: 0px !important;
         font-size: 1.6rem !important;
@@ -65,6 +56,12 @@ page-home {
     .menu-item{
         padding-left: 12px !important;
     }
+
+    .cut-text { 
+        text-overflow: ellipsis;
+        overflow: hidden; 
+        width: calc(100% - 0.1rem) ;
+      }
 
     $text-input-placeholder-color: white;
 }

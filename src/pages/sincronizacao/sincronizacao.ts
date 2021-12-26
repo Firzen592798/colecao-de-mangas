@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { AlertController, IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Md5 } from 'ts-md5/dist/md5';
 import { MangaProvider } from '../../providers/manga/manga';
 import { MangaapiProvider } from '../../providers/mangaapi/mangaapi';
@@ -23,7 +23,7 @@ export class SincronizacaoPage {
   confirmasenha: string = "";
   usuario: any = {};
   loading: boolean = true;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public mangaProvider: MangaProvider, public mangaApi: MangaapiProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public mangaProvider: MangaProvider, public alertCtrl: AlertController, public mangaApi: MangaapiProvider) {
   }
 
   ionViewDidEnter(){
@@ -45,10 +45,30 @@ export class SincronizacaoPage {
   }
 
   desativarSincronizacao(){
-    console.log(this.usuario);
-    this.mangaProvider.removerUsuario();
-    this.usuario = null;
-    this.presentToast("Sincronização de dados desativada com sucesso");
+    let alert = this.alertCtrl.create({
+      title: 'Deseja sair da conta?',
+      message: 'Todos os dados salvos neste dispositivo serão apagados, mas seus dados continuarão guardados na sua conta cadastrada',
+      buttons: [
+        {
+          text: 'Não',
+          role: 'cancel',
+          handler: () => {
+
+          }
+        },
+        {
+          text: 'Sim',
+          handler: () => {
+            alert.present();
+            this.usuario = null;
+            this.mangaProvider.sairDaConta();
+            this.presentToast("Você deslogou da conta");
+            this.navCtrl.pop();
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   entrar(){

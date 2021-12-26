@@ -33,6 +33,10 @@ export class AjudaPage {
 
   irParaSincronizacao(){
     this.navCtrl.push(SincronizacaoPage);
-}
+  }
+
+  voltar(){
+    this.navCtrl.pop();
+  }
 
 }

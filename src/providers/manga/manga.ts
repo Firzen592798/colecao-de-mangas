@@ -20,18 +20,22 @@ export class MangaProvider {
     });
   }
 
+  public isPrimeiroAcesso(){
+    return this.localStorage.get("versao").then((versao) => {
+      if(versao >= 1){
+        return false;
+      }
+      return true;
+    });
+  }
+
   public salvarUsuario(usuario: any){
     console.log("salvando usuario");
     console.log(usuario);
     this.localStorage.set("usuario", usuario); 
     this.usuario = usuario;
   }
-  
-  public removerUsuario(){
-    this.localStorage.remove("usuario"); 
-    this.usuario = null;
-  }
-  
+
   //Salva ou atualiza um mangá tanto localmente quanto no banco de dados online caso o usuário esteja logado
   public salvarManga(key: string, manga: any){
     var novo = manga.key ? false : true;
@@ -126,6 +130,12 @@ export class MangaProvider {
     }
   }
 
+  public sairDaConta(){
+    this.localStorage.clear();
+    this.localStorage.set("versao", 2);
+    this.usuario = null;
+  }
+
   //Atualiza o formato dos dados caso o usuário esteja entrando com a nova versão do aplicativo pela primeria vez
   public atualizarVersaoDados(){
     this.localStorage.get("versao").then((versao) => {
@@ -174,8 +184,6 @@ export class MangaProvider {
     var that = this;
     if(this.usuario && listaMangasSync.length > 0){
       this.mangaapi.sincronizarMangasNaEntrada(this.usuario.idUsuario, listaMangasSync).then(function(result){
-        //console.log("sincronizarNaEntrada");
-        //console.log(result);
         if(result["linhasAfetadas"] > 0){
           for(let manga of listaMangasSync){
             manga.sync = true;
@@ -185,7 +193,6 @@ export class MangaProvider {
       }).catch(error => {
         console.log(error);
         return error;
-        //this.presentToast(error.message);
       });  
     }
   }

@@ -16,7 +16,7 @@
     <ion-col id="col-titulo" class="ion-float-left"> 
       <ion-item> 
         <ion-label floating >Nome do mangá</ion-label>
-        <ion-input #input1 (keyup.enter)="carregarAutocomplete()" type="text" [(ngModel)]="manga.titulo"></ion-input>
+        <ion-input #input1 (keyup.enter)="carregarAutocomplete()" type="text" [(ngModel)]="manga.titulo" maxlength="120"></ion-input>
       </ion-item>
     </ion-col>
     <button id="btn-search" ion-button class="ion-button ion-float-right" (click)="$event.stopPropagation(); carregarAutocomplete()"><ion-icon name="search"></ion-icon>
@@ -47,7 +47,7 @@
 
   <ion-item>
     <ion-label floating >Autor</ion-label>
-    <ion-input #input4 maxlength=48 type="text" [(ngModel)]="manga.autor"></ion-input>
+    <ion-input #input4 maxlength="48" type="text" [(ngModel)]="manga.autor"></ion-input>
   </ion-item>
 
   
@@ -58,13 +58,6 @@
   <button  ion-button block icon-right (click)="tirarFoto()">
     {{ manga.imagem == null ? 'Tirar uma foto do mangá' : 'Substituir foto do mangá'}} <ion-icon name="camera"></ion-icon>
   </button>
-
-  <!--<img *ngIf="image" [src]="domSanitizer.bypassSecurityTrustUrl(image)" />-->
-
-
-
-  <!--<img *ngIf="image" [src]="image" />-->
-  <!--<img *ngIf="image" [src]="domSanitizer.bypassSecurityTrustUrl(image)" />-->
   
   <button ion-button block (click) = "salvar()" style="margin-top: 8px;">
     {{ manga.key == null ? 'Continuar' : 'Salvar'}} 

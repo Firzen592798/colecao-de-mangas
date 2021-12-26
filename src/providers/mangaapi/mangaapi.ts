@@ -201,17 +201,4 @@ export class MangaapiProvider {
         }
       });
   }
-
-  //Método de logoff, usado pra sair da conta que está logada
-  /*desativarSincronizacao(email){
-    let url = this.apiUrl+'/manga/apagarDadosUsuario';
-    let postData = {
-      "email": email,
-    }
-    console.log(postData);
-    return fetch(url, {
-      method: 'post',
-      body: JSON.stringify(postData)
-    });
-  }*/
 }

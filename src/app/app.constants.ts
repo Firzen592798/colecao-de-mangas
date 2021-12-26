@@ -6,6 +6,7 @@ export class AppConstants {
   public apiUrl = "http://localhost/index.php";
   public showAD = false;
   public isTestingAD = true;
+  
   /*PRODUÇÃO*/
   //public apiUrl = "https://colecaodemangas.000webhostapp.com/index.php";
   //public showAD = true;

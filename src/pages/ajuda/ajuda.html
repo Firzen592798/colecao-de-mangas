@@ -8,11 +8,9 @@
   <ion-navbar>
     <ion-title>Ajuda</ion-title>
   </ion-navbar>
-  
 </ion-header>
 
 <ion-content padding>
-  
   <p>Esse aplicativo serve para gerenciar sua coleção de <strong>mangás e light novels</strong> em suas versões físícas, 
   sendo possível cadastrar cada mangá e gerenciar individualmente cada volume de mangá de acordo com os status abaixo:</p>
   <strong>Comprado: </strong>Esse volume de mangá foi comprado, mas ainda não foi lido
@@ -23,7 +21,13 @@
   <br>
   <p>Ao cadastrar um novo título de mangá, use o <strong>botão de busca</strong> ao lado do nome do mangá para buscar a <strong>imagem</strong> e deixar sua experiência de uso com o app mais rica. O cadastro da imagem é opcional.</p>
   <p>Quando você possuir todos os mangás de uma coleção, você pode marcar que a coleção desse mangá está finalizada clicando no botão <strong>Completo</strong></p>
-  <p>Utilize a opção sincronizar </p>
   <p>Caso queira ativar a <strong>sincronização online</strong> dos seus mangás, você pode criar um cadastro <a (click)="irParaSincronizacao()">clicando aqui</a> </p>
-
 </ion-content>
+
+<ion-footer no-border no-padding style="margin:2rem 0rem !important;">
+  <div style="margin:0rem 2rem !important;">
+    <button (click)="voltar()"  block ion-button>
+      Entendi
+    </button>
+  </div>
+</ion-footer>
