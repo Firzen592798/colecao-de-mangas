@@ -126,7 +126,7 @@ export class MangaProvider {
   public excluirManga(chave){
     this.localStorage.remove(chave);
     if(this.usuario){
-      return this.mangaapi.removerManga(chave, this.usuario.idUsuario);
+      this.mangaapi.removerManga(chave, this.usuario.idUsuario);
     }
   }
 

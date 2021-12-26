@@ -93,9 +93,7 @@ export class HomePage {
         {
           text: 'Excluir',
           handler: () => {
-            this.mangaProvider.excluirManga(manga.key).then(data => {
-              console.log(data);
-            });
+            this.mangaProvider.excluirManga(manga.key);
             var index = this.lista_mangas_filtrado.indexOf(manga);
             if (index !== -1) {
               this.lista_mangas_filtrado.splice(index, 1);
