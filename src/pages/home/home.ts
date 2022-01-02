@@ -21,32 +21,47 @@ declare var admob;
 })
 
 export class HomePage {
+
   public lista_mangas: any;
   public lista_mangas_filtrado: any;
   public query: String;
   public apenasNaoCompletos: boolean = false;
   public isSearching: boolean = false;
-
+  public precisaSincronizar;
   @ViewChild('search') search:TextInput;
 
   constructor(public http: HttpClient,public navCtrl: NavController, public malProvider: MalapiProvider, public mangaProvider: MangaProvider, public mangaApi: MangaapiProvider, public alertCtrl: AlertController, public toastCtrl: ToastController, public ads: AdsProvider, public statusBar: StatusBar) {
   }
 
+  ionViewDidLoad(){
+    console.log("DidLoad")
+    this.ads.loadInterstitial();
+    this.precisaSincronizar = true;
+  }
+
   ionViewDidEnter(){
+    console.log("DidEnter")
     this.mangaProvider.isPrimeiroAcesso().then(primeiroAcesso => {
       if(primeiroAcesso){
         this.irParaAjuda();
       }
     })
-
-    this.ads.loadInterstitial();
+    console.log("listar");
     this.mangaProvider.listar().then(data => {
+      console.log("carregou lista");
+      console.log(data);
       this.lista_mangas = data;
-      this.mangaProvider.sincronizarMangas(this.lista_mangas);
       this.lista_mangas_filtrado = data;
+      if(this.precisaSincronizar){
+        this.mangaProvider.sincronizarMangas(this.lista_mangas);
+        this.precisaSincronizar = false;
+      }
     }).catch(err => {
+      console.log("Catch error");
+      console.log(err);
       this.lista_mangas = [];
       this.lista_mangas_filtrado = [];
+      this.precisaSincronizar = false;
     });
   }
 
@@ -132,7 +147,7 @@ export class HomePage {
   //Alterna o status de um mangá para completo ou incompleto(toggle)
   toggleCompleto(manga){
     manga.completo = !manga.completo;
-    this.mangaProvider.salvarManga(manga.key, manga);
+    this.mangaProvider.salvarSincronizarManga(manga.key, manga);
     if(manga.completo)
       this.presentToast("Mangá marcado como completo");
     else

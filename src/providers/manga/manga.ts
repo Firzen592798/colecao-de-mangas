@@ -30,16 +30,47 @@ export class MangaProvider {
   }
 
   public salvarUsuario(usuario: any){
-    console.log("salvando usuario");
-    console.log(usuario);
     this.localStorage.set("usuario", usuario); 
     this.usuario = usuario;
   }
 
+    //Salva um mangá tanto apenas local
+    public salvarMangaApenasLocal(key: string, manga: any){
+      this.localStorage.set(key, manga); 
+    }
+
   //Salva ou atualiza um mangá tanto localmente quanto no banco de dados online caso o usuário esteja logado
-  public salvarManga(key: string, manga: any){
+  public salvarSincronizarManga(key: string, manga: any){
     var novo = manga.key ? false : true;
-    manga.key = key;
+    var that = this;
+    if(this.usuario && navigator.onLine){//Se o usuário está logado, o app vai tentar não só salvar mas sincronizar os dados na nuvem
+      if(novo){
+        this.mangaapi.salvarManga(key, this.usuario.idUsuario, manga).then(function(data){
+          manga.sync = true;
+          that.localStorage.set(key, manga); 
+        }).catch(error => {
+          console.log(error);
+          manga.sync = false;
+          that.localStorage.set(key, manga);
+        });  
+      }else{
+        this.mangaapi.atualizarManga(key, this.usuario.idUsuario, manga).then(function(data){
+          manga.sync = true;
+          that.localStorage.set(key, manga); 
+        }).catch(error => {
+          console.log(error);
+          manga.sync = false;
+          that.localStorage.set(key, manga); 
+        });   
+      }
+    }else{
+      manga.sync = false;
+      this.localStorage.set(key, manga); 
+    }
+  }
+
+  //Todos os volumes precisam se atualizar para ficar de acordo com o status do ultimo lido e ultimo comprado. 
+  public removerInconsistenciasLidosComprados(manga: any){
     manga.dataModificacao = new Date();
     manga.uLido = manga.uLido ? parseInt(manga.uLido) : 0;
     manga.uComprado = manga.uComprado ? parseInt(manga.uComprado) : 0;
@@ -57,43 +88,9 @@ export class MangaProvider {
         manga.uLido = manga.uComprado;
       }
     }
-    var that = this;
-    if(this.usuario){//Se o usuário está logado, o app vai tentar não só salvar mas sincronizar os dados na nuvem
-      if(novo){
-        this.mangaapi.salvarManga(key, this.usuario.idUsuario, manga).then(function(data){
-          console.log(data);
-          manga.sync = true;
-          console.log("acerto");
-          that.localStorage.set(key, manga); 
-        }).catch(error => {
-          console.log(error);
-          manga.sync = false;
-          that.localStorage.set(key, manga);
-        });  
-        //}).add(()=>{
-            //console.log("complete novo");
-            //this.localStorage.set(key, manga); 
-      }else{
-        this.mangaapi.atualizarManga(key, this.usuario.idUsuario, manga).then(function(data){
-          console.log(data);
-          manga.sync = true;
-          that.localStorage.set(key, manga); 
-        }).catch(error => {
-          console.log(error);
-          manga.sync = false;
-          that.localStorage.set(key, manga); 
-        });   
-      }
-    }else{
-      console.log(manga);
-      manga.sync = false;
-      this.localStorage.set(key, manga); 
-    }
   }
 
-  //Atualiza o mangá numa operação de edição
 
-  
   //Atualiza somente os dados de mudança de status de um volume do mangá(adicionar um novo volume, mudar de comprado para lido, etc)
   //Não sincroniza online pra evitar muitas requisições
   public atualizarVolumeManga(key: string, manga: any) {
@@ -180,20 +177,22 @@ export class MangaProvider {
 
   //Ao abrir o aplicativo, pega todos os mangás que estão com sync = false e tentam sincronizar com o banco de dados exterior
   public sincronizarMangas(listaMangas: any){
-    let listaMangasSync =  listaMangas.filter(x => x.sync == false)
-    var that = this;
-    if(this.usuario && listaMangasSync.length > 0){
-      this.mangaapi.sincronizarMangasNaEntrada(this.usuario.idUsuario, listaMangasSync).then(function(result){
-        if(result["linhasAfetadas"] > 0){
-          for(let manga of listaMangasSync){
-            manga.sync = true;
-            that.localStorage.set(manga.key, manga); 
+    if(navigator.onLine){
+      let listaMangasSync =  listaMangas.filter(x => x.sync == false)
+      var that = this;
+      if(this.usuario && listaMangasSync.length > 0){
+        this.mangaapi.sincronizarMangasNaEntrada(this.usuario.idUsuario, listaMangasSync).then(function(result){
+          if(result["linhasAfetadas"] > 0){
+            for(let manga of listaMangasSync){
+              manga.sync = true;
+              that.localStorage.set(manga.key, manga); 
+            }
           }
-        }
-      }).catch(error => {
-        console.log(error);
-        return error;
-      });  
+        }).catch(error => {
+          console.log(error);
+          return error;
+        });  
+      }
     }
   }
 }

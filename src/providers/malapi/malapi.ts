@@ -17,23 +17,25 @@ export class MalapiProvider {
 
   getMangas(query: String) {
     return new Promise((resolve, reject) => {
+      
         let url = this.apiUrl+'/search/manga?limit=5&q='+query;
-        this.http.get(url)
-          .subscribe((result: any) => {
-            //resolve(result);
-            console.log(result);
-            resolve(result.results.map(function(item){
-              return {
-                malId: item.mal_id,
-                titulo: item.title,
-                imagem: item.image_url
-              }
-            }));
-            //resolve(result.results);
-          },
-          (error) => {
-            reject(error);
-          });
+        if(navigator.onLine){
+          this.http.get(url).subscribe((result: any) => {
+              resolve(result.results.map(function(item){
+                return {
+                  malId: item.mal_id,
+                  titulo: item.title,
+                  imagem: item.image_url
+                }
+              }));
+            },
+            (error) => {
+              reject(error);
+            });
+          }else{
+            console.log("erro");
+            throw new Error("Não foi possível obter informações sobre esse mangá. Verifique sua conexão com a internet");
+          }
       });
   }
 

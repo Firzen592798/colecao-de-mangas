@@ -19,6 +19,7 @@ export class CapitulosMangaPage {
 
   manga :any = {};
   isNovoManga: boolean;
+  alterouManga: boolean = false;
   classeAdd = "add";
   constructor(public navCtrl: NavController, public navParams: NavParams, public provider: MangaProvider, public toastCtrl: ToastController) {
     this.manga = navParams.get("manga");
@@ -30,14 +31,18 @@ export class CapitulosMangaPage {
       this.finalizar();
     }
   }
+  
 
   finalizar(){
-    this.navCtrl.pop()
+    console.log(this.manga);
+    this.navCtrl.pop();
     if(this.isNovoManga){
       this.presentToast("Mangá salvo com sucesso");
-      this.navCtrl.pop()
+      this.navCtrl.pop();
     }else{
-      this.provider.salvarManga(this.manga.key, this.manga);
+      if(this.alterouManga){
+        this.provider.salvarSincronizarManga(this.manga.key, this.manga);
+      }
     }
   }
 
@@ -46,6 +51,7 @@ export class CapitulosMangaPage {
     this.manga.uComprado =this.manga.lista.length + 1;
     this.manga.lista.push(novoVolume);
     this.provider.atualizarVolumeManga(this.manga.key, this.manga);
+    this.alterouManga = true;
   }
 
   removerVolume(){
@@ -57,9 +63,11 @@ export class CapitulosMangaPage {
       this.manga.lista.pop();
       this.provider.atualizarVolumeManga(this.manga.key, this.manga);
     }
+    this.alterouManga = true;
   }
 
   alterarStatus(volume, numero){
+    this.alterouManga = true;
     switch(volume.st){
       case "c":
         volume.st = "l";
@@ -92,8 +100,8 @@ export class CapitulosMangaPage {
         volume.st = "c"
         break;
     }
-    
     this.provider.atualizarVolumeManga(this.manga.key, this.manga);
+    console.log(this.manga);
   }
 
   presentToast(msg) {

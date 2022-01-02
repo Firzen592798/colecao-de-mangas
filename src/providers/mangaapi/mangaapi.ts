@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { Network } from '@ionic-native/network';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/empty' 
 import { AppConstants } from '../../app/app.constants';
@@ -11,139 +10,146 @@ import { AppConstants } from '../../app/app.constants';
 @Injectable()
 export class MangaapiProvider {
   apiUrl: String = this.appConstants.apiUrl;  
-  constructor(public http: HttpClient, public localStorage: Storage, public network: Network, public appConstants: AppConstants) {
-    
+  constructor(public http: HttpClient, public localStorage: Storage, public appConstants: AppConstants) {
+  
   }
 
   listarMangasPorUsuario(idUsuario){
+    if(navigator.onLine){
       let url = this.apiUrl+'/manga/list?usuario='+idUsuario;
       console.log(url);
       return this.http.get(url);
+    }
   }
   
   //Quando a aplicação é aberta, verifica se algum mangá falta ser sincronizado com a nuvem para manter a base de dados atualziada
   sincronizarMangasNaEntrada(idUsuario, mangaLista){
-    for(let manga of mangaLista){
-      manga = this.removerImagemSeMuitoGrande(manga);
-      delete manga.dataModificacao;
-      delete manga.sync;
-    }
-    let url = this.apiUrl+'/manga/sincronizarNaEntrada';
-    var jsonDados = {usuario: idUsuario, dados: mangaLista};
-    let postData = JSON.stringify(jsonDados);
-    return fetch(url, {
-      method: 'post',
-      body: postData
-    }).then((response) => {
-      if(response.ok){
-        //console.log(response.text);
-        //return response.text();
-        return response.json();
-      }else{
-        return response.json().then(data => {
-        throw new Error(data.mensagem);
-        }
-       );
-     }
-    });
+    if(navigator.onLine){
+      for(let manga of mangaLista){
+        manga = this.removerImagemSeMuitoGrande(manga);
+        delete manga.dataModificacao;
+        delete manga.sync;
+      }
+      let url = this.apiUrl+'/manga/sincronizarNaEntrada';
+      var jsonDados = {usuario: idUsuario, dados: mangaLista};
+      let postData = JSON.stringify(jsonDados);
+      console.log(url);
+      console.log(postData);
+      return fetch(url, {
+        method: 'post',
+        body: postData
+      }).then((response) => {
+        if(response.ok){
+          //console.log(response.text);
+          //return response.text();
+          return response.json();
+        }else{
+          return response.json().then(data => {
+          throw new Error(data.mensagem);
+          }
+        );
+      }
+      });
+    }else{
+      console.log("Sem internet");
+    } 
   }
 
   //Método usado quando a sincronização é ativada e os mangás salvos localmente são sincronizados pela primeira vez
   salvarMangaEmLote(idUsuario, mangaLista){
-    for(let manga of mangaLista){
-      manga = this.removerImagemSeMuitoGrande(manga);
-      delete manga.dataModificacao;
-    }
-    console.log("Salvando em lote");
-    let url = this.apiUrl+'/manga/salvarEmLote';
-    var jsonDados = {usuario: idUsuario, dados: mangaLista};
-    console.log(jsonDados);
-    let postData = JSON.stringify(jsonDados);
-    console.log(postData);
-
-    return fetch(url, {
-      method: 'post',
-      body: postData
-    }).then((response) => {
-      if(response.ok){
-        return response.json();
+    if(navigator.onLine){
+      for(let manga of mangaLista){
+        manga = this.removerImagemSeMuitoGrande(manga);
+        delete manga.dataModificacao;
       }
-    });
-    /*(this.http.post(url, postData).subscribe((result: any) => {
-      console.log(result['_body']);
-    }, error => {
-      console.log(error);
-    });*/
+      console.log("Salvando em lote");
+      let url = this.apiUrl+'/manga/salvarEmLote';
+      var jsonDados = {usuario: idUsuario, dados: mangaLista};
+      console.log(jsonDados);
+      let postData = JSON.stringify(jsonDados);
+      console.log(JSON.stringify(postData));
+
+      return fetch(url, {
+        method: 'post',
+        body: postData
+      }).then((response) => {
+        if(response.ok){
+          return response.json();
+        }
+      });
+    }
   }
 
   salvarManga(key, idUsuario, manga){
-    let mangaSalvar = Object.assign({}, manga);
-    this.removerImagemSeMuitoGrande(mangaSalvar);
-    delete mangaSalvar.dataModificacao;
-    delete mangaSalvar.sync;
-    let url = this.apiUrl+'/manga/post';
-    let postData = {
-      "novo": true,
-      "id_usuario": idUsuario,
-      "chave": key,
-      "valor": JSON.stringify(mangaSalvar)
-    }
-    console.log("Enviando data");
-    console.log(postData);
-    //return this.http.post(url, postData);
-
-    return fetch(url, {
-      method: 'post',
-      body: JSON.stringify(postData)
-    }).then((response) => {
-      if(response.ok){
-        return response.json();
+    if(navigator.onLine){
+      let mangaSalvar = Object.assign({}, manga);
+      this.removerImagemSeMuitoGrande(mangaSalvar);
+      delete mangaSalvar.dataModificacao;
+      delete mangaSalvar.sync;
+      let url = this.apiUrl+'/manga/post';
+      let postData = {
+        "novo": true,
+        "id_usuario": idUsuario,
+        "chave": key,
+        "valor": JSON.stringify(mangaSalvar)
       }
-    });
+      console.log("Salvar manga");
+      console.log(JSON.stringify(postData));
+      return fetch(url, {
+        method: 'post',
+        body: JSON.stringify(postData)
+      }).then((response) => {
+        if(response.ok){
+          return response.json();
+        }
+      });
+    }
   }
 
   atualizarManga(key, idUsuario, manga){
-    let mangaSalvar = Object.assign({}, manga);
-    this.removerImagemSeMuitoGrande(mangaSalvar);
-    delete mangaSalvar.dataModificacao;
-    delete mangaSalvar.sync;
-    let url = this.apiUrl+'/manga/post';
-    let postData = {
-      "novo": false,
-      "id_usuario": idUsuario,
-      "chave": key,
-      "valor": JSON.stringify(mangaSalvar)
-    }
-    console.log("Enviando data");
-    console.log(JSON.stringify(postData));
-    //return this.http.post(url, postData);
-
-    return fetch(url, {
-      method: 'post',
-      body: JSON.stringify(postData)
-    }).then((response) => {
-      if(response.ok){
-        return response.json();
+    if(navigator.onLine){
+      let mangaSalvar = Object.assign({}, manga);
+      this.removerImagemSeMuitoGrande(mangaSalvar);
+      delete mangaSalvar.dataModificacao;
+      delete mangaSalvar.sync;
+      let url = this.apiUrl+'/manga/post';
+      let postData = {
+        "novo": false,
+        "id_usuario": idUsuario,
+        "chave": key,
+        "valor": JSON.stringify(mangaSalvar)
       }
-    });
+      console.log("Att manga");
+      console.log(JSON.stringify(mangaSalvar));
+      return fetch(url, {
+        method: 'post',
+        body: JSON.stringify(postData)
+      }).then((response) => {
+        if(response.ok){
+          return response.json();
+        }
+      });
+    }
   }
   
   removerManga(chave, idUsuario){
-    let url = this.apiUrl+'/manga/remover';
-    let postData = {
-      "chave": chave,
-      "id_usuario": idUsuario,
-    }
-    //return this.http.post(url, postData);
-
-    return fetch(url, {
-      method: 'post',
-      body: JSON.stringify(postData)
-    }).then((response) => {
-      if(response.ok){
-        return response.json();
+    if(navigator.onLine){
+      let url = this.apiUrl+'/manga/remover';
+      let postData = {
+        "chave": chave,
+        "id_usuario": idUsuario,
       }
-    });
+      //return this.http.post(url, postData);
+
+      return fetch(url, {
+        method: 'post',
+        body: JSON.stringify(postData)
+      }).then((response) => {
+        if(response.ok){
+          return response.json();
+        }
+      });
+    }
   }
 
   //Se a imagem tiver o arquivo no formato blob(no caso uma foto tirada pela camera), remove a foto pra não sobrecarregar
@@ -157,6 +163,7 @@ export class MangaapiProvider {
 
   //Cadastra o usuário no banco de dados externo e ativa a sincronização
   public ativarSincronizacao(email, senha){
+    if(navigator.onLine){
       let url = this.apiUrl+'/manga/cadastrarUsuario';
       let postData = {
         "email": email,
@@ -177,16 +184,24 @@ export class MangaapiProvider {
          );
        }
       });
+    }else{
+      return new Promise(function(){
+        throw new Error("É necessário estar conectado com a internet");
+      });
+    }
   }
 
   //Método de login, somente usado quando o usuário está cadastrado
   login(email, senha){
+    if(navigator.onLine){
       let url = this.apiUrl+'/manga/login';
       console.log(url);
       let postData = {
         "email": email,
         "senha": senha,
       }
+      console.log(url);
+      console.log(JSON.stringify(postData));
       return fetch(url, {
         method: 'post',
         body: JSON.stringify(postData)
@@ -200,5 +215,10 @@ export class MangaapiProvider {
           );
         }
       });
+    }else{
+      return new Promise(function(resolve, reject){
+        throw new Error("É necessário estar conectado com a internet");
+      });
+    }
   }
 }

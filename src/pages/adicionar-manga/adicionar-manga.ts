@@ -55,7 +55,7 @@ export class AdicionarMangaPage {
         this.malProvider.getMangas(this.manga.titulo).then((mangas) => {
           this.mangaAutocomplete = mangas;
         }).catch((error) => {
-          this.presentToast("Não foi possível obter informações sobre esse mangá. Verifique sua conexão com a internet");
+          this.presentToast(error.message);
           this.mangaAutocomplete = [];
         });
       }else{
@@ -78,15 +78,16 @@ export class AdicionarMangaPage {
     if(!this.manga.titulo){
       this.presentToast("É necessário preencher um título");
     }else if(this.manga.uComprado > 200){
-      this.presentToast("Não é permitido adicionar mais de 200 volumes. Se existir um mangá maior do que isso, parabens =)");
+      this.presentToast("Não é permitido adicionar mais de 200 volumes. Se existir um mangá maior do que isso, me avise =)");
     }else{
       this.mostrarAd = false;
+      this.mangaProvider.removerInconsistenciasLidosComprados(this.manga);
       if(!this.manga.key){
         let key = this.datepipe.transform(new Date(), "ddMMyyyyHHmmss");
-        this.mangaProvider.salvarManga(key, this.manga);
+        this.mangaProvider.salvarSincronizarManga(key, this.manga);
         this.navCtrl.push(CapitulosMangaPage, {manga: this.manga, novoManga: true});
       }else{
-        this.mangaProvider.salvarManga(this.manga.key, this.manga);
+        this.mangaProvider.salvarSincronizarManga(this.manga.key, this.manga);
         this.navCtrl.pop();
         this.presentToast("Mangá salvo com sucesso");
       } 

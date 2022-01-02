@@ -23,6 +23,8 @@ import { Camera } from '@ionic-native/camera';
 import { MangaapiProvider } from '../providers/mangaapi/mangaapi';
 import { CadastroUsuarioPageModule } from '../pages/cadastro-usuario/cadastro-usuario.module';
 import { AppConstants } from './app.constants';
+import { IonicImageLoader } from 'ionic-image-loader';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -38,7 +40,7 @@ import { AppConstants } from './app.constants';
     CadastroUsuarioPageModule,
     AdicionarMangaPageModule,
     IonicStorageModule.forRoot(),
-    
+    IonicImageLoader.forRoot(),
     HttpClientModule
   ],
   bootstrap: [IonicApp],

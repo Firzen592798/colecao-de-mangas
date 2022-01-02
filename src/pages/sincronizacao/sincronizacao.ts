@@ -76,12 +76,11 @@ export class SincronizacaoPage {
     this.mangaApi.login(this.email, Md5.hashStr(this.senha)).then(function(data){
       that.usuario = data;
       that.mangaProvider.salvarUsuario(data);
-      that.mangaApi.listarMangasPorUsuario(data.idUsuario).subscribe(data => {
+      that.mangaApi.listarMangasPorUsuario(that.usuario.idUsuario).subscribe(data => {
         var array = data as Array<any>;
-        
         for(let manga of array){
-          console.log(manga);
-          that.mangaProvider.salvarManga(manga["key"], manga);
+          manga.sync = true;
+          that.mangaProvider.salvarMangaApenasLocal(manga["key"], manga);
         } 
         that.presentToast("Seus mangás foram sincronizados");
         that.navCtrl.pop();

@@ -50,9 +50,14 @@
     <ion-input #input4 maxlength="48" type="text" [(ngModel)]="manga.autor"></ion-input>
   </ion-item>
 
+  <ion-item no-lines>
+      <ion-label>Coleção completa</ion-label>
+      <ion-checkbox [(ngModel)]="manga.completo"></ion-checkbox>
+      <ion-icon name="help-circle"></ion-icon>
+  </ion-item>
   
   <ion-thumbnail id="manga-img">
-    <img *ngIf="manga.imagem" [src]="manga.imagem">
+    <img-loader *ngIf="manga.imagem" [src]="manga.imagem" fallbackUrl="../../assets/imgs/manga.png" useImg></img-loader>
   </ion-thumbnail>
 
   <button  ion-button block icon-right (click)="tirarFoto()">
