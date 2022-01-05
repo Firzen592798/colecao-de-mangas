@@ -15,7 +15,7 @@ export class MangaProvider {
   constructor(public localStorage: Storage, public http: HttpClient, public mangaapi: MangaapiProvider) {
     this.atualizarVersaoDados();
     this.localStorage.get("usuario").then((output) => {
-      console.log(output);
+      //console.log(output);
       this.usuario  = output;
     });
   }
@@ -49,7 +49,7 @@ export class MangaProvider {
           manga.sync = true;
           that.localStorage.set(key, manga); 
         }).catch(error => {
-          console.log(error);
+          //console.log(error);
           manga.sync = false;
           that.localStorage.set(key, manga);
         });  
@@ -58,7 +58,7 @@ export class MangaProvider {
           manga.sync = true;
           that.localStorage.set(key, manga); 
         }).catch(error => {
-          console.log(error);
+          //console.log(error);
           manga.sync = false;
           that.localStorage.set(key, manga); 
         });   
@@ -168,7 +168,7 @@ export class MangaProvider {
             delete manga.ultimoLido;
             delete manga.img;
             this.localStorage.set(key, manga); 
-            console.log(manga);
+            //console.log(manga);
           }  
         })
       }
@@ -189,7 +189,7 @@ export class MangaProvider {
             }
           }
         }).catch(error => {
-          console.log(error);
+          //console.log(error);
           return error;
         });  
       }

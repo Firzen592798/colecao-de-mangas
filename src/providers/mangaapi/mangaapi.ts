@@ -17,7 +17,7 @@ export class MangaapiProvider {
   listarMangasPorUsuario(idUsuario){
     if(navigator.onLine){
       let url = this.apiUrl+'/manga/list?usuario='+idUsuario;
-      console.log(url);
+      //console.log(url);
       return this.http.get(url);
     }
   }
@@ -33,8 +33,8 @@ export class MangaapiProvider {
       let url = this.apiUrl+'/manga/sincronizarNaEntrada';
       var jsonDados = {usuario: idUsuario, dados: mangaLista};
       let postData = JSON.stringify(jsonDados);
-      console.log(url);
-      console.log(postData);
+      //console.log(url);
+      //console.log(postData);
       return fetch(url, {
         method: 'post',
         body: postData
@@ -51,7 +51,7 @@ export class MangaapiProvider {
       }
       });
     }else{
-      console.log("Sem internet");
+      //console.log("Sem internet");
     } 
   }
 
@@ -62,12 +62,12 @@ export class MangaapiProvider {
         manga = this.removerImagemSeMuitoGrande(manga);
         delete manga.dataModificacao;
       }
-      console.log("Salvando em lote");
+      //console.log("Salvando em lote");
       let url = this.apiUrl+'/manga/salvarEmLote';
       var jsonDados = {usuario: idUsuario, dados: mangaLista};
-      console.log(jsonDados);
+      //console.log(jsonDados);
       let postData = JSON.stringify(jsonDados);
-      console.log(JSON.stringify(postData));
+      //console.log(JSON.stringify(postData));
 
       return fetch(url, {
         method: 'post',
@@ -93,8 +93,8 @@ export class MangaapiProvider {
         "chave": key,
         "valor": JSON.stringify(mangaSalvar)
       }
-      console.log("Salvar manga");
-      console.log(JSON.stringify(postData));
+      //console.log("Salvar manga");
+      //console.log(JSON.stringify(postData));
       return fetch(url, {
         method: 'post',
         body: JSON.stringify(postData)
@@ -119,8 +119,8 @@ export class MangaapiProvider {
         "chave": key,
         "valor": JSON.stringify(mangaSalvar)
       }
-      console.log("Att manga");
-      console.log(JSON.stringify(mangaSalvar));
+      //console.log("Att manga");
+      //console.log(JSON.stringify(mangaSalvar));
       return fetch(url, {
         method: 'post',
         body: JSON.stringify(postData)
@@ -155,7 +155,7 @@ export class MangaapiProvider {
   //Se a imagem tiver o arquivo no formato blob(no caso uma foto tirada pela camera), remove a foto pra não sobrecarregar
   private removerImagemSeMuitoGrande(manga){
     if(manga.imagem && manga.imagem.length > 150){
-      console.log("removeu imagem");
+      //console.log("removeu imagem");
       manga.imagem = '';
     }
     return manga;
@@ -195,13 +195,13 @@ export class MangaapiProvider {
   login(email, senha){
     if(navigator.onLine){
       let url = this.apiUrl+'/manga/login';
-      console.log(url);
+      //console.log(url);
       let postData = {
         "email": email,
         "senha": senha,
       }
-      console.log(url);
-      console.log(JSON.stringify(postData));
+      //console.log(url);
+      //console.log(JSON.stringify(postData));
       return fetch(url, {
         method: 'post',
         body: JSON.stringify(postData)

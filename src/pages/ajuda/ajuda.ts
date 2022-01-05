@@ -24,7 +24,6 @@ export class AjudaPage {
 
   ionViewDidLoad() {
     this.ads.showBanner();
-    //console.log('ionViewDidLoad AjudaPage');
   }
 
   ionViewDidLeave(){

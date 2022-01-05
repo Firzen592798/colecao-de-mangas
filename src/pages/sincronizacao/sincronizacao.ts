@@ -85,7 +85,6 @@ export class SincronizacaoPage {
         that.presentToast("Seus mangás foram sincronizados");
         that.navCtrl.pop();
       }, errorData => {
-        console.log(errorData);
         that.presentToast("Erro");
       });
     }).catch(error => {
@@ -99,7 +98,6 @@ export class SincronizacaoPage {
       duration: 4000,
       position: 'bottom'
     });
-    console.log(toast);
   
     toast.onDidDismiss(() => {
       //console.log('Dismissed toast');

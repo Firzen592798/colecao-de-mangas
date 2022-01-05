@@ -18,11 +18,9 @@ export class AdsProvider {
 
   showBanner() {
     if(this.appConstants.showAD){
-      console.log("chamou banner")
       this.platform
         .ready()
         .then(() => {
-          console.log("then")
           const bannerConfig: AdMobFreeBannerConfig = {
             id: this.bannerId,
             isTesting: this.isTesting,
@@ -32,7 +30,6 @@ export class AdsProvider {
           this.admobFree.banner
             .prepare()
             .then(() => {
-              console.log("show")
               this.admobFree.banner.show() .catch(e => console.log(e));
             })
             .catch(e => console.log(e));

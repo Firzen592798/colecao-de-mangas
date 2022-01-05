@@ -34,22 +34,17 @@ export class HomePage {
   }
 
   ionViewDidLoad(){
-    console.log("DidLoad")
     this.ads.loadInterstitial();
     this.precisaSincronizar = true;
   }
 
   ionViewDidEnter(){
-    console.log("DidEnter")
     this.mangaProvider.isPrimeiroAcesso().then(primeiroAcesso => {
       if(primeiroAcesso){
         this.irParaAjuda();
       }
     })
-    console.log("listar");
     this.mangaProvider.listar().then(data => {
-      console.log("carregou lista");
-      console.log(data);
       this.lista_mangas = data;
       this.lista_mangas_filtrado = data;
       if(this.precisaSincronizar){
@@ -57,8 +52,6 @@ export class HomePage {
         this.precisaSincronizar = false;
       }
     }).catch(err => {
-      console.log("Catch error");
-      console.log(err);
       this.lista_mangas = [];
       this.lista_mangas_filtrado = [];
       this.precisaSincronizar = false;

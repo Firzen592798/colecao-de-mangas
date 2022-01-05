@@ -23,8 +23,6 @@ export class CapitulosMangaPage {
   classeAdd = "add";
   constructor(public navCtrl: NavController, public navParams: NavParams, public provider: MangaProvider, public toastCtrl: ToastController) {
     this.manga = navParams.get("manga");
-    console.log("Recebeu manga");
-    console.log(this.manga);
     this.isNovoManga = navParams.get("novoManga");
   }
 
@@ -36,7 +34,6 @@ export class CapitulosMangaPage {
   
 
   finalizar(){
-    console.log(this.manga);
     this.navCtrl.pop();
     if(this.isNovoManga){
       this.presentToast("Mangá salvo com sucesso");
@@ -103,7 +100,6 @@ export class CapitulosMangaPage {
         break;
     }
     this.provider.atualizarVolumeManga(this.manga.key, this.manga);
-    console.log(this.manga);
   }
 
   presentToast(msg) {
