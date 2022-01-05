@@ -12,13 +12,23 @@ page-adicionar-manga {
         width: 40px !important;
     }
 
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0px;
+        left: 0;
+        z-index: 100;
+
+    }
+
     ion-list{
         z-index: 1;
         background: color($colors, primary);
         position: absolute;
         width: calc(100% - 40px);
         margin-top: -8px !important;
-
+        z-index: 200;
         border: 1px solid #1A2622 !important;
         border-radius: 5px !important;
     }
@@ -52,9 +62,9 @@ page-adicionar-manga {
     }
 
     #btn-search{
-        margin-top: 15px;
-        height: 5rem;
-        width: 5rem;
+        margin-top: 2rem;
+        height: 4rem;
+        width: 4rem;
     }
 
     ion-label{

@@ -62,7 +62,7 @@
     <ion-card *ngIf="!apenasNaoCompletos || !manga.completo" (click) = "irParaCapitulos(manga);">
       <ion-item class="item-manga">
         <ion-thumbnail item-start>
-          <img-loader [spinner]="false" *ngIf="manga.imagem" [src]="manga.imagem" fallbackUrl="../../assets/imgs/manga.png" useImg></img-loader>
+          <img-loader [spinner]="false" [src]="manga.imagem" fallbackUrl="../../assets/imgs/manga.png" useImg></img-loader>
           
         </ion-thumbnail>
         <ion-card-title class="cut-text">

@@ -23,6 +23,8 @@ export class CapitulosMangaPage {
   classeAdd = "add";
   constructor(public navCtrl: NavController, public navParams: NavParams, public provider: MangaProvider, public toastCtrl: ToastController) {
     this.manga = navParams.get("manga");
+    console.log("Recebeu manga");
+    console.log(this.manga);
     this.isNovoManga = navParams.get("novoManga");
   }
 

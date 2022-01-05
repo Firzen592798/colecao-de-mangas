@@ -29,6 +29,8 @@ export class AdicionarMangaPage {
 
   public mostrarAd: boolean = true;
 
+  public carregandoAutocomplete: boolean = false;
+
   constructor(public navCtrl: NavController, public malProvider: MalapiProvider, public navParams: NavParams, public mangaProvider: MangaProvider, private datepipe: DatePipe, private toastCtrl:ToastController, public ads: AdsProvider, private camera: Camera) {
     var param = navParams.get("manga");
     if(param)
@@ -51,12 +53,19 @@ export class AdicionarMangaPage {
       this.mangaAutocomplete = [];
     }else{
       if(this.manga.titulo.length >= 3){
+        this.carregandoAutocomplete = true;
         this.mangaAutocomplete = [{titulo: "Carregando...", imagem: null}];
         this.malProvider.getMangas(this.manga.titulo).then((mangas) => {
-          this.mangaAutocomplete = mangas;
+          if(this.carregandoAutocomplete){
+            this.mangaAutocomplete = mangas;
+            this.carregandoAutocomplete = false;
+          }
         }).catch((error) => {
-          this.presentToast(error.message);
-          this.mangaAutocomplete = [];
+          if(this.carregandoAutocomplete){
+            this.presentToast(error.message);
+            this.mangaAutocomplete = [];
+            this.carregandoAutocomplete = false;
+          }
         });
       }else{
         this.presentToast("É necessário digitar no mínimo 3 caracteres");
@@ -85,6 +94,7 @@ export class AdicionarMangaPage {
       if(!this.manga.key){
         let key = this.datepipe.transform(new Date(), "ddMMyyyyHHmmss");
         this.mangaProvider.salvarSincronizarManga(key, this.manga);
+        this.manga.key = key;
         this.navCtrl.push(CapitulosMangaPage, {manga: this.manga, novoManga: true});
       }else{
         this.mangaProvider.salvarSincronizarManga(this.manga.key, this.manga);
@@ -110,6 +120,7 @@ export class AdicionarMangaPage {
 
   fecharAutocomplete(){
     this.mangaAutocomplete = [];
+    this.carregandoAutocomplete = false;
   }
 
   nextInput(nextInput){

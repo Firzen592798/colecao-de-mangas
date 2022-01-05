@@ -22,6 +22,9 @@
     <button id="btn-search" ion-button class="ion-button ion-float-right" (click)="$event.stopPropagation(); carregarAutocomplete()"><ion-icon name="search"></ion-icon>
     </button>
   </div>
+  <div *ngIf="mangaAutocomplete?.length > 0" class="modal-backdrop">
+
+  </div>
   <ion-list *ngIf="mangaAutocomplete?.length > 0">
 		<ion-item *ngFor="let manga of mangaAutocomplete" (click)="carregarInfo(manga); nextInput(input2)">
       <ion-thumbnail item-start>
