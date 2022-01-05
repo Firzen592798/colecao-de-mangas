@@ -147,14 +147,14 @@ export class MangaProvider {
             var novaLista = [];
             for(let volumeIt of manga.lista){
               var status;
-              switch(volumeIt.st){
-                case 'c': 
+              switch(volumeIt.status){
+                case 'comprado': 
                   status = 'c';
                   break;
-                case 'l':
+                case 'lido':
                   status = 'l';
                   break;
-                case 'nc':
+                case 'naocomprado':
                   status = 'nc';
               }
               let volume = {st: status};
@@ -173,7 +173,7 @@ export class MangaProvider {
         })
       }
     });
-  }
+ }
 
   //Ao abrir o aplicativo, pega todos os mangás que estão com sync = false e tentam sincronizar com o banco de dados exterior
   public sincronizarMangas(listaMangas: any){
