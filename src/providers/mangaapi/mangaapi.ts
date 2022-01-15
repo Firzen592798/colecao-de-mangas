@@ -17,21 +17,24 @@ export class MangaapiProvider {
   listarMangasPorUsuario(idUsuario){
     if(navigator.onLine){
       let url = this.apiUrl+'/manga/list?usuario='+idUsuario;
-      //console.log(url);
+      console.log(url);
       return this.http.get(url);
     }
   }
   
   //Quando a aplicação é aberta, verifica se algum mangá falta ser sincronizado com a nuvem para manter a base de dados atualziada
   sincronizarMangasNaEntrada(idUsuario, mangaLista){
+    //let mangaListaSalvar = Object.assign({}, mangaLista);
+    let mangaListaSalvar = JSON.parse(JSON.stringify(mangaLista))
     if(navigator.onLine){
-      for(let manga of mangaLista){
+      for(let manga of mangaListaSalvar){
         manga = this.removerImagemSeMuitoGrande(manga);
         delete manga.dataModificacao;
         delete manga.sync;
       }
+      console.log(mangaListaSalvar);
       let url = this.apiUrl+'/manga/sincronizarNaEntrada';
-      var jsonDados = {usuario: idUsuario, dados: mangaLista};
+      var jsonDados = {usuario: idUsuario, dados: mangaListaSalvar};
       let postData = JSON.stringify(jsonDados);
       //console.log(url);
       //console.log(postData);
@@ -109,6 +112,7 @@ export class MangaapiProvider {
   atualizarManga(key, idUsuario, manga){
     if(navigator.onLine){
       let mangaSalvar = Object.assign({}, manga);
+      console.log(mangaSalvar);
       this.removerImagemSeMuitoGrande(mangaSalvar);
       delete mangaSalvar.dataModificacao;
       delete mangaSalvar.sync;
@@ -154,8 +158,9 @@ export class MangaapiProvider {
 
   //Se a imagem tiver o arquivo no formato blob(no caso uma foto tirada pela camera), remove a foto pra não sobrecarregar
   private removerImagemSeMuitoGrande(manga){
+    console.log(manga.imagem);
     if(manga.imagem && manga.imagem.length > 150){
-      //console.log("removeu imagem");
+      console.log("removeu imagem");
       manga.imagem = '';
     }
     return manga;

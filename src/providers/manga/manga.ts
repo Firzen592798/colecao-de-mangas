@@ -56,6 +56,8 @@ export class MangaProvider {
       }else{
         this.mangaapi.atualizarManga(key, this.usuario.idUsuario, manga).then(function(data){
           manga.sync = true;
+          console.log("Atualizar manga");
+          console.log(manga);
           that.localStorage.set(key, manga); 
         }).catch(error => {
           //console.log(error);
@@ -74,20 +76,30 @@ export class MangaProvider {
     manga.dataModificacao = new Date();
     manga.uLido = manga.uLido ? parseInt(manga.uLido) : 0;
     manga.uComprado = manga.uComprado ? parseInt(manga.uComprado) : 0;
-    manga.lista = []
-    if(manga.uComprado){
-      manga.uComprado = parseInt(manga.uComprado);
-      for(let i = 1; i <= manga.uComprado; i++){
-        let volume = {st: "c"};
-        if(i <= manga.uLido){
-          volume.st = "l";
-        } 
-        manga.lista.push(volume); 
-      }
+    if(!manga.lista){ //Novo cadastro
+      manga.lista = []
+    }
       if(manga.uLido > manga.uComprado){
         manga.uLido = manga.uComprado;
       }
-    }
+      if(manga.uComprado < manga.lista.length){ 
+        manga.lista = manga.lista.slice(0, manga.uComprado);
+      }
+      for (let i = 0; i < manga.uComprado; i++) {
+          if(i + 1 > manga.lista.length){
+            let volume = {st: manga.uLido >= i+1 ? "l" : "c"};
+            manga.lista.push(volume);
+          }else{
+            if(manga.lista[i].st != 'nc'){
+              if(manga.uLido > i){
+                manga.lista[i] =  {st: "l"};
+              }else{
+                if(manga.uComprado > i)
+                  manga.lista[i] =  {st: "c"};
+              }
+            }
+          }
+        }
   }
 
 
