@@ -37,7 +37,7 @@
         Entrar
       </button>
 
-      <button (click)="recuperarSenha()" block ion-button margin-top>
+      <button (click)="irParaRedefinirSenha()"  block ion-button>
         Recuperar senha
       </button>
 
@@ -58,6 +58,9 @@
 
       <ion-footer no-border no-padding style="margin:2rem 0rem !important;">
         <div style="margin:0rem 2rem !important;">
+          <button (click)="irParaAlterarSenha()"  block ion-button>
+            Alterar Senha
+          </button>
           <button (click)="desativarSincronizacao()"  block ion-button>
             Sair da conta
           </button>

@@ -3,7 +3,9 @@ import { AlertController, IonicPage, NavController, NavParams, ToastController }
 import { Md5 } from 'ts-md5/dist/md5';
 import { MangaProvider } from '../../providers/manga/manga';
 import { MangaapiProvider } from '../../providers/mangaapi/mangaapi';
+import { AlterarSenhaPage } from '../alterar-senha/alterar-senha';
 import { CadastroUsuarioPage } from '../cadastro-usuario/cadastro-usuario';
+import { RedefinirSenhaPage } from '../redefinir-senha/redefinir-senha';
 
 /**
  * Generated class for the SincronizacaoPage page.
@@ -109,5 +111,52 @@ export class SincronizacaoPage {
 
   recuperarSenha(){
     this.presentToast("Em construção. Por favor entre em contato conosco através do e-mail firzen592798@gmail.com");
+  }
+
+  irParaAlterarSenha(){
+    this.navCtrl.push(AlterarSenhaPage);
+  }
+
+  irParaRedefinirSenha(){
+    this.mostrarPromptEmailRedefinirSenha();
+  }
+
+  mostrarPromptEmailRedefinirSenha(){
+      let alert = this.alertCtrl.create({
+        title: 'Digite o e-mail para o qual deseja recuperar a sua senha',
+        inputs: [
+          {
+            name: 'email',
+            placeholder: 'Email'
+          },
+        ],
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: data => {
+            }
+          },
+          {
+            text: 'Já tenho o código',
+            handler: data => {
+              this.navCtrl.push(RedefinirSenhaPage);
+            }
+          },
+          {
+            text: 'Enviar email',
+            handler: data => {
+              this.mangaApi.enviarEmailRedefinirSenha(data.email).then(() => {
+                this.presentToast("Email enviado. Utilize o código gerado para redefinir sua senha");
+                this.navCtrl.push(RedefinirSenhaPage);
+              }).catch((error) => {
+                console.log(error);
+                this.presentToast(error.message);
+              });
+            }
+          }
+        ]
+      });
+      alert.present();
   }
 }

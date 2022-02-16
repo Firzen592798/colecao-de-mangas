@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Md5 } from 'ts-md5';
+import { AppConstants } from '../../app/app.constants';
 import { MangaProvider } from '../../providers/manga/manga';
 import { MangaapiProvider } from '../../providers/mangaapi/mangaapi';
 
@@ -22,7 +23,7 @@ export class CadastroUsuarioPage {
   senha: string = "";
   confirmasenha: string = "";
   usuario: any = null;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public mangaProvider: MangaProvider, public mangaApi: MangaapiProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public mangaProvider: MangaProvider, public mangaApi: MangaapiProvider, public appConstants: AppConstants) {
   }
 
   ionViewDidLoad() {
@@ -37,21 +38,25 @@ export class CadastroUsuarioPage {
   //Prossegue com o cadastro de um usuário no banco de dados. Caso o usuário já tenha mangás cadastrados, faz a sincronização com o servidor
   cadastrar(){
     if(this.senha == this.confirmasenha){
-      if(this.validarEmail(this.email)){
-        var listaMangas = this.navParams.get("lista_mangas");
-        this.mangaApi.ativarSincronizacao(this.email, Md5.hashStr(this.senha)).then(usuario => {
-          this.mangaApi.salvarMangaEmLote(usuario["idUsuario"], listaMangas)
-          console.log("Acerto");
-          console.log(usuario);
-          this.mangaProvider.salvarUsuario(usuario);
-          this.presentToast("Cadastro finalizado com sucesso. Os dados dos seus mangás já estão guardados no nosso banco de dados online e serão atualizados a cada mangá adicionado e/ou atualizado");
-          this.navCtrl.pop();
-          this.navCtrl.pop();
-        }).catch(error => {
-          this.presentToast(error.message);
-        });  
+      if(this.senha.length >= 3){
+        if(this.validarEmail(this.email)){
+          var listaMangas = this.navParams.get("lista_mangas");
+          this.mangaApi.ativarSincronizacao(this.email, Md5.hashStr(this.senha)).then(usuario => {
+            this.mangaApi.salvarMangaEmLote(usuario["idUsuario"], listaMangas)
+            console.log("Acerto");
+            console.log(usuario);
+            this.mangaProvider.salvarUsuario(usuario);
+            this.presentToast("Cadastro finalizado com sucesso. Os dados dos seus mangás já estão guardados no nosso banco de dados online e serão atualizados a cada mangá adicionado e/ou atualizado");
+            this.navCtrl.pop();
+            this.navCtrl.pop();
+          }).catch(error => {
+            this.presentToast(error.message);
+          });  
+        }else{
+          this.presentToast("E-mail inválido");
+        }
       }else{
-        this.presentToast("E-mail inválido");
+        this.presentToast("A senha precisa ter no mínimo "+this.appConstants.tamanhoSenha+" caracteres");
       }
     }else{
       this.presentToast("Senhas não se correspondem");
@@ -67,7 +72,7 @@ export class CadastroUsuarioPage {
     });
   
     toast.onDidDismiss(() => {
-      //console.log('Dismissed toast');
+
     });
   
     toast.present();

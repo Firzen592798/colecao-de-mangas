@@ -24,6 +24,8 @@ import { MangaapiProvider } from '../providers/mangaapi/mangaapi';
 import { CadastroUsuarioPageModule } from '../pages/cadastro-usuario/cadastro-usuario.module';
 import { AppConstants } from './app.constants';
 import { IonicImageLoader } from 'ionic-image-loader';
+import { AlterarSenhaPageModule } from '../pages/alterar-senha/alterar-senha.module';
+import { RedefinirSenhaPageModule } from '../pages/redefinir-senha/redefinir-senha.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { IonicImageLoader } from 'ionic-image-loader';
     SincronizacaoPageModule,
     CadastroUsuarioPageModule,
     AdicionarMangaPageModule,
+    AlterarSenhaPageModule,
+    RedefinirSenhaPageModule,
     IonicStorageModule.forRoot(),
     IonicImageLoader.forRoot(),
     HttpClientModule

@@ -1,0 +1,35 @@
+<!--
+  Generated template for the SincronizacaoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Alterar senha</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  
+  <div>
+    <ion-item>
+      <ion-label floating >Senha atual</ion-label>
+      <ion-input type="password" [(ngModel)]="senhaatual"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Senha</ion-label>
+      <ion-input type="password" [(ngModel)]="senha"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Confirmar senha</ion-label>
+      <ion-input type="password" [(ngModel)]="confirmasenha"></ion-input>
+    </ion-item>
+
+    <button (click)="submit()" block ion-button margin-top>
+      Alterar senha
+    </button>
+  </div>
+</ion-content>

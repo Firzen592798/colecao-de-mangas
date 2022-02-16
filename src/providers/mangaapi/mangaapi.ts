@@ -9,7 +9,10 @@ import { AppConstants } from '../../app/app.constants';
 */
 @Injectable()
 export class MangaapiProvider {
+  //let mangaListaSalvar = Object.assign({}, mangaLista);
+
   apiUrl: String = this.appConstants.apiUrl;  
+
   constructor(public http: HttpClient, public localStorage: Storage, public appConstants: AppConstants) {
   
   }
@@ -195,6 +198,124 @@ export class MangaapiProvider {
       });
     }
   }
+
+  
+  //Altera a senha do usuário remoto
+  public alterarSenha(idUsuario, senhaAtual, novaSenha){
+    if(navigator.onLine){
+      let url = this.apiUrl+'/manga/alterarSenha';
+      let postData = {
+        "idUsuario": idUsuario,
+        "senhaAtual": senhaAtual,
+        "novaSenha": novaSenha,
+      }
+      console.log(url);
+      console.log(JSON.stringify(postData));
+      return fetch(url, {
+        method: 'post',
+        body: JSON.stringify(postData)
+      }).then((response) => {
+        if(response.ok){
+          console.log("Response ok");
+          return response.json();
+        }else{
+          console.log("Response erro");
+          return response.json().then(data => {
+           throw new Error(data.mensagem);
+          }
+         );
+       }
+      });
+    }else{
+      return new Promise(function(){
+        throw new Error("É necessário estar conectado com a internet");
+      });
+    }
+  }
+
+  enviarEmailRedefinirSenha(email: String){
+    if(navigator.onLine){
+      let url = this.apiUrl+'/manga/enviarEmailRedefinirSenha';
+      let postData = {
+        "email": email
+      }
+      console.log(url);
+      console.log(postData);
+      return fetch(url, {
+        method: 'post',
+        body: JSON.stringify(postData)
+      }).then((response) => {
+        if(response.ok){
+          return response.json();
+        }else{
+          return response.json().then(data => {
+           throw new Error(data.mensagem);
+          }
+         );
+       }
+      });
+    }else{
+      return new Promise(function(){
+        throw new Error("É necessário estar conectado com a internet");
+      });
+    }
+  }
+
+  redefinirSenha(email: String, codigo: String, novaSenha: String) {
+    if(navigator.onLine){
+      let url = this.apiUrl+'/manga/redefinirSenha';
+      let postData = {
+        "email": email,
+        "codigo": codigo,
+        "senha": novaSenha,
+      }
+      return fetch(url, {
+        method: 'post',
+        body: JSON.stringify(postData)
+      }).then((response) => {
+        if(response.ok){
+          return;
+        }else{
+          return response.json().then(data => {
+           throw new Error(data.mensagem);
+          }
+         );
+       }
+      });
+    }else{
+      return new Promise(function(){
+        throw new Error("É necessário estar conectado com a internet");
+      });
+    }
+  }
+
+    //Altera a senha do usuário remoto
+    public esquecerSenha(email){
+      if(navigator.onLine){
+        let url = this.apiUrl+'/manga/esquecerSenha';
+        let postData = {
+          "email": email,
+        }
+        return fetch(url, {
+          method: 'post',
+          body: JSON.stringify(postData)
+        }).then((response) => {
+          if(response.ok){
+            return response.json();
+          }else{
+            return response.json().then(data => {
+             throw new Error(data.mensagem);
+            }
+           );
+         }
+        });
+      }else{
+        return new Promise(function(){
+          throw new Error("É necessário estar conectado com a internet");
+        });
+      }
+    }
+    
 
   //Método de login, somente usado quando o usuário está cadastrado
   login(email, senha){
