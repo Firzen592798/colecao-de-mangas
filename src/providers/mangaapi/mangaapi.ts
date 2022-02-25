@@ -162,7 +162,7 @@ export class MangaapiProvider {
   //Se a imagem tiver o arquivo no formato blob(no caso uma foto tirada pela camera), remove a foto pra não sobrecarregar
   private removerImagemSeMuitoGrande(manga){
     console.log(manga.imagem);
-    if(manga.imagem && manga.imagem.length > 150){
+    if(manga.imagem && manga.imagem.length > 255){
       console.log("removeu imagem");
       manga.imagem = '';
     }

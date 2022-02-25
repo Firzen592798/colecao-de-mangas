@@ -59,12 +59,21 @@
       <ion-icon name="help-circle"></ion-icon>
   </ion-item>
   
+  <ion-item *ngIf="!(manga.imagem && manga.imagem.length > 255)">
+    <ion-label floating >URL da imagem</ion-label>
+    <ion-input #input5 maxlength="255" type="text" [(ngModel)]="manga.imagem"></ion-input>
+  </ion-item>
+
   <ion-thumbnail id="manga-img">
     <img-loader *ngIf="manga.imagem" [src]="manga.imagem" fallbackUrl="../../assets/imgs/manga.png" useImg></img-loader>
   </ion-thumbnail>
 
-  <button  ion-button block icon-right (click)="tirarFoto()">
-    {{ manga.imagem == null ? 'Tirar uma foto do mangá' : 'Substituir foto do mangá'}} <ion-icon name="camera"></ion-icon>
+  <button ion-button block icon-right (click)="tirarFoto()" *ngIf="!manga.imagem">
+    Tirar uma foto<ion-icon name="camera"></ion-icon>
+  </button>
+
+  <button ion-button block icon-right (click)="apagarImagem()" *ngIf="manga.imagem">
+    Apagar imagem<ion-icon name="clear"></ion-icon>
   </button>
   
   <button ion-button block (click) = "salvar()" style="margin-top: 8px;">

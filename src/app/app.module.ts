@@ -26,6 +26,8 @@ import { AppConstants } from './app.constants';
 import { IonicImageLoader } from 'ionic-image-loader';
 import { AlterarSenhaPageModule } from '../pages/alterar-senha/alterar-senha.module';
 import { RedefinirSenhaPageModule } from '../pages/redefinir-senha/redefinir-senha.module';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { AjudaImagemPageModule } from '../pages/ajuda-imagem/ajuda-imagem.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { RedefinirSenhaPageModule } from '../pages/redefinir-senha/redefinir-sen
     IonicModule.forRoot(MyApp, {_forceStatusbarPadding: true}),
     CapitulosMangaPageModule,
     AjudaPageModule,
+    AjudaImagemPageModule,
     QuantitativosPageModule,
     SincronizacaoPageModule,
     CadastroUsuarioPageModule,
@@ -65,7 +68,8 @@ import { RedefinirSenhaPageModule } from '../pages/redefinir-senha/redefinir-sen
     Camera,
     Network,
     MangaapiProvider,
-    AppConstants
+    AppConstants,
+    InAppBrowser
   ]
 })
 export class AppModule {}

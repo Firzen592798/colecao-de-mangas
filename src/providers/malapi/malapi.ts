@@ -10,22 +10,37 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class MalapiProvider {
 
-  apiUrl: String = "https://api.jikan.moe/v3";  
+  apiUrl: String = "https://api.jikan.moe/v4";  
   constructor(public http: HttpClient) {
 
   }
 
+  formatarAutor(autorArr: any){
+    console.log(autorArr);
+    var autor = "";
+    if(autorArr != null){
+      if(autorArr.authors){
+        return autorArr.authors.reduce(function(result, item){  
+          return result == "" ? item.name.split(",").reverse().join(" ") : result+";"+item.name.split(",").reverse().join(" ")   //authors.name  
+        }, "");
+      }
+    }
+    return autor;
+  }
+
   getMangas(query: String) {
+    var that = this;
     return new Promise((resolve, reject) => {
       
-        let url = this.apiUrl+'/search/manga?limit=5&q='+query;
+        let url = this.apiUrl+'/manga?limit=5&q='+query;
         if(navigator.onLine){
           this.http.get(url).subscribe((result: any) => {
-              resolve(result.results.map(function(item){
+              resolve(result.data.map(function(item){
                 return {
                   malId: item.mal_id,
                   titulo: item.title,
-                  imagem: item.image_url
+                  autor: that.formatarAutor(item),
+                  imagem: item.images.jpg.image_url
                 }
               }));
             },
@@ -38,22 +53,4 @@ export class MalapiProvider {
           }
       });
   }
-
-  getAutores(malId: number) {
-    return new Promise((resolve, reject) => {
-        let url = this.apiUrl+'/manga/'+malId;
-        this.http.get(url)
-          .subscribe((result: any) => {
-            resolve(
-              result.authors.reduce(function(result, item){  
-                return result == "" ? item.name.split(",").reverse().join(" ") : result+";"+item.name.split(",").reverse().join(" ")   //authors.name  
-              }, "")
-            );
-          },
-          (error) => {
-            reject(error);
-          });
-      });
-  }
-
 }

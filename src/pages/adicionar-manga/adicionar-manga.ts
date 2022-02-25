@@ -75,10 +75,11 @@ export class AdicionarMangaPage {
   }
 
   carregarInfo(mangaSelecionado){
-    this.malProvider.getAutores(mangaSelecionado.malId).then((autores) => {
+    /*this.malProvider.getAutores(mangaSelecionado.malId).then((autores) => {
       this.manga.autor = autores;
-    });
+    });*/
     this.mangaAutocomplete = [];
+    this.manga.autor = mangaSelecionado.autor;
     this.manga.titulo = mangaSelecionado.titulo;
     this.manga.imagem = mangaSelecionado.imagem;
   }
@@ -127,6 +128,10 @@ export class AdicionarMangaPage {
     nextInput.setFocus();
   }
 
+  apagarImagem(){
+    this.manga.imagem = "";
+  }
+
   tirarFoto(){
     const options: CameraOptions = {
       quality: 70,
@@ -140,6 +145,7 @@ export class AdicionarMangaPage {
     
     this.camera.getPicture(options).then((imageData) => {
     this.manga.imagem = 'data:image/jpeg;base64,' + imageData;
+    console.log(imageData);
     }, (err) => {
       alert(err);
     });

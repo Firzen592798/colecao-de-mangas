@@ -1,0 +1,38 @@
+<!--
+  Generated template for the CapitulosMangaPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Ajuda</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p>Para cadastrar uma imagem através de uma URL externa, é necessário entrar pelo celular ou pelo computador em um site que contenha 
+    a foto dos mangás, copiar a URL da imagem e colar no aplicativo. 
+  <p>
+  <p>
+    Para fazer isso pelo celular, uma opção é pesquisar pelo mangá no Anilist, localizar a imagem do mangá, 
+    pressionar a imagem por um segundo, selecionar a opção <strong>Compartilhar imagem</strong> e em seguida 
+    <strong>Copiar link</strong>. Caso não consiga encontrar o botão <strong>Copiar link</strong>, há a opção selecionar a opção 
+    <strong>Abrir imagem em nova guia</strong>, ir para a guia aberta e copiar a URL.
+    <a href="#" (click)="abrirLink()">Clique aqui para ver o Anilist</a></p>
+  <p>
+    Para fazer isso pelo computador, o procedimento é bem simples: primeiro entre na seção de busca de mangás de um site como o Anilist, 
+    clique com o botão direito sobre a imagem desejada e selecione <strong>Copiar endereço do link</strong>. 
+  </p>
+  <p>
+    Não recomendamos copiar uma imagem diretamente do resultado de busca do Google, pois pode causar problemas.
+  </p>
+
+</ion-content>
+<ion-footer no-border no-padding style="margin:2rem 0rem !important;">
+  <div style="margin:0rem 2rem !important;">
+    <button (click)="voltar()"  block ion-button>
+      Voltar
+    </button>
+  </div>
+</ion-footer>
