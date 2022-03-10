@@ -3,7 +3,8 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class AppConstants {
   /*DESENVOLVIMENTO*/
-  public apiUrl = "http://localhost/index.php";
+  //public apiUrl = "http://localhost/index.php";
+  public apiUrl = "http://10.7.56.10/index.php";
   public showAD = false;
   public isTestingAD = true;
   public tamanhoSenha = 3;

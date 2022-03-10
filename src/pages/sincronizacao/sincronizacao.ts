@@ -81,10 +81,12 @@ export class SincronizacaoPage {
       that.mangaApi.listarMangasPorUsuario(that.usuario.idUsuario).subscribe(listaMangas => {
         console.log(listaMangas);
         var array = listaMangas as Array<any>;
-        for(let manga of array){
-          manga.sync = true;
-          that.mangaProvider.salvarMangaApenasLocal(manga["key"], manga);
-        } 
+        if(array){
+          for(let manga of array){
+            manga.sync = true;
+            that.mangaProvider.salvarMangaApenasLocal(manga["key"], manga);
+          } 
+        }
         that.presentToast("Seus mangás foram sincronizados");
         that.navCtrl.pop();
       }, errorData => {

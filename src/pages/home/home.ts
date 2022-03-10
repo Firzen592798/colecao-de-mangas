@@ -195,6 +195,19 @@ export class HomePage {
     this.lista_mangas_filtrado = this.lista_mangas;
   }
 
+  doInfinite(infiniteScroll) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      for (let i = 0; i < 30; i++) {
+        this.items.push( this.items.length );
+      }
+
+      console.log('Async operation has ended');
+      infiniteScroll.complete();
+    }, 500);
+  }
+
   prepareAds(){
     const admobid = {
       interstitial: 'ca-app-pub-8275051926630772/7364383928',
