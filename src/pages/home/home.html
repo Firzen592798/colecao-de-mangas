@@ -52,13 +52,13 @@
     <button ion-fab (click)="irParaAdicionarManga(fab)"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
-  <ion-content>
+  <ion-content #content>
     <ion-row>
     </ion-row>   
     <div padding *ngIf="lista_mangas && !lista_mangas.length"> 
       Você não possui mangás adicionados. <a (click)="irParaAdicionarManga()"> Clique aqui </a> para adicionar
     </div>
-    <div *ngFor="let manga of lista_mangas_filtrado">
+    <div *ngFor="let manga of lista_mangas_lazy">
     <ion-card *ngIf="!apenasNaoCompletos || !manga.completo" (click) = "irParaCapitulos(manga);">
       <ion-item class="item-manga">
         <ion-thumbnail item-start>
@@ -87,5 +87,10 @@
       </ion-item>
     </ion-card>
   </div>
-
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="lista_mangas_lazy?.length != lista_mangas?.length">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

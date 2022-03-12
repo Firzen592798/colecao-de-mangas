@@ -105,6 +105,10 @@ export class AdicionarMangaPage {
     }
   }
 
+  public ionViewWillLeave(){
+    this.navCtrl.getPrevious().data.refresh =  true;
+  }
+
   presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,

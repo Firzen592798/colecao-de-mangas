@@ -1,3 +1,5 @@
+Se der pau no https do localhost, reinstalar o certificado https://www.youtube.com/watch?v=6Zy5GB5-eUM
+
 Alterar comentários em app.constants.tools
 
 Alterar numero e código da versão em config. Verificar se houve alguma mudança no targetSdkVersion ou minSdkVersion

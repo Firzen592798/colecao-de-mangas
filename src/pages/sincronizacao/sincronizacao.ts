@@ -65,6 +65,7 @@ export class SincronizacaoPage {
             this.usuario = null;
             this.mangaProvider.sairDaConta();
             this.presentToast("Você deslogou da conta");
+            this.navCtrl.getPrevious().data.refresh =  true;
             this.navCtrl.pop();
           }
         }
@@ -88,6 +89,7 @@ export class SincronizacaoPage {
           } 
         }
         that.presentToast("Seus mangás foram sincronizados");
+        that.navCtrl.getPrevious().data.refresh =  true;
         that.navCtrl.pop();
       }, errorData => {
         that.presentToast("Erro");

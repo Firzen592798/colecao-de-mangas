@@ -1,6 +1,6 @@
 
 import { Component, ViewChild, ElementRef, Input } from '@angular/core';
-import { NavController, AlertController, ToastController, Checkbox, TextInput, FabContainer } from 'ionic-angular';
+import { NavController, AlertController, ToastController, Checkbox, TextInput, FabContainer, Content, NavParams } from 'ionic-angular';
 import { AdicionarMangaPage } from '../adicionar-manga/adicionar-manga';
 import { QuantitativosPage } from '../quantitativos/quantitativos';
 import { MangaProvider } from '../../providers/manga/manga';
@@ -22,40 +22,68 @@ declare var admob;
 
 export class HomePage {
 
+  //Todos os mangás que estão salvos
   public lista_mangas: any;
+  //Todos os mangás que tão carregados no lazy
+  public lista_mangas_lazy: any;
+  //Todos os mangás que obedecem as regras do filtro, podendo ser todos
   public lista_mangas_filtrado: any;
+  //Conteúdo da query inserida no filtro
   public query: String;
+  //Indica se o filtro está configurado pra mostrar todos os mangás ou apenas os completos
   public apenasNaoCompletos: boolean = false;
+  //Indica se a aba de pesquisa no filtro ta aberto
   public isSearching: boolean = false;
+  //Toda vez que entra no app precisa sincronizar com a nuvem
   public precisaSincronizar;
+  //Número de itens carregados por vez no list
+  public qtdItensPorVez: number = 20;
   @ViewChild('search') search:TextInput;
-
-  constructor(public http: HttpClient,public navCtrl: NavController, public malProvider: MalapiProvider, public mangaProvider: MangaProvider, public mangaApi: MangaapiProvider, public alertCtrl: AlertController, public toastCtrl: ToastController, public ads: AdsProvider, public statusBar: StatusBar) {
+  @ViewChild('content') pageTop: Content;
+  constructor(public http: HttpClient,public navCtrl: NavController, public navParams: NavParams, public malProvider: MalapiProvider, public mangaProvider: MangaProvider, public mangaApi: MangaapiProvider, public alertCtrl: AlertController, public toastCtrl: ToastController, public ads: AdsProvider, public statusBar: StatusBar) {
   }
 
   ionViewDidLoad(){
+    console.log("DidLoad");
     this.ads.loadInterstitial();
     this.precisaSincronizar = true;
   }
 
   ionViewDidEnter(){
+    /*this.mangaApi.listarMangasPorUsuario(75).subscribe(listaMangas => {
+      console.log(listaMangas);
+      alert(JSON.stringify(listaMangas));
+    }, errorData => {
+      console.log(errorData);
+      alert(JSON.stringify(errorData));
+    });*/
+    var precisaDarRefresh = this.navParams.get("refresh");
+    console.log("DidEnter");
     this.mangaProvider.isPrimeiroAcesso().then(primeiroAcesso => {
       if(primeiroAcesso){
         this.irParaAjuda();
       }
     })
-    this.mangaProvider.listar().then(data => {
-      this.lista_mangas = data;
-      this.lista_mangas_filtrado = data;
-      if(this.precisaSincronizar){
-        this.mangaProvider.sincronizarMangas(this.lista_mangas);
+    console.log(precisaDarRefresh +" | "+this.precisaSincronizar);
+    if(precisaDarRefresh || this.precisaSincronizar){
+      console.log("passou");
+      this.navParams.data.refresh = false;
+      this.mangaProvider.listar().then(data => {
+        this.lista_mangas = data;
+        this.lista_mangas_filtrado = data;
+        this.lista_mangas_lazy = this.lista_mangas.slice(0, this.qtdItensPorVez);
+        this.pageTop.scrollToTop(100);
+        if(this.precisaSincronizar){
+          this.mangaProvider.sincronizarMangas(this.lista_mangas);
+          this.precisaSincronizar = false;
+        }
+      }).catch(err => {
+        this.lista_mangas = [];
+        this.lista_mangas_filtrado = [];
+        this.lista_mangas_lazy = [];
         this.precisaSincronizar = false;
-      }
-    }).catch(err => {
-      this.lista_mangas = [];
-      this.lista_mangas_filtrado = [];
-      this.precisaSincronizar = false;
-    });
+      });
+    }
   }
 
   irParaAdicionarManga(fab: FabContainer){
@@ -102,9 +130,9 @@ export class HomePage {
           text: 'Excluir',
           handler: () => {
             this.mangaProvider.excluirManga(manga.key);
-            var index = this.lista_mangas_filtrado.indexOf(manga);
+            var index = this.lista_mangas_lazy.indexOf(manga);
             if (index !== -1) {
-              this.lista_mangas_filtrado.splice(index, 1);
+              this.lista_mangas_lazy.splice(index, 1);
             }
             index = this.lista_mangas.indexOf(manga);
             if (index !== -1) {
@@ -178,6 +206,7 @@ export class HomePage {
   //Traz o resultado de acordo com o texto digitado no filtro
   filtrar(){
     this.lista_mangas_filtrado = this.lista_mangas.filter((x) => {return x.titulo.toUpperCase().includes(this.query.toUpperCase())});
+    this.lista_mangas_lazy = this.lista_mangas_filtrado.slice(0, this.qtdItensPorVez);
   }
 
   //Exibe a barra de pesquisa de mangá
@@ -193,19 +222,8 @@ export class HomePage {
     this.isSearching = false;
     this.query = "";
     this.lista_mangas_filtrado = this.lista_mangas;
-  }
-
-  doInfinite(infiniteScroll) {
-    console.log('Begin async operation');
-
-    setTimeout(() => {
-      for (let i = 0; i < 30; i++) {
-        this.items.push( this.items.length );
-      }
-
-      console.log('Async operation has ended');
-      infiniteScroll.complete();
-    }, 500);
+    this.lista_mangas_lazy = this.lista_mangas_filtrado.slice(0, this.qtdItensPorVez);
+    this.pageTop.scrollToTop(100);
   }
 
   prepareAds(){
@@ -220,5 +238,24 @@ export class HomePage {
     })
 
     admob.interstitial.prepare();
+  }
+
+  doInfinite(infiniteScroll): Promise<any> {
+    //console.log('Begin async operation');
+
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        console.log('Begin async operation');
+        var tamInicial = this.lista_mangas_lazy.length;
+        var tamFinal = Math.min(tamInicial + this.qtdItensPorVez, this.lista_mangas_filtrado.length);
+        console.log(tamInicial +'|'+tamFinal);
+        for (var i = tamInicial; i < tamFinal; i++) {
+          this.lista_mangas_lazy.push( this.lista_mangas[i] );
+        }
+
+        //console.log('Async operation has ended');
+        infiniteScroll.complete();
+      }, 500);
+    })
   }
 }
