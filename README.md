@@ -6,7 +6,7 @@
 O aplicativo permite gerenciar seus mangás comprados de modo que você terá sempre o controle dos itens que estão presentes e os que estão faltando na sua coleção. 
 É possível também gerenciar os mangás lidos e especificar os volumes de mangás que ainda não foram comprados
 
-[Link na PlayStore](https://www.nescafe-dolcegusto.com.br/)
+[Link na PlayStore](https://play.google.com/store/apps/details?id=colecao.mangas)
 
 O aplicativo conta com as seguintes características
 - Cadastro de mangás, puxando da base de dados da API jikan.moe, uma API não oficial do myanimelist
